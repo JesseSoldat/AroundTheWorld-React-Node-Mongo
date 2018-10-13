@@ -3,7 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "scripts": {},
+  "engines": {
+    "node": "10.10.0"
+  },
+  "scripts": {
+    "start": "node server",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "server": "nodemon server",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
+  },
   "author": "JLab",
   "license": "ISC",
   "dependencies": {
@@ -11,5 +20,9 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mongoose": "^5.3.3"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "nodemon": "^1.18.4"
   }
 }

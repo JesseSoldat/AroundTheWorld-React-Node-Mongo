@@ -1,4 +1,4 @@
-const authFields = [
+const registerFields = [
   {
     label: "* Username ",
     placeholder: "Username ",
@@ -31,4 +31,22 @@ const authFields = [
   }
 ];
 
-export default authFields;
+const loginFields = [
+  {
+    label: "* Email",
+    placeholder: "Email",
+    required: true,
+    name: "email",
+    info: ""
+  },
+  ,
+  {
+    label: "* Password",
+    placeholder: "Password",
+    required: true,
+    name: "password",
+    info: ""
+  }
+];
+
+export { registerFields, loginFields };

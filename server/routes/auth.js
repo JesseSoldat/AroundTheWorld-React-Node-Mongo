@@ -26,7 +26,7 @@ module.exports = app => {
       const { token, err } = await user.generateAuthToken();
 
       // err: false unless set in catch block
-      if (err) return serverRes(res, 400, err, null);
+      if (err) return serverRes(res, 401, err, null);
 
       const msg = `${user.email} is now registered.`;
 
@@ -36,7 +36,7 @@ module.exports = app => {
     } catch (err) {
       console.log("Err: Register", err);
       const msg = getErrMsg("err", "register", "user");
-      serverRes(res, 400, msg, null);
+      serverRes(res, 401, msg, null);
     }
   });
 
@@ -48,12 +48,12 @@ module.exports = app => {
       // returns User or null
       const user = await User.findByCredentials(email, password);
 
-      if (!user) return serverRes(res, 400, getErrMsg("noUser"), null);
+      if (!user) return serverRes(res, 401, getErrMsg("noUser"), null);
 
       const { token, err } = await user.generateAuthToken();
 
       // err: false unless set in catch block
-      if (err) return serverRes(res, 400, err, null);
+      if (err) return serverRes(res, 401, err, null);
 
       const msg = `${user.email} has logged in successfully.`;
 
@@ -61,9 +61,8 @@ module.exports = app => {
 
       serverRes(res, 200, msg, { _id, role, token });
     } catch (err) {
-      console.log("Err: Login", err);
       const msg = getErrMsg("err", "login", "user");
-      serverRes(res, 400, msg, null);
+      serverRes(res, 401, msg, null);
     }
   });
 };

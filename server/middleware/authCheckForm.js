@@ -28,7 +28,7 @@ const authFieldsCheck = (req, res, next) => {
   // Check the Password Length
   if (password.length < 6) {
     const msg = getErrMsg("passwordLength");
-    return serverRes(res, 400, msg, null);
+    return serverRes(res, 401, msg, null);
   }
 
   // Continue with next Middleware or Route Handler

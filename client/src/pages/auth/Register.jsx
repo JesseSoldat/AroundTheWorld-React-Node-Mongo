@@ -3,19 +3,18 @@ import { connect } from "react-redux";
 import {
   combineValidators,
   composeValidators,
-  createValidator,
   matchesField,
   isRequired,
   hasLengthBetween
 } from "revalidate";
+import isValidEmail from "./helpers/isValidEmail";
 import { Field, reduxForm } from "redux-form";
-import { withRouter } from "react-router-dom";
 
 // common components
 import Heading from "../../components/Heading";
 import TextInput from "../../components/form/TextInput";
 // helpers
-import authFields from "./helpers/authFields";
+import { registerFields as authFields } from "./helpers/authFields";
 // Actions
 import { startRegister } from "../../actions/authActions";
 
@@ -49,15 +48,6 @@ class Register extends Component {
     );
   }
 }
-
-const isValidEmail = createValidator(
-  message => value => {
-    if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      return message;
-    }
-  },
-  "Invalid email address"
-);
 
 const validate = combineValidators({
   username: composeValidators(

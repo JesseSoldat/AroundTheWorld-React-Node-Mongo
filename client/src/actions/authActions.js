@@ -3,6 +3,7 @@ import { toastr } from "react-redux-toastr";
 // utils
 import setAxiosHeader from "../utils/auth/setAxiosHeader";
 // helpers
+import errorHandling from "./helpers/errorHandling";
 // actions
 import {
   asyncActionStart,
@@ -55,7 +56,15 @@ export const startLogin = user => async dispatch => {
     const res = await axios.post("/api/login", user);
 
     const { msg, payload } = res.data;
-  } catch (err) {}
+
+    authSetup(dispatch, payload, msg);
+  } catch (err) {
+    console.log("error", err);
+
+    errorHandling(err, "login", "user");
+
+    dispatch(asyncActionError());
+  }
 };
 
 // Logout

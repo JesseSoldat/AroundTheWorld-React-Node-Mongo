@@ -37,11 +37,12 @@ UserSchema.pre("save", function(next) {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
         user.password = hash;
-        return next();
+        next();
       });
     });
+  } else {
+    next();
   }
-  next();
 });
 
 UserSchema.methods.generateAuthToken = async function() {
@@ -51,8 +52,8 @@ UserSchema.methods.generateAuthToken = async function() {
     const { _id, username, role } = user;
     const tokenExpirationDays = 1; // 1 days; USE this for real token
     const tokenExpirationTime = 30 * 1000; // 30 seconds TESTING
-    // const exp = daysFromNow(new Date(), tokenExpirationDays);
-    const exp = milliFromNow(tokenExpirationTime);
+    const exp = daysFromNow(new Date(), tokenExpirationDays);
+    // const exp = milliFromNow(tokenExpirationTime);
 
     // Create the Token
     const token = jwt
@@ -73,6 +74,26 @@ UserSchema.methods.generateAuthToken = async function() {
     return {
       err: "An error ocurred while trying to generate the auth token."
     };
+  }
+};
+
+UserSchema.statics.findByCredentials = async function(email, password) {
+  const User = this;
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) return null;
+
+    const matchedUser = await new Promise((resolve, reject) => {
+      bcrypt.compare(password, user.password, (err, matched) => {
+        console.log(err);
+        return err ? resolve(null) : resolve(user);
+      });
+    });
+
+    return matchedUser;
+  } catch (err) {
+    return null;
   }
 };
 

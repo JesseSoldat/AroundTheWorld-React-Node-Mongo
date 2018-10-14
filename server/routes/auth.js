@@ -37,4 +37,29 @@ module.exports = app => {
       serverRes(res, 400, msg, null);
     }
   });
+
+  // Login
+  app.post("/api/login", authFieldsCheck, async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+      // returns User or null
+      const user = await User.findByCredentials(email, password);
+
+      if (!user) return serverRes(res, 400, getErrMsg("noUser"), null);
+
+      const { token, err } = await user.generateAuthToken();
+
+      // err: false unless set in catch block
+      if (err) return serverRes(res, 400, getMsg(err), null);
+
+      const msg = getMsg(`${user.email} has logged in successfully.`, "blue");
+
+      serverRes(res, 200, msg, { token });
+    } catch (err) {
+      console.log("Err: Login", err);
+      const msg = getErrMsg("err", "login", "user");
+      serverRes(res, 400, msg, null);
+    }
+  });
 };

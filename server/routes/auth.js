@@ -3,7 +3,7 @@ const User = require("../models/user");
 // Middleware
 const authFieldsCheck = require("../middleware/authCheckForm");
 // Utils
-const { serverRes, getMsg, getErrMsg } = require("../utils/serverRes");
+const { serverRes, getErrMsg } = require("../utils/serverRes");
 
 module.exports = app => {
   // Register
@@ -26,9 +26,9 @@ module.exports = app => {
       const { token, err } = await user.generateAuthToken();
 
       // err: false unless set in catch block
-      if (err) return serverRes(res, 400, getMsg(err), null);
+      if (err) return serverRes(res, 400, err, null);
 
-      const msg = getMsg(`${user.email} is now registered.`, "blue");
+      const msg = `${user.email} is now registered.`;
 
       serverRes(res, 200, msg, { token });
     } catch (err) {
@@ -51,9 +51,9 @@ module.exports = app => {
       const { token, err } = await user.generateAuthToken();
 
       // err: false unless set in catch block
-      if (err) return serverRes(res, 400, getMsg(err), null);
+      if (err) return serverRes(res, 400, err, null);
 
-      const msg = getMsg(`${user.email} has logged in successfully.`, "blue");
+      const msg = `${user.email} has logged in successfully.`;
 
       serverRes(res, 200, msg, { token });
     } catch (err) {

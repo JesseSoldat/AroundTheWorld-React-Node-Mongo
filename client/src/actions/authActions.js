@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toastr } from "react-redux-toastr";
 // utils
+import setAxiosHeader from "../utils/auth/setAxiosHeader";
 // helpers
 // actions
 import {
@@ -55,4 +56,14 @@ export const startLogin = user => async dispatch => {
 
     const { msg, payload } = res.data;
   } catch (err) {}
+};
+
+// Logout
+export const startLogout = () => dispatch => {
+  // axios headers
+  setAxiosHeader(null);
+  // remove user to local storage
+  localStorage.removeItem("user");
+
+  dispatch({ type: AUTH_LOGOUT });
 };

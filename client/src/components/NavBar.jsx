@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 
 // common components
 import SiteLink from "./links/SiteLink";
+// actions
+import { startLogout } from "../actions/authActions";
 
-const NavBar = ({ isAuth }) => {
+const NavBar = ({ isAuth, startLogout }) => {
   const brand = (
     <SiteLink
       text="Around The World"
@@ -40,6 +42,7 @@ const NavBar = ({ isAuth }) => {
 
   const onStartLogout = e => {
     e.preventDefault();
+    startLogout();
   };
 
   return (
@@ -68,5 +71,5 @@ const mapStateToProps = ({ auth }) => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { startLogout }
 )(NavBar);

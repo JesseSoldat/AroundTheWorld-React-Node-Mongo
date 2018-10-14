@@ -57,7 +57,9 @@ module.exports = app => {
 
       const msg = `${user.email} has logged in successfully.`;
 
-      serverRes(res, 200, msg, { token });
+      const { _id, role } = user;
+
+      serverRes(res, 200, msg, { _id, role, token });
     } catch (err) {
       console.log("Err: Login", err);
       const msg = getErrMsg("err", "login", "user");

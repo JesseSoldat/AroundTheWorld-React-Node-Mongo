@@ -4,15 +4,19 @@ import createHistory from "history/createBrowserHistory";
 // Routes
 import AuthRoutes from "./routes/authRoutes";
 import GeneralRoutes from "./routes/generalRoutes";
+import NavBar from "../components/NavBar";
 
 export const history = createHistory();
 
 const AppRouter = () => (
   <Router history={history}>
-    <Switch>
-      {AuthRoutes}
-      {GeneralRoutes}
-    </Switch>
+    <div>
+      <NavBar />
+      <Switch>
+        {AuthRoutes}
+        {GeneralRoutes}
+      </Switch>
+    </div>
   </Router>
 );
 

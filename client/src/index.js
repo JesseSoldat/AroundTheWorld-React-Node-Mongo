@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import ReduxToastr from "react-redux-toastr";
 import * as serviceWorker from "./serviceWorker";
 // css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
+
 import "./index.css";
 
 import AppRouter from "./router/AppRouter";

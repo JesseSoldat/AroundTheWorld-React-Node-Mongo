@@ -30,7 +30,9 @@ module.exports = app => {
 
       const msg = `${user.email} is now registered.`;
 
-      serverRes(res, 200, msg, { token });
+      const { _id, role } = user;
+
+      serverRes(res, 200, msg, { _id, role, token });
     } catch (err) {
       console.log("Err: Register", err);
       const msg = getErrMsg("err", "register", "user");

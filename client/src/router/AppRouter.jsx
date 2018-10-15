@@ -5,6 +5,7 @@ import ReduxToastr from "react-redux-toastr";
 // Routes
 import AuthRoutes from "./routes/authRoutes";
 import GeneralRoutes from "./routes/generalRoutes";
+import MapRoutes from "./routes/mapRoutes";
 import NavBar from "../components/NavBar";
 import ScrollToTop from "../components/ScrollToTop";
 
@@ -22,6 +23,7 @@ const AppRouter = () => (
       <Switch>
         {AuthRoutes}
         {GeneralRoutes}
+        {MapRoutes}
       </Switch>
     </ScrollToTop>
   </Router>

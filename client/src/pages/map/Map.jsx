@@ -4,24 +4,19 @@ import googleMapsApiKey from "../../_config/googleKey";
 import Marker from "./Marker";
 
 class Map extends Component {
-  static defaultProps = {
-    center: {
-      lat: 0,
-      lng: 0
-    },
-    zoom: -8
-  };
-
   render() {
     const {
+      map,
       marker,
+      zoom,
+      height = "100vh",
       moveMarker,
       showBtns = false,
       cancel,
       selectPlace
     } = this.props;
     return (
-      <div style={{ height: "100vh", width: "100%", position: "relative" }}>
+      <div style={{ height, width: "100%", position: "relative" }}>
         {showBtns && (
           <div
             style={{ zIndex: 3, position: "absolute", top: "2%", right: "8%" }}
@@ -37,11 +32,11 @@ class Map extends Component {
 
         <GoogleMapReact
           bootstrapURLKeys={{ key: googleMapsApiKey }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
+          defaultCenter={map}
+          defaultZoom={zoom}
           onClick={moveMarker}
         >
-          <Marker lat={marker.lat} lng={marker.lng} />
+          {marker && <Marker lat={marker.markerLat} lng={marker.markerLng} />}
         </GoogleMapReact>
       </div>
     );

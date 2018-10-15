@@ -3,16 +3,17 @@ import Map from "./Map";
 
 class MapIt extends Component {
   state = {
-    lat: 0,
-    lng: 0
+    markerLat: 18.646245142670608,
+    markerLng: 18.646245142670608
   };
 
-  moveMarker = ({ x, y, lat, lng, event }) => {
-    this.setState({ lat, lng });
+  moveMarker = ({ lat, lng }) => {
+    this.setState({ markerLat: lat, markerLng: lng });
   };
 
   selectPlace = () => {
-    console.log(this.state);
+    const { markerLat, markerLng } = this.state;
+    this.props.history.push(`/createStory?lat=${markerLat}&lng=${markerLng}`);
   };
 
   cancel = () => {
@@ -20,15 +21,17 @@ class MapIt extends Component {
   };
 
   render() {
-    const { lat, lng } = this.state;
+    const { markerLat, markerLng } = this.state;
     return (
       <div>
         <Map
-          marker={{ lat, lng }}
+          map={{ lat: markerLat, lng: markerLng }}
+          marker={{ markerLat, markerLng }}
           moveMarker={this.moveMarker}
           showBtns={true}
           cancel={this.cancel}
           selectPlace={this.selectPlace}
+          zoom={-10}
         />
       </div>
     );

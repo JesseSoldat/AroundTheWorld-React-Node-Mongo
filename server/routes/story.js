@@ -8,7 +8,21 @@ const { serverRes, getErrMsg } = require("../utils/serverRes");
 module.exports = app => {
   // list of users stories
   app.get("/api/story/:userId", isAuth, async (req, res) => {
-    const { userId } = req.params;
+    try {
+      const { userId } = req.params;
+      const stories = await Story.find({ user: userId })
+        .sort({ _id: -1 })
+        .populate({
+          path: "user",
+          select: ["email", "username"]
+        });
+
+      serverRes(res, 200, null, { stories });
+    } catch (err) {
+      console.log("Err: Fetch Stories", err);
+      const msg = getErrMsg("err", "fetch", "stories");
+      serverRes(res, 400, msg, null);
+    }
   });
 
   // create story

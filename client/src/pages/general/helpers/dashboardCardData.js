@@ -10,7 +10,7 @@ const dashboardCardData = [
     title: "View your Stories",
     subtitle:
       "Revisit your stories and update or remove to them to your liking.",
-    link: "/map/storyList",
+    link: "/storyList",
     linkText: "Stories"
   },
   {

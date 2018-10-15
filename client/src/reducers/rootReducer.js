@@ -5,12 +5,14 @@ import { reducer as FormReducer } from "redux-form";
 // Reducers
 import asyncReducer from "./asyncReducer";
 import authReducer from "./authReducer";
+import storyReducer from "./storyReducer";
 
 const rootReducer = combineReducers({
   form: FormReducer,
   toastr: toastrReducer,
   async: asyncReducer,
-  auth: authReducer
+  auth: authReducer,
+  story: storyReducer
 });
 
 export default rootReducer;

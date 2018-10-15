@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
+import jLogo from "../_images/jLogo.png";
 // common components
 import SiteLink from "./links/SiteLink";
 // actions
@@ -8,11 +9,10 @@ import { startLogout } from "../actions/authActions";
 
 const NavBar = ({ isAuth, startLogout }) => {
   const brand = (
-    <SiteLink
-      text="Around The World"
-      url={isAuth ? "/dashboard" : "/"}
-      linkCss="navbar-brand text-light"
-    />
+    <Link className="navbar-brand " to={isAuth ? "/dashboard" : "/"}>
+      <img class="logo" src={jLogo} />
+      <span>Around The World</span>
+    </Link>
   );
 
   // responsive css for all of the navbar links
@@ -46,7 +46,7 @@ const NavBar = ({ isAuth, startLogout }) => {
   };
 
   return (
-    <nav className="navbar navbar-expand-md navbar-light text-light bg-dark site-navbar">
+    <nav className="navbar navbar-expand-md navbar-light bg-dark site-navbar">
       {brand}
       <button
         className="navbar-toggler"

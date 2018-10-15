@@ -10,7 +10,7 @@ const PublicRoute = ({ isAuth, component: Component, ...rest }) => {
         isAuth ? (
           <Redirect to="/dashboard" />
         ) : (
-          <div>
+          <div className="publicRouteWrapper">
             <Component {...props} />
             <div className="spacer200" />
           </div>

@@ -17,27 +17,36 @@ class Login extends Component {
     const { handleSubmit, invalid, submitting } = this.props;
 
     return (
-      <div className="container my-3">
-        <Heading title="login" />
-        <form onSubmit={handleSubmit(this.props.startLogin)}>
-          {authFields &&
-            authFields.map((obj, i) => (
-              <Field
-                key={i}
-                fieldObj={obj}
-                name={obj.name}
-                type={obj.type}
-                component={TextInput}
-              />
-            ))}
-          <button
-            type="submit"
-            disabled={invalid || submitting}
-            className="btn btn-info btn-block mt-4"
-          >
-            Submit
-          </button>
-        </form>
+      <div className="container">
+        <div className="spacer100" />
+        <div className="row">
+          <div className="col-sm-12 col-md-10 mx-auto">
+            <div className="card authFormCard">
+              <Heading title="login" />
+              <div className="card-block">
+                <form onSubmit={handleSubmit(this.props.startLogin)}>
+                  {authFields &&
+                    authFields.map((obj, i) => (
+                      <Field
+                        key={i}
+                        fieldObj={obj}
+                        name={obj.name}
+                        type={obj.type}
+                        component={TextInput}
+                      />
+                    ))}
+                  <button
+                    type="submit"
+                    disabled={invalid || submitting}
+                    className="btn btn-info btn-block mt-4"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

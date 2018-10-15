@@ -5,22 +5,25 @@ const { serverRes } = require("../utils/serverRes");
 
 const authErrMsg = "An error ocurred while authenticating. Please login again.";
 
+const options = {
+  type: "tokenErr"
+};
+
 const isAuth = async (req, res, next) => {
   const token = req.header("x-auth");
 
   try {
-    if (!token) return serverRes(res, 401, authErrMsg);
+    if (!token) return serverRes(res, 401, authErrMsg, null, options);
 
     const user = await User.findByToken(token);
 
-    if (!user) return serverRes(res, 401, authErrMsg);
+    if (!user) return serverRes(res, 401, authErrMsg, null, options);
 
     req.user = user;
 
     next();
   } catch (err) {
-    console.log("Err: isAuth Middleware", err);
-    return serverRes(res, 401, authErrMsg);
+    return serverRes(res, 401, authErrMsg, null, options);
   }
 };
 

@@ -12,8 +12,8 @@ const getErrMsg = (type, method, target) => {
   return msgTypes[type];
 };
 
-const serverRes = (res, status, msg = null, payload = null) => {
-  res.status(status).send({ msg, payload });
+const serverRes = (res, status, msg = null, payload = null, options = null) => {
+  res.status(status).send({ msg, payload, options });
 };
 
 module.exports = { getErrMsg, serverRes };

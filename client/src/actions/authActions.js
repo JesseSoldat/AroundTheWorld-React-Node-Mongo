@@ -33,7 +33,7 @@ export const startCheckToken = () => async dispatch => {
   try {
     await axios.get("/api/tokenCheck");
   } catch (err) {
-    errorHandling(err, "check", "token");
+    errorHandling(dispatch, err, "check", "token");
   }
 };
 
@@ -47,7 +47,7 @@ export const startRegister = user => async dispatch => {
 
     authSetup(dispatch, payload, msg);
   } catch (err) {
-    errorHandling(err, "register", "user");
+    errorHandling(dispatch, err, "register", "user");
     dispatch(asyncActionError());
   }
 };
@@ -68,7 +68,7 @@ export const startLogin = user => async dispatch => {
 
     authSetup(dispatch, payload, msg);
   } catch (err) {
-    errorHandling(err, "login", "user");
+    errorHandling(dispatch, err, "login", "user");
     dispatch(asyncActionError());
   }
 };

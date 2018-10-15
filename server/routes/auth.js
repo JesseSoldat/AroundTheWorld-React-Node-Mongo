@@ -1,12 +1,24 @@
-// Models
+// models
 const User = require("../models/user");
-// Middleware
+// middlewares
+const isAuth = require("../middleware/isAuth");
 const authFieldsCheck = require("../middleware/authCheckForm");
-// Utils
+// utils
 const { serverRes, getErrMsg } = require("../utils/serverRes");
 
 module.exports = app => {
-  // Register
+  // check token on redirect to dashboard
+  app.get("/api/tokenCheck", isAuth, async (req, res) => {
+    const authErrMsg =
+      "An error ocurred while authenticating. Please login again.";
+    try {
+      serverRes(res, 200, null);
+    } catch (err) {
+      console.log("tokenCheck", err);
+      serverRes(res, 401, authErrMsg);
+    }
+  });
+  // register
   app.post("/api/register", authFieldsCheck, async (req, res) => {
     const { username, email, password } = req.body;
     try {
@@ -40,7 +52,7 @@ module.exports = app => {
     }
   });
 
-  // Login
+  // login
   app.post("/api/login", authFieldsCheck, async (req, res) => {
     const { email, password } = req.body;
 

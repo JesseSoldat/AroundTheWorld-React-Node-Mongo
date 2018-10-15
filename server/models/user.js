@@ -97,6 +97,25 @@ UserSchema.statics.findByCredentials = async function(email, password) {
   }
 };
 
+UserSchema.statics.findByToken = async function(token) {
+  try {
+    const user = await new Promise(resolve => {
+      jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+        if (err || !decodedToken) resolve(null);
+
+        resolve(decodedToken);
+      });
+    });
+
+    if (!user) return null;
+
+    return user;
+  } catch (err) {
+    console.log("Err: findByToken", err);
+    return null;
+  }
+};
+
 const User = mongoose.model("user", UserSchema);
 
 module.exports = User;

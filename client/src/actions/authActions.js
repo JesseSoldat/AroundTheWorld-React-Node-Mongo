@@ -14,10 +14,10 @@ import {
 export const AUTH_LOGIN = "AUTH_LOGIN";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
 
-// Auth
+// auth
 const authSetup = (dispatch, { _id, token, expires, role }, msg) => {
   // axios headers
-  // setAxiosHeader(token);
+  setAxiosHeader(token);
   // set user to local storage
   localStorage.setItem("user", JSON.stringify({ _id, token, expires }));
   // login
@@ -28,7 +28,16 @@ const authSetup = (dispatch, { _id, token, expires, role }, msg) => {
   dispatch(asyncActionFinish());
 };
 
-// Register
+// check token
+export const startCheckToken = () => async dispatch => {
+  try {
+    await axios.get("/api/tokenCheck");
+  } catch (err) {
+    errorHandling(err, "check", "token");
+  }
+};
+
+// register
 export const startRegister = user => async dispatch => {
   dispatch(asyncActionStart());
   try {
@@ -38,12 +47,12 @@ export const startRegister = user => async dispatch => {
 
     authSetup(dispatch, payload, msg);
   } catch (err) {
-    toastr.error("Error", err);
+    errorHandling(err, "register", "user");
     dispatch(asyncActionError());
   }
 };
 
-// Login
+// login
 export const login = (_id, token, role) => ({
   type: AUTH_LOGIN,
   _id,
@@ -59,10 +68,7 @@ export const startLogin = user => async dispatch => {
 
     authSetup(dispatch, payload, msg);
   } catch (err) {
-    console.log("error", err);
-
     errorHandling(err, "login", "user");
-
     dispatch(asyncActionError());
   }
 };

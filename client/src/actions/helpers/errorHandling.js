@@ -1,7 +1,7 @@
 import { toastr } from "react-redux-toastr";
 
 const errMsg = (method, target) =>
-  `An unknown error occured while trying to ${method} the ${target}.`;
+  `An unknown error occurred while trying to ${method} the ${target}.`;
 
 const errorHandling = (err, method, target) => {
   if (err && err.response) {

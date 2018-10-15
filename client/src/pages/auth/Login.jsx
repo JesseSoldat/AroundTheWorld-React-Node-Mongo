@@ -26,7 +26,7 @@ class Login extends Component {
                 key={i}
                 fieldObj={obj}
                 name={obj.name}
-                type="text"
+                type={obj.type}
                 component={TextInput}
               />
             ))}

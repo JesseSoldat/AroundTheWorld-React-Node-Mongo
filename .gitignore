@@ -1,2 +1,3 @@
 server/config/config.json
+client/src/_config/googleKey.js
 node_modules

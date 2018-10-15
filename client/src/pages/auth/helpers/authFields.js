@@ -5,14 +5,16 @@ const registerFields = [
     required: true,
     name: "username",
     info: "",
-    index: "0"
+    index: "0",
+    type: "text"
   },
   {
     label: "* Email",
     placeholder: "Email",
     required: true,
     name: "email",
-    info: ""
+    info: "",
+    type: "email"
   },
   ,
   {
@@ -20,14 +22,16 @@ const registerFields = [
     placeholder: "Password",
     required: true,
     name: "password",
-    info: ""
+    info: "",
+    type: "password"
   },
   {
     label: "* Confirm Password",
     placeholder: "Confirm Password",
     required: true,
     name: "confirm",
-    info: ""
+    info: "",
+    type: "password"
   }
 ];
 
@@ -37,7 +41,8 @@ const loginFields = [
     placeholder: "Email",
     required: true,
     name: "email",
-    info: ""
+    info: "",
+    type: "email"
   },
   ,
   {
@@ -45,7 +50,8 @@ const loginFields = [
     placeholder: "Password",
     required: true,
     name: "password",
-    info: ""
+    info: "",
+    type: "password"
   }
 ];
 

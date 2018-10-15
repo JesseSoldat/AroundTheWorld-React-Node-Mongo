@@ -32,7 +32,7 @@ const NavBar = ({ isAuth, startLogout }) => {
   const privateRoutes = (
     <ul className="navbar-nav ml-auto">
       <li className={navLinkClass}>
-        <a href="" onClick={e => onStartLogout(e)}>
+        <a onClick={e => onStartLogout(e)}>
           <i className="fas fa-sign-out-alt mr-2" />
           Logout
         </a>

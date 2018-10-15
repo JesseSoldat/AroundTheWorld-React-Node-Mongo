@@ -1,10 +1,10 @@
 import React from "react";
 
 import PrivateRoute from "../PrivateRoute";
-import Map from "../../pages/map/Map";
+import MapIt from "../../pages/map/MapIt";
 
 const MapRoutes = [
-  <PrivateRoute key="welcome" path="/map" component={Map} exact />
+  <PrivateRoute key="welcome" path="/map" component={MapIt} exact />
 ];
 
 export default MapRoutes;

@@ -16,7 +16,6 @@ const registerFields = [
     info: "",
     type: "email"
   },
-  ,
   {
     label: "* Password",
     placeholder: "Password",
@@ -44,7 +43,6 @@ const loginFields = [
     info: "",
     type: "email"
   },
-  ,
   {
     label: "* Password",
     placeholder: "Password",

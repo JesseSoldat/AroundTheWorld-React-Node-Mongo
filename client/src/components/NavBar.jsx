@@ -6,11 +6,13 @@ import jLogo from "../_images/jLogo.png";
 import SiteLink from "./links/SiteLink";
 // actions
 import { startLogout } from "../actions/authActions";
+// css
+import "./NavBar.module.css";
 
 const NavBar = ({ isAuth, startLogout }) => {
   const brand = (
     <Link className="navbar-brand " to={isAuth ? "/dashboard" : "/"}>
-      <img class="logo" src={jLogo} />
+      <img className="logo" src={jLogo} />
       <span>Around The World</span>
     </Link>
   );

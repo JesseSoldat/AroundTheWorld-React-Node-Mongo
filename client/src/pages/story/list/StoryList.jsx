@@ -3,10 +3,18 @@ import { connect } from "react-redux";
 // common components
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/Spinner";
+// custom components
+import ListCard from "../../../components/cards/ListCard";
 // actions
 import { startGetStories } from "../../../actions/storyActions";
-
+// Data
+const distances =
+  "5,10,15,20,50,100,300,500,1000,1500,2000,2500,3000,5000,10000,100000";
+const distanceArray = distances.split(",");
 class StoryList extends Component {
+  state = {
+    distances: distanceArray
+  };
   componentDidMount() {
     this.props.startGetStories();
   }
@@ -21,7 +29,13 @@ class StoryList extends Component {
       content = (
         <div className="row">
           <div className="col-12 text-center">
-            <h3 className="mt-3">Has Stories</h3>
+            {stories.map(story => (
+              <ListCard
+                key={story._id}
+                story={story}
+                distances={this.state.distances}
+              />
+            ))}
           </div>
         </div>
       );
@@ -35,9 +49,11 @@ class StoryList extends Component {
       );
     }
     return (
-      <div className="container">
+      <div className="storyListWrapper">
         <Heading title="Stories" />
-        {content}
+        <div className="storiesContainer col-xs-12 col-sm-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
+          {content}
+        </div>
       </div>
     );
   }

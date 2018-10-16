@@ -62,3 +62,27 @@ export const startCreateStory = (newStory, history) => async (
     dispatch(asyncActionError());
   }
 };
+
+// Match with Other Peoples Stories
+export const startMatchWithOthers = matchQuery => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const userId = getState().auth._id;
+    const { unit, maxDistance, coordinates } = matchQuery;
+    const lng = coordinates[0];
+    const lat = coordinates[1];
+
+    const url = `/api/story/match/${userId}?lat=${lat}&lng=${lng}&unit=${unit}&maxDistance=${maxDistance}`;
+
+    const res = await axios.get(url);
+
+    const { payload } = res.data;
+    console.log(payload);
+  } catch (err) {
+    console.log(err);
+
+    errorHandling(dispatch, err, "match", "others");
+  }
+};

@@ -1,7 +1,13 @@
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 // models
 const Story = require("../models/story");
+// queries
+const geoMatchWithGroupAndSort = require("./queries/geoMatchOthers");
 // middlewares
 const isAuth = require("../middleware/isAuth");
+// helpers
+const convertToRadiansFromMilesOrKm = require("./helpers/convertToRadiansFromMilesOrKm");
 // utils
 const { serverRes, getErrMsg } = require("../utils/serverRes");
 
@@ -45,6 +51,26 @@ module.exports = app => {
     } catch (err) {
       console.log("Err: Create Story", err);
       const msg = getErrMsg("err", "create", "story");
+      serverRes(res, 400, msg, null);
+    }
+  });
+
+  app.get("/api/story/match/:userId", isAuth, async (req, res) => {
+    try {
+      const { userId } = req.params;
+
+      const user = new ObjectId(userId);
+      const maxDistance = convertToRadiansFromMilesOrKm(req.query);
+
+      const lng = parseFloat(req.query.lng);
+      const lat = parseFloat(req.query.lat);
+
+      const match = await geoMatchWithGroupAndSort(lng, lat, maxDistance, user);
+
+      serverRes(res, 200, null, { match });
+    } catch (err) {
+      console.log("Err: Match Location", err);
+      const msg = getErrMsg("err", "match", "other users");
       serverRes(res, 400, msg, null);
     }
   });

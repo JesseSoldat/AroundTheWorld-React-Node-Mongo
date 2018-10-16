@@ -5,9 +5,11 @@ import Heading from "../../../components/Heading";
 import Spinner from "../../../components/Spinner";
 // custom components
 import ListCard from "../../../components/cards/ListCard";
-
 // actions
-import { startGetStories } from "../../../actions/storyActions";
+import {
+  startGetStories,
+  startMatchWithOthers
+} from "../../../actions/storyActions";
 // Data
 const distances =
   "5,10,15,20,50,100,300,500,1000,1500,2000,2500,3000,5000,10000,100000";
@@ -16,9 +18,22 @@ class StoryList extends Component {
   state = {
     distances: distanceArray
   };
+
+  // lifecycles
   componentDidMount() {
     this.props.startGetStories();
   }
+
+  // cbs & events
+  tryToMatchOthers = (story, values) => {
+    const matchQuery = {
+      unit: values.distanceType,
+      maxDistance: values.distance,
+      coordinates: story.geometry.coordinates
+    };
+
+    this.props.startMatchWithOthers(matchQuery);
+  };
 
   render() {
     const { loading, stories } = this.props;
@@ -35,6 +50,7 @@ class StoryList extends Component {
                 key={story._id}
                 story={story}
                 distances={this.state.distances}
+                tryToMatchOthers={this.tryToMatchOthers}
               />
             ))}
           </div>
@@ -67,5 +83,5 @@ const mapStateToProps = ({ async, story }) => ({
 
 export default connect(
   mapStateToProps,
-  { startGetStories }
+  { startGetStories, startMatchWithOthers }
 )(StoryList);

@@ -12,11 +12,18 @@ import RadioInput from "../form/RadioInput";
 // custom components
 import StaticMap from "../../pages/map/StaticMap";
 
-const ListCard = ({ handleSubmit, submitting, invalid, story, distances }) => {
+const ListCard = ({
+  handleSubmit,
+  submitting,
+  invalid,
+  story,
+  distances,
+  tryToMatchOthers
+}) => {
   const { title, description, geometry } = story;
 
-  const matchUsers = values => {
-    console.log(values);
+  const matchOthers = values => {
+    tryToMatchOthers(story, values);
   };
 
   return (
@@ -27,7 +34,7 @@ const ListCard = ({ handleSubmit, submitting, invalid, story, distances }) => {
             <h3 className="card-title">{title}</h3>
             <p className="card-text">{description}</p>
 
-            <form className="form" onSubmit={handleSubmit(matchUsers)}>
+            <form className="form" onSubmit={handleSubmit(matchOthers)}>
               <Field
                 name="distance"
                 type="text"

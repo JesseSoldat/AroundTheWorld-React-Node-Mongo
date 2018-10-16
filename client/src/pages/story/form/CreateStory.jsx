@@ -37,7 +37,7 @@ class CreateStory extends Component {
     });
   }
   // map
-  moveMarker = ({ lat, lng }) => {
+  moveMarker = ({ lat, lng, x, y }) => {
     this.setState({ markerLat: lat, markerLng: lng });
   };
 
@@ -47,7 +47,7 @@ class CreateStory extends Component {
   };
 
   submitStory = values => {
-    const { markerLat: lng, markerLng: lat } = this.state;
+    const { markerLat: lat, markerLng: lng } = this.state;
 
     const story = {
       title: values.title,

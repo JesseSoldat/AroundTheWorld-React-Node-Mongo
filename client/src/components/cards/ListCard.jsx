@@ -9,9 +9,11 @@ import {
 // common components
 import SelectInput from "../form/SelectInput";
 import RadioInput from "../form/RadioInput";
+// custom components
+import StaticMap from "../../pages/map/StaticMap";
 
 const ListCard = ({ handleSubmit, submitting, invalid, story, distances }) => {
-  const { title, description } = story;
+  const { title, description, geometry } = story;
 
   const matchUsers = values => {
     console.log(values);
@@ -71,7 +73,7 @@ const ListCard = ({ handleSubmit, submitting, invalid, story, distances }) => {
           </div>
 
           <div className="cardImg col-xs-12 col-xs-12 col-md-12 col-lg-5">
-            <img src="https://via.placeholder.com/150x150" />
+            <StaticMap coordinates={geometry.coordinates} />
           </div>
         </div>
       </div>

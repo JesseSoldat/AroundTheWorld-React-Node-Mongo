@@ -7,7 +7,9 @@ import AuthRoutes from "./routes/authRoutes";
 import GeneralRoutes from "./routes/generalRoutes";
 import MapRoutes from "./routes/mapRoutes";
 import StoryRoutes from "./routes/storyRoutes";
+// components
 import NavBar from "../components/NavBar";
+import ModalManager from "../modals/ModalManager";
 import ScrollToTop from "../components/ScrollToTop";
 
 export const history = createHistory();
@@ -16,6 +18,7 @@ const AppRouter = () => (
   <Router history={history}>
     <ScrollToTop>
       <NavBar />
+      <ModalManager />
       <ReduxToastr
         position="bottom-right"
         transitionIn="fadeIn"

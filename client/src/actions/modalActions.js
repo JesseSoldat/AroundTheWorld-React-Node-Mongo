@@ -1,13 +1,11 @@
 export const MODAL_CLOSE = "MODAL_CLOSE";
 export const MODAL_OPEN = "MODAL_OPEN";
 
-export const openModal = (modalType, modalProps) => {
+export const openModal = ({ modalType, data }) => {
   return {
     type: MODAL_OPEN,
-    payload: {
-      modalType,
-      modalProps
-    }
+    modalType,
+    data
   };
 };
 

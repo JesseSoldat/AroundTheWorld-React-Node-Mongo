@@ -1,54 +1,56 @@
-import React, { Component } from "react";
+import React from "react";
+import Modal from "react-bootstrap4-modal";
 
-class MatchUsersModal extends Component {
-  closeModal = () => {
-    console.log("close");
-  };
+const MatchUsersModal = ({ data, onHide, viewUser }) => {
+  return (
+    <Modal visible={true} onClickBackdrop={onHide} dialogClassName="modal-lg">
+      <div className="modal-header">
+        {data && (
+          <h5 className="modal-title">You Matched {data.length} Users</h5>
+        )}
+        <button type="button" className="close" onClick={onHide}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-  closeModalAndRoute = () => {
-    console.log("close and route");
-  };
-  render({ data }) {
-    return (
-      <div>
-        <div className="modal-header">
-          <h4 className="modal-title" id="modal-basic-title">
-            You Matched {data.match.length} Users
-          </h4>
-
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={this.closeModal}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        {data &&
-          data.match.length && (
-            <div className="modal-body">
-              <ul className="list-group list-group-flush">
-                {data.match.map(match => (
-                  <li className="list-group-item">
+      <div className="modal-body">
+        {data && (
+          <ul className="list-group list-group-flush">
+            {data.length > 0 ? (
+              data.map((match, i) => {
+                return (
+                  <li key={i} className="list-group-item">
                     <span>
                       {match.userInfo[0].username} has {match.length}{" "}
-                      {match.length === 1 ? "story" : "stories"} found near your
-                      location.
+                      {match.length === 1 ? "story " : "stories "} found near
+                      your location.{" "}
                     </span>
-                    <br />
-                    <a onClick={() => this.closeModalAndRoute(match)}>
+
+                    <a
+                      style={{ color: "blue", pointer: "hover" }}
+                      onClick={() => viewUser(match)}
+                    >
                       Check out their stories.
                     </a>
                   </li>
-                ))}
-              </ul>
-            </div>
-          )}
+                );
+              })
+            ) : (
+              <p>
+                No matches found. Try increasing the distance from your story.
+              </p>
+            )}
+          </ul>
+        )}
       </div>
-    );
-  }
-}
+
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" onClick={onHide}>
+          Close
+        </button>
+      </div>
+    </Modal>
+  );
+};
 
 export default MatchUsersModal;

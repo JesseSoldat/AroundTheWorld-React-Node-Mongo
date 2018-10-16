@@ -19,7 +19,7 @@ body {
   padding-bottom: 3px;
 }
 
-.navbar .nav-item a {
+.navbar .nav-item {
   color: black;
   cursor: pointer;
   margin-right: 5px;

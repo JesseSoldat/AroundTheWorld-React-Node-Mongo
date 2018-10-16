@@ -10,6 +10,7 @@ import StoryRoutes from "./routes/storyRoutes";
 // components
 import NavBar from "../components/NavBar";
 import ModalManager from "../modals/ModalManager";
+
 import ScrollToTop from "../components/ScrollToTop";
 
 export const history = createHistory();

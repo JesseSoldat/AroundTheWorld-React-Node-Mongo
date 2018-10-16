@@ -1,21 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-// Modals
+// modals
 import MatchUsersModal from "./MatchUsersModal";
+// actions
+import { closeModal } from "../actions/modalActions";
 
-const modalLookup = {
-  MatchesModal: MatchUsersModal
-};
+const ModalManager = ({ modalType, data, closeModal }) => {
+  const viewUser = match => {
+    console.log(match);
+    closeModal();
+  };
 
-const ModalManager = ({ modalType, data }) => {
-  let renderedModal;
-
-  if (modalType) {
-    const ModalComponent = modalLookup[modalType];
-
-    renderedModal = <ModalComponent data={data} />;
-  }
-  return <span>{renderedModal}</span>;
+  return (
+    <span>
+      {modalType === "matchUser" && (
+        <MatchUsersModal data={data} onHide={closeModal} viewUser={viewUser} />
+      )}
+    </span>
+  );
 };
 
 const mapStateToProps = ({ modal }) => ({
@@ -23,4 +25,7 @@ const mapStateToProps = ({ modal }) => ({
   data: modal.data
 });
 
-export default connect(mapStateToProps)(ModalManager);
+export default connect(
+  mapStateToProps,
+  { closeModal }
+)(ModalManager);

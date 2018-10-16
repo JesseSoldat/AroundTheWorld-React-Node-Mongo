@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { type, payload } = action;
+  const { type, modalType, data } = action;
   switch (type) {
     case MODAL_CLOSE:
       return { ...state, modalType: null, data: null };
@@ -14,8 +14,8 @@ export default (state = initialState, action) => {
     case MODAL_OPEN:
       return {
         ...state,
-        modalType: payload.modalType,
-        data: payload.data
+        modalType,
+        data
       };
 
     default:

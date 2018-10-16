@@ -8,6 +8,7 @@ import {
   asyncActionFinish,
   asyncActionError
 } from "./asyncActions";
+import { openModal } from "./modalActions";
 // types
 export const STORIES_REQUESTED = "STORIES_REQUESTED";
 export const STORIES_LOADED = "STORIES_LOADED";
@@ -79,10 +80,9 @@ export const startMatchWithOthers = matchQuery => async (
     const res = await axios.get(url);
 
     const { payload } = res.data;
-    console.log(payload);
-  } catch (err) {
-    console.log(err);
 
+    dispatch(openModal({ modalType: "matchUser", data: payload.match }));
+  } catch (err) {
     errorHandling(dispatch, err, "match", "others");
   }
 };

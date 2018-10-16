@@ -1,11 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import {
-  combineValidators,
-  composeValidators,
-  isRequired,
-  hasLengthBetween
-} from "revalidate";
+import { combineValidators, isRequired } from "revalidate";
 // common components
 import SelectInput from "../form/SelectInput";
 import RadioInput from "../form/RadioInput";

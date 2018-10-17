@@ -1,13 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 // modals
 import MatchUsersModal from "./MatchUsersModal";
+// common components
+import withStorage from "../components/hoc/withStorage";
 // actions
 import { closeModal } from "../actions/modalActions";
 
-const ModalManager = ({ modalType, data, closeModal }) => {
-  const viewUser = match => {
-    console.log(match);
+// Modal Manager
+const ComponentNeedingStorage = ({
+  modalType,
+  data,
+  closeModal,
+  history,
+  save
+}) => {
+  const viewUser = matched => {
+    save("matchedUser", JSON.stringify(matched));
+    history.push("/matchedList");
     closeModal();
   };
 
@@ -20,6 +31,8 @@ const ModalManager = ({ modalType, data, closeModal }) => {
   );
 };
 
+const ModalManager = withStorage(ComponentNeedingStorage);
+
 const mapStateToProps = ({ modal }) => ({
   modalType: modal.modalType,
   data: modal.data
@@ -28,4 +41,4 @@ const mapStateToProps = ({ modal }) => ({
 export default connect(
   mapStateToProps,
   { closeModal }
-)(ModalManager);
+)(withRouter(ModalManager));

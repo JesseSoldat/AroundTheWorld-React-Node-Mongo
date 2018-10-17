@@ -1,7 +1,13 @@
 import React from "react";
 
-const Accordion = ({ data, children }) => {
-  const { title1, title2, title3, cardBody1 } = data;
+const Accordion = ({
+  data,
+  accordionTop,
+  accordionMiddle,
+  accordionBottom
+}) => {
+  const { title1, title2, title3 } = data;
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="card">
@@ -25,9 +31,7 @@ const Accordion = ({ data, children }) => {
           aria-labelledby="headingOne"
           data-parent="#accordionExample"
         >
-          <div className="card-body">
-            <p>{cardBody1}</p>
-          </div>
+          <div className="card-body">{accordionTop}</div>
         </div>
       </div>
       <div className="card">
@@ -51,7 +55,7 @@ const Accordion = ({ data, children }) => {
           aria-labelledby="headingTwo"
           data-parent="#accordionExample"
         >
-          <div className="card-body">{children}</div>
+          <div className="card-body">{accordionMiddle}</div>
         </div>
       </div>
       <div className="card">
@@ -75,7 +79,7 @@ const Accordion = ({ data, children }) => {
           aria-labelledby="headingThree"
           data-parent="#accordionExample"
         >
-          <div className="card-body">Anim pariatur cliche reprehenderit</div>
+          <div className="card-body">{accordionBottom}</div>
         </div>
       </div>
     </div>

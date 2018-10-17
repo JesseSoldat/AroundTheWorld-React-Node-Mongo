@@ -6,9 +6,15 @@ import Spinner from "../../../components/Spinner";
 import Accordion from "../../../components/Accordion";
 // custom components
 import StaticMap from "../../map/StaticMap";
-
+import MatchedUserImages from "./components/MatchedUserImages";
+// utils
+import checkFriendStatus from "../../../utils/checkFriendStatus";
 // actions
 import { startGetMatchedStoryDetails } from "../../../actions/storyActions";
+import {
+  startSendFriendRequest,
+  startAcceptFriendRequest
+} from "../../../actions/friendActions";
 
 class MatchedDetails extends Component {
   componentDidMount() {
@@ -16,31 +22,67 @@ class MatchedDetails extends Component {
     this.props.startGetMatchedStoryDetails(storyId);
   }
 
+  // format data to pass to children
   formatAccordionData = matchedDetails => {
-    console.log(matchedDetails);
-
     const data = {
       title1: "Story",
       title2: "Map",
       title3: "Photos",
-      cardBody1: matchedDetails.description,
+      matchedUserId: matchedDetails.user._id,
+      description: matchedDetails.description,
       coordinates: matchedDetails.geometry.coordinates
     };
 
     return data;
   };
 
+  // cb & events
+  sendRequest = () => {
+    const { userId, matchedDetails, startSendFriendRequest } = this.props;
+    const matchedUserId = matchedDetails.user._id;
+    startSendFriendRequest(userId, matchedUserId);
+  };
+
+  acceptRequest = () => {
+    const { userId, matchedDetails, startAcceptFriendRequest } = this.props;
+    const matchedUserId = matchedDetails.user._id;
+    startAcceptFriendRequest(userId, matchedUserId);
+  };
+
   render() {
-    const { loading, matchedDetails } = this.props;
+    const {
+      loading,
+      userId,
+      matchedDetails,
+      friends,
+      friendRequests
+    } = this.props;
     let content;
 
     if (loading) content = <Spinner />;
     else if (matchedDetails) {
       const data = this.formatAccordionData(matchedDetails);
+
+      const status = checkFriendStatus({
+        userId,
+        matchedUserId: data.matchedUserId,
+        friends,
+        friendRequests
+      });
+
       content = (
-        <Accordion data={data}>
-          <StaticMap coordinates={data.coordinates} />{" "}
-        </Accordion>
+        <Accordion
+          data={data}
+          accordionTop={<p>{data.description}</p>}
+          accordionMiddle={<StaticMap coordinates={data.coordinates} />}
+          accordionBottom={
+            <MatchedUserImages
+              status={status}
+              sendRequest={this.sendRequest}
+              acceptRequest={this.acceptRequest}
+            />
+          }
+        />
       );
     }
 
@@ -55,14 +97,19 @@ class MatchedDetails extends Component {
   }
 }
 
-const mapStateToProps = ({ async, story, friend }) => ({
+const mapStateToProps = ({ async, story, friend, auth }) => ({
   loading: async.loading,
   matchedDetails: story.matchedDetails,
   friendRequests: friend.friendRequests,
-  friends: friend.friends
+  friends: friend.friends,
+  userId: auth._id
 });
 
 export default connect(
   mapStateToProps,
-  { startGetMatchedStoryDetails }
+  {
+    startGetMatchedStoryDetails,
+    startSendFriendRequest,
+    startAcceptFriendRequest
+  }
 )(MatchedDetails);

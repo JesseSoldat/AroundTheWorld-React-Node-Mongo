@@ -16,6 +16,8 @@ const logoutUser = dispatch => {
 };
 
 const errorHandling = (dispatch, err, method, target) => {
+  console.log("ERR:", err);
+
   if (err && err.response) {
     const { data } = err.response;
 

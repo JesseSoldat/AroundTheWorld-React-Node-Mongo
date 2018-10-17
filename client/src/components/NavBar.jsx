@@ -20,7 +20,7 @@ class NavBar extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.userId !== prevProps.userId) {
-      console.log("NAV: componentDidUpdate userId", this.props.userId);
+      this.props.startGetFriendRequests(this.props.userId);
     }
   }
 

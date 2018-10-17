@@ -13,7 +13,7 @@ const PrivateRoute = ({ isAuth, component: Component, ...rest }) => {
             <div className="spacer200" />
           </div>
         ) : (
-          <Redirect to="login" />
+          <Redirect to="/login" />
         )
       }
     />

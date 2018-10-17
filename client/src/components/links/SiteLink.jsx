@@ -8,7 +8,7 @@ const SiteLink = ({ text, url = null, linkCss = null, icon = null }) => {
   const createIcon = () => <i className={`fa ${icon} mr-2`} />;
 
   return (
-    <Link className={linkCss} to={linkUrl}>
+    <Link className={linkCss} to={linkUrl} style={{ color: "black" }}>
       {icon && createIcon()}
       {text}
     </Link>

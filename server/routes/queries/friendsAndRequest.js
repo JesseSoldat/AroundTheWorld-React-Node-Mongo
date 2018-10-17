@@ -20,4 +20,15 @@ const queryFriendRequests = userId => {
     });
 };
 
-module.exports = { queryFriends, queryFriendRequests };
+const queryReceivedFriendRequest = (userId, friendId) => {
+  return FriendRequest.findOne({
+    requester: friendId,
+    recipient: userId
+  });
+};
+
+module.exports = {
+  queryFriends,
+  queryFriendRequests,
+  queryReceivedFriendRequest
+};

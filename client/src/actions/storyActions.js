@@ -17,6 +17,9 @@ export const CREATE_STORY = "CREATE_STORY";
 // matched user
 export const MATCHED_STORIES_REQUESTED = "MATCHED_STORIES_REQUESTED";
 export const MATCHED_STORIES_LOADED = "MATCHED_STORIES_LOADED";
+export const MATCHED_STORIES_DETAILS_REQUESTED =
+  "MATCHED_STORIES_DETAILS_REQUESTED";
+export const MATCHED_STORIES_DETAILS_LOADED = "MATCHED_STORIES_DETAILS_LOADED";
 
 // Get Stories
 export const getStories = ({ stories }) => ({
@@ -25,9 +28,10 @@ export const getStories = ({ stories }) => ({
 });
 
 export const startGetStories = () => async (dispatch, getState) => {
-  dispatch({ type: STORIES_REQUESTED });
-  dispatch(asyncActionStart());
   try {
+    dispatch(asyncActionStart());
+    dispatch({ type: STORIES_REQUESTED });
+
     const userId = getState().auth._id;
 
     const res = await axios.get(`/api/story/${userId}`);
@@ -51,14 +55,14 @@ export const startCreateStory = (newStory, history) => async (
   dispatch,
   getState
 ) => {
-  dispatch(asyncActionStart());
   try {
+    dispatch(asyncActionStart());
+
     const userId = getState().auth._id;
 
     const res = await axios.post(`/api/story/add/${userId}`, newStory);
 
     const { msg, payload } = res.data;
-    console.log(payload);
 
     toastr.success("Success", msg);
 
@@ -93,13 +97,15 @@ export const startMatchWithOthers = matchQuery => async (
 };
 
 export const getMatchedStoryDetails = ({ story }) => ({
-  type: MATCHED_STORIES_LOADED,
+  type: MATCHED_STORIES_DETAILS_LOADED,
   matchedDetails: story
 });
 
 export const startGetMatchedStoryDetails = storyId => async dispatch => {
   try {
-    dispatch({ type: MATCHED_STORIES_REQUESTED });
+    dispatch(asyncActionStart());
+    dispatch({ type: MATCHED_STORIES_DETAILS_REQUESTED });
+
     const res = await axios.get(`/api/story/details/${storyId}`);
 
     const { payload } = res.data;

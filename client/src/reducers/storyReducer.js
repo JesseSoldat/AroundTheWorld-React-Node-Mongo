@@ -1,7 +1,7 @@
 const {
   STORIES_LOADED,
   CREATE_STORY,
-  MATCHED_STORIES_LOADED
+  MATCHED_STORIES_DETAILS_LOADED
 } = require("../actions/storyActions");
 
 const initialState = {
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
     case CREATE_STORY:
       return { ...state, stories: null };
 
-    case MATCHED_STORIES_LOADED:
+    case MATCHED_STORIES_DETAILS_LOADED:
       return { ...state, matchedDetails };
 
     default:

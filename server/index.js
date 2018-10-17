@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 
 require("./routes/auth")(app);
 require("./routes/story")(app);
+require("./routes/friend")(app);
 
 if (process.env.NODE_ENV === "production") {
   // express will serve up production assets (main.js or main.css)

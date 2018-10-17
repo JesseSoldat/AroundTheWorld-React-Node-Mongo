@@ -35,10 +35,10 @@ const withStorage = WrappedComponent => {
     render() {
       return (
         <WrappedComponent
+          {...this.props}
           load={this.load}
           save={this.save}
           remove={this.remove}
-          {...this.props}
         />
       );
     }

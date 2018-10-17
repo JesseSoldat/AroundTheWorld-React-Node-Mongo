@@ -4,6 +4,7 @@ import PrivateRoute from "../PrivateRoute";
 import CreateStory from "../../pages/story/form/CreateStory";
 import StoryList from "../../pages/story/list/StoryList";
 import MatchedList from "../../pages/story/matchedList/MatchedList";
+import MatchedDetails from "../../pages/story/matchedDetails/MatchedDetails";
 
 const StoryRoutes = [
   <PrivateRoute
@@ -22,6 +23,12 @@ const StoryRoutes = [
     key="matchedList"
     path="/matchedList"
     component={MatchedList}
+    exact
+  />,
+  <PrivateRoute
+    key="matchedDetails"
+    path="/matchedDetails/:storyId"
+    component={MatchedDetails}
     exact
   />
 ];

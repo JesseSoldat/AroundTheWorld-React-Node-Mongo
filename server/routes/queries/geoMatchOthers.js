@@ -40,7 +40,8 @@ const geoMatchWithGroupAndSort = (lng, lat, maxDistance, user) =>
         "userInfo._id": 1,
         "stories.title": 1,
         "stories.description": 1,
-        "stories.geometry": 1
+        "stories.geometry": 1,
+        "stories._id": 1
       }
     }
   ]);

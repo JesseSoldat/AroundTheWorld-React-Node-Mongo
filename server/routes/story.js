@@ -31,6 +31,23 @@ module.exports = app => {
     }
   });
 
+  // get a single story details
+  app.get("/api/story/details/:storyId", isAuth, async (req, res) => {
+    try {
+      const { storyId } = req.params;
+      const story = await Story.findById(storyId).populate({
+        path: "user",
+        select: ["email", "username"]
+      });
+
+      serverRes(res, 200, null, { story });
+    } catch (err) {
+      console.log("Err: Fetch Story", err);
+      const msg = getErrMsg("err", "fetch", "story");
+      serverRes(res, 400, msg, null);
+    }
+  });
+
   // create story
   app.post("/api/story/add/:userId", isAuth, async (req, res) => {
     try {
@@ -55,6 +72,7 @@ module.exports = app => {
     }
   });
 
+  // find users with stories close to your story
   app.get("/api/story/match/:userId", isAuth, async (req, res) => {
     try {
       const { userId } = req.params;

@@ -10,9 +10,13 @@ import {
 } from "./asyncActions";
 import { openModal } from "./modalActions";
 // types
+// user
 export const STORIES_REQUESTED = "STORIES_REQUESTED";
 export const STORIES_LOADED = "STORIES_LOADED";
 export const CREATE_STORY = "CREATE_STORY";
+// matched user
+export const MATCHED_STORIES_REQUESTED = "MATCHED_STORIES_REQUESTED";
+export const MATCHED_STORIES_LOADED = "MATCHED_STORIES_LOADED";
 
 // Get Stories
 export const getStories = ({ stories }) => ({
@@ -21,6 +25,7 @@ export const getStories = ({ stories }) => ({
 });
 
 export const startGetStories = () => async (dispatch, getState) => {
+  dispatch({ type: STORIES_REQUESTED });
   dispatch(asyncActionStart());
   try {
     const userId = getState().auth._id;
@@ -84,5 +89,25 @@ export const startMatchWithOthers = matchQuery => async (
     dispatch(openModal({ modalType: "matchUser", data: payload.match }));
   } catch (err) {
     errorHandling(dispatch, err, "match", "others");
+  }
+};
+
+export const getMatchedStoryDetails = ({ story }) => ({
+  type: MATCHED_STORIES_LOADED,
+  matchedDetails: story
+});
+
+export const startGetMatchedStoryDetails = storyId => async dispatch => {
+  try {
+    dispatch({ type: MATCHED_STORIES_REQUESTED });
+    const res = await axios.get(`/api/story/details/${storyId}`);
+
+    const { payload } = res.data;
+
+    dispatch(getMatchedStoryDetails(payload));
+    dispatch(asyncActionFinish());
+  } catch (err) {
+    errorHandling(dispatch, err, "get", "story");
+    dispatch(asyncActionError());
   }
 };

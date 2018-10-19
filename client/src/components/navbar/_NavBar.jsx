@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import jLogo from "../_images/jLogo.png";
+import jLogo from "../../_images/jLogo.png";
 // common components
-import SiteLink from "./links/SiteLink";
+import SiteLink from "../links/SiteLink";
+// custom components
+import FriendsRequestBtnGroup from "./FriendsRequestBtnGroup";
 // actions
-import { startLogout } from "../actions/authActions";
-import { startGetFriendRequests } from "../actions/friendActions";
+import { startLogout } from "../../actions/authActions";
+import { startGetFriendRequests } from "../../actions/friendActions";
 // css
 import "./NavBar.module.css";
+
+// responsive css for all of the navbar links
+const navLinkClass = "nav-item mr-2 py-2 my-md-0 py-md-0";
 
 class NavBar extends Component {
   componentDidMount() {
@@ -29,20 +34,20 @@ class NavBar extends Component {
     this.props.startLogout();
   };
 
-  render() {
-    const { isAuth } = this.props;
-
-    const brand = (
-      <Link className="navbar-brand " to={isAuth ? "/dashboard" : "/"}>
+  getBrand = () => {
+    return (
+      <Link
+        className="navbar-brand "
+        to={this.props.isAuth ? "/dashboard" : "/"}
+      >
         <img className="logo" src={jLogo} />
         <span>Around The World</span>
       </Link>
     );
+  };
 
-    // responsive css for all of the navbar links
-    const navLinkClass = "nav-item mr-2 py-2 my-md-0 py-md-0";
-
-    const publicRoutes = (
+  getPublicRoutes = () => {
+    return (
       <ul className="navbar-nav ml-auto">
         <li className={`${navLinkClass} mt-2 mt-md-0`}>
           <SiteLink text="Login" icon="fa-sign-in-alt" />
@@ -52,9 +57,12 @@ class NavBar extends Component {
         </li>
       </ul>
     );
+  };
 
-    const privateRoutes = (
+  getPrivateRoutes = () => {
+    return (
       <ul className="navbar-nav ml-auto">
+        <FriendsRequestBtnGroup />
         <li className={navLinkClass}>
           <a onClick={e => this.onStartLogout(e)}>
             <i className="fas fa-sign-out-alt mr-2" />
@@ -63,10 +71,13 @@ class NavBar extends Component {
         </li>
       </ul>
     );
+  };
 
+  render() {
+    const { isAuth } = this.props;
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-dark site-navbar">
-        {brand}
+        {this.getBrand()}
         <button
           className="navbar-toggler"
           type="button"
@@ -77,7 +88,7 @@ class NavBar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="mobile">
           <ul className="navbar-nav mr-auto" />
-          {isAuth ? privateRoutes : publicRoutes}
+          {isAuth ? this.getPrivateRoutes() : this.getPublicRoutes()}
         </div>
       </nav>
     );

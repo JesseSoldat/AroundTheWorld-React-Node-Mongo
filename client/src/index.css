@@ -5,6 +5,14 @@ body {
   font-family: "Roboto", sans-serif;
   background: url(./_images/pattern.png) repeat;
 }
+
+.cursorAllowed {
+  cursor: pointer !important;
+}
+
+.cursorNotAllowed {
+  cursor: not-allowed !important;
+}
 /* --------------------components---------------------- */
 /* navbar */
 .site-navbar {

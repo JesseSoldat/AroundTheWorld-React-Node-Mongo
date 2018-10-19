@@ -79,14 +79,24 @@ class NavBar extends Component {
       <ul className="navbar-nav ml-auto">
         <ShowHide size={"sm"}>
           <FriendsRequestListItem
-            numberOfRequests={0}
+            numberOfRequests={numberOfRequests}
             viewFriends={this.viewFriends}
             acceptFriendRequest={this.acceptFriendRequest}
           />
+        </ShowHide>
 
+        <li className={navLinkClass}>
+          <SiteLink text="MapIt" icon="fas fa-map" />
+        </li>
+
+        <li className={navLinkClass}>
+          <SiteLink text="Stories" icon="fas fa-atlas" />
+        </li>
+
+        <ShowHide size={"sm"}>
           <li className="nav-item">
             <a onClick={e => this.onStartLogout(e)}>
-              <i className="fas fa-sign-out-alt my-3 mr-2" />
+              <i className="fas fa-sign-out-alt py-2 mr-2" />
               Logout
             </a>
           </li>
@@ -94,7 +104,7 @@ class NavBar extends Component {
 
         <ShowHide size={"md"}>
           <FriendsRequestBtnGroup
-            numberOfRequests={0}
+            numberOfRequests={numberOfRequests}
             viewFriends={this.viewFriends}
             acceptFriendRequest={this.acceptFriendRequest}
             logout={this.onStartLogout}

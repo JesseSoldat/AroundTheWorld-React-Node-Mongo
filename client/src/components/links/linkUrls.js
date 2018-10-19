@@ -1,6 +1,8 @@
 const linkUrls = {
   Login: "/login",
-  Register: "/register"
+  Register: "/register",
+  MapIt: "/map",
+  Stories: "/storyList"
 };
 
 const getLinkUrls = key => {

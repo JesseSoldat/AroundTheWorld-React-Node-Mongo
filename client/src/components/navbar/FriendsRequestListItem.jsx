@@ -10,7 +10,7 @@ const FriendsRequestListItem = ({ numberOfRequests, acceptFriendRequest }) => {
   return [
     <li
       key="friendRequest"
-      className={`nav-item ${liClass} mt-3`}
+      className={`nav-item ${liClass} py-2 mt-2`}
       disabled={disabled}
       onClick={disabled ? () => {} : acceptFriendRequest}
     >
@@ -22,7 +22,7 @@ const FriendsRequestListItem = ({ numberOfRequests, acceptFriendRequest }) => {
         </span>
       </a>
     </li>,
-    <li key="viewFriends" className="nav-item mt-3">
+    <li key="viewFriends" className="nav-item py-2">
       <a>
         <i className="fas fa-user-friends mr-2" />
         <span>View Friends</span>{" "}

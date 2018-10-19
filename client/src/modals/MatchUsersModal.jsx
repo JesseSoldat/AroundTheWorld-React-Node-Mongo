@@ -25,9 +25,10 @@ const MatchUsersModal = ({ data, onHide, viewUser }) => {
                       {match.length === 1 ? "story " : "stories "} found near
                       your location.{" "}
                     </span>
-
+                    <br />
                     <a
-                      style={{ color: "blue", pointer: "hover" }}
+                      className="cursorAllowed"
+                      style={{ color: "blue" }}
                       onClick={() => viewUser(match)}
                     >
                       Check out their stories.

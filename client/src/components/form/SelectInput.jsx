@@ -1,6 +1,6 @@
 import React from "react";
 
-const SelectInput = ({ input, options, label, defaultText }) => {
+const SelectInput = ({ input, options, label, defaultValue = null }) => {
   return (
     <div className="form-group mr-3">
       <label>{label}</label>
@@ -9,7 +9,7 @@ const SelectInput = ({ input, options, label, defaultText }) => {
         onChange={e => input.onChange(e)}
         name="distance"
       >
-        <option value={""}>{defaultText}</option>
+        {defaultValue && <option value={""}>{defaultValue}</option>}
         {options &&
           options.map(o => (
             <option key={o} value={o}>

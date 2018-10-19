@@ -17,9 +17,7 @@ const ListCard = ({
 }) => {
   const { title, description, geometry } = story;
 
-  const matchOthers = values => {
-    tryToMatchOthers(story, values);
-  };
+  const matchOthers = values => tryToMatchOthers(story, values);
 
   return (
     <div className="card my-4">
@@ -36,7 +34,7 @@ const ListCard = ({
                 label="Select Distance:"
                 options={distances}
                 component={SelectInput}
-                defaultText="Select a distance"
+                defaultValue="Select a distance"
               />
 
               <div className="radioGroup form-group">
@@ -58,14 +56,14 @@ const ListCard = ({
               </div>
 
               <button
-                disabled={invalid || submitting}
+                disabled={invalid | submitting}
                 type="submit"
                 className="showSmBtn btn btn-primary"
               >
                 Match Others
               </button>
               <button
-                disabled={invalid || submitting}
+                disabled={invalid | submitting}
                 type="submit"
                 className="showLgBtn btn btn-primary btn-block"
               >
@@ -88,4 +86,8 @@ const validate = combineValidators({
   distanceType: isRequired({ message: "Please select a distance type" })
 });
 
-export default reduxForm({ form: "matchUsersForm", validate })(ListCard);
+export default reduxForm({
+  form: "matchUsersForm",
+  validate,
+  initialValues: { distanceType: "miles" }
+})(ListCard);

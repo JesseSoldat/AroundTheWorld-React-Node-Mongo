@@ -2,8 +2,17 @@ import React, { Component } from "react";
 // custom components
 import SendFriendRequest from "./SendFriendRequest";
 import ReceivedFriendRequest from "./ReceivedFriendRequest";
+import ImageList from "./ImageList";
 
 class MatchedUserImages extends Component {
+  renderFriendImages = () => {
+    const { images } = this.props;
+    if (!images.length)
+      return <p>This story does not have any photos associated with it.</p>;
+
+    return <ImageList images={images} />;
+  };
+
   render() {
     const { status, sendRequest, acceptRequest } = this.props;
     let content;
@@ -27,7 +36,7 @@ class MatchedUserImages extends Component {
         break;
 
       case "isFriend":
-        content = <p>You are friends!</p>;
+        content = this.renderFriendImages();
         break;
 
       default:

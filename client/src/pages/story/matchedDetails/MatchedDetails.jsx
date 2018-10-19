@@ -78,6 +78,7 @@ class MatchedDetails extends Component {
           accordionBottom={
             <MatchedUserImages
               status={status}
+              images={matchedDetails.images}
               sendRequest={this.sendRequest}
               acceptRequest={this.acceptRequest}
             />

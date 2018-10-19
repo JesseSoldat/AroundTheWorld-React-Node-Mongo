@@ -14,14 +14,17 @@ import { openModal } from "./modalActions";
 export const STORIES_REQUESTED = "STORIES_REQUESTED";
 export const STORIES_LOADED = "STORIES_LOADED";
 export const CREATE_STORY = "CREATE_STORY";
+export const STORY_DETAILS_REQUESTED = "STORY_DETAILS_REQUESTED";
+export const STORY_DETAILS_LOADED = "STORY_DETAILS_LOADED";
+
 // matched user
 export const MATCHED_STORIES_REQUESTED = "MATCHED_STORIES_REQUESTED";
 export const MATCHED_STORIES_LOADED = "MATCHED_STORIES_LOADED";
-export const MATCHED_STORIES_DETAILS_REQUESTED =
-  "MATCHED_STORIES_DETAILS_REQUESTED";
-export const MATCHED_STORIES_DETAILS_LOADED = "MATCHED_STORIES_DETAILS_LOADED";
+export const MATCHED_STORY_DETAILS_REQUESTED =
+  "MATCHED_STORY_DETAILS_REQUESTED";
+export const MATCHED_STORY_DETAILS_LOADED = "MATCHED_STORY_DETAILS_LOADED";
 
-// Get Stories
+// get stories
 export const getStories = ({ stories }) => ({
   type: STORIES_LOADED,
   stories
@@ -46,7 +49,29 @@ export const startGetStories = () => async (dispatch, getState) => {
   }
 };
 
-// Create Story
+// get story details
+export const getStoryDetails = ({ story }) => ({
+  type: STORY_DETAILS_LOADED,
+  details: story
+});
+
+export const startGetStoryDetails = storyId => async dispatch => {
+  try {
+    dispatch(asyncActionStart());
+    dispatch({ type: STORY_DETAILS_REQUESTED });
+
+    const res = await axios.get(`/api/story/details/${storyId}`);
+
+    const { payload } = res.data;
+
+    dispatch(getStoryDetails(payload));
+    dispatch(asyncActionFinish());
+  } catch (err) {
+    errorHandling(dispatch, err, "get", "story");
+    dispatch(asyncActionError());
+  }
+};
+// create story
 export const createStory = () => ({
   type: CREATE_STORY
 });
@@ -73,7 +98,7 @@ export const startCreateStory = (newStory, history) => async (
   }
 };
 
-// Match with Other Peoples Stories
+// match with Other peoples stories
 export const startMatchWithOthers = matchQuery => async (
   dispatch,
   getState
@@ -97,14 +122,14 @@ export const startMatchWithOthers = matchQuery => async (
 };
 
 export const getMatchedStoryDetails = ({ story }) => ({
-  type: MATCHED_STORIES_DETAILS_LOADED,
+  type: MATCHED_STORY_DETAILS_LOADED,
   matchedDetails: story
 });
 
 export const startGetMatchedStoryDetails = storyId => async dispatch => {
   try {
     dispatch(asyncActionStart());
-    dispatch({ type: MATCHED_STORIES_DETAILS_REQUESTED });
+    dispatch({ type: MATCHED_STORY_DETAILS_REQUESTED });
 
     const res = await axios.get(`/api/story/details/${storyId}`);
 

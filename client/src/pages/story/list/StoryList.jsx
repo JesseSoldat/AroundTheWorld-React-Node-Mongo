@@ -51,6 +51,7 @@ class StoryList extends Component {
                 story={story}
                 distances={this.state.distances}
                 tryToMatchOthers={this.tryToMatchOthers}
+                isCurrentUser={true}
               />
             ))}
           </div>

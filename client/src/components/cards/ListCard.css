@@ -1,0 +1,22 @@
+.form-group > label {
+  margin-right: 10px;
+}
+
+/* right */
+.cardImg > img {
+  float: right;
+}
+
+/* from large break-point */
+@media (max-width: 1199.98px) {
+}
+
+/* from medium break-point */
+@media (max-width: 991.98px) {
+  .cardImg {
+    margin-top: 10px;
+  }
+  .cardImg > img {
+    float: none;
+  }
+}

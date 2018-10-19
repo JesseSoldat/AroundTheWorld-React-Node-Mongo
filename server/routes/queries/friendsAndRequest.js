@@ -2,7 +2,14 @@
 const FriendRequest = require("../../models/friend");
 const User = require("../../models/user");
 
-const queryFriends = userId => {
+const queryAllFriends = userId => {
+  return User.findById(userId, { _id: 1 }).populate({
+    path: "friends",
+    select: ["username", "email"]
+  });
+};
+
+const queryFriendIds = userId => {
   return User.findById(userId, { friends: 1, _id: 0 });
 };
 
@@ -28,7 +35,8 @@ const queryReceivedFriendRequest = (userId, friendId) => {
 };
 
 module.exports = {
-  queryFriends,
+  queryAllFriends,
+  queryFriendIds,
   queryFriendRequests,
   queryReceivedFriendRequest
 };

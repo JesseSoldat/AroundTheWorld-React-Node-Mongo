@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import jLogo from "../../_images/jLogo.png";
 // common components
 import SiteLink from "../links/SiteLink";
@@ -36,10 +36,12 @@ class NavBar extends Component {
   }
 
   // cbs and events
-  viewFriends = () => {};
+  viewFriends = () => {
+    this.props.history.push("/friends");
+  };
 
   acceptFriendRequest = () => {
-    console.log("friend");
+    // display a modal with request
   };
 
   onStartLogout = e => {
@@ -85,11 +87,11 @@ class NavBar extends Component {
           />
         </ShowHide>
 
-        <li className={navLinkClass}>
+        <li className={`${navLinkClass} mr-3`}>
           <SiteLink text="MapIt" icon="fas fa-map" />
         </li>
 
-        <li className={navLinkClass}>
+        <li className={`${navLinkClass} mr-3`}>
           <SiteLink text="Stories" icon="fas fa-atlas" />
         </li>
 
@@ -150,4 +152,4 @@ const mapStateToProps = ({ auth, friend }) => {
 export default connect(
   mapStateToProps,
   { startLogout, startGetFriendRequests }
-)(NavBar);
+)(withRouter(NavBar));

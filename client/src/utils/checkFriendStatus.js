@@ -1,7 +1,7 @@
 const checkFriendStatus = ({
   userId = "",
   matchedUserId = "",
-  friends = [],
+  friendIds = [],
   friendRequests = []
 }) => {
   // console.log("userId", userId);
@@ -11,7 +11,7 @@ const checkFriendStatus = ({
   let status = "unknown";
 
   // check if they are friends
-  friends.forEach(friendId => {
+  friendIds.forEach(friendId => {
     if (matchedUserId === friendId) {
       return (status = "isFriend");
     }

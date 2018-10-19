@@ -1,6 +1,10 @@
 import React from "react";
 
-const FriendsRequestListItem = ({ numberOfRequests, acceptFriendRequest }) => {
+const FriendsRequestListItem = ({
+  numberOfRequests,
+  viewFriends,
+  acceptFriendRequest
+}) => {
   const liClass = numberOfRequests
     ? "cursorAllowed"
     : "text-muted cursorNotAllowed";
@@ -22,7 +26,7 @@ const FriendsRequestListItem = ({ numberOfRequests, acceptFriendRequest }) => {
         </span>
       </a>
     </li>,
-    <li key="viewFriends" className="nav-item py-2">
+    <li key="viewFriends" className="nav-item py-2" onClick={viewFriends}>
       <a>
         <i className="fas fa-user-friends mr-2" />
         <span>View Friends</span>{" "}

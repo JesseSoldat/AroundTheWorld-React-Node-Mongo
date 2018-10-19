@@ -47,7 +47,7 @@ const FriendsRequestBtnGroup = ({
 
   return (
     <div className="friendBtnGroup">
-      <div className="btn-group mx-3">
+      <div className="btn-group mr-3">
         {getMenuBtn()}
         <div className="dropdown-menu dropdown-menu-right">
           {getMenuLinkBtn()}

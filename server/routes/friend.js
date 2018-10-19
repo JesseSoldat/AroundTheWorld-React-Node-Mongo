@@ -7,22 +7,38 @@ const isAuth = require("../middleware/isAuth");
 const { serverRes, getErrMsg } = require("../utils/serverRes");
 // queries
 const {
-  queryFriends,
+  queryAllFriends,
+  queryFriendIds,
   queryFriendRequests,
   queryReceivedFriendRequest
 } = require("./queries/friendsAndRequest");
 
 module.exports = app => {
+  // get all friends
+  app.get("/api/friends/:userId", isAuth, async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const friends = await queryAllFriends(userId);
+      console.log(friends);
+
+      serverRes(res, 200, null, { friends: friends.friends });
+    } catch (err) {
+      console.log("Err: Get Friends", err);
+      const msg = getErrMsg("err", "fetch", "friends");
+      serverRes(res, 400, msg, null);
+    }
+  });
+
   // get all friends request sent or received
   app.get("/api/friend/request/:userId", isAuth, async (req, res) => {
     try {
       const { userId } = req.params;
       const [friends, friendRequests] = await Promise.all([
-        queryFriends(userId),
+        queryFriendIds(userId),
         queryFriendRequests(userId)
       ]);
 
-      serverRes(res, 200, null, { friends: friends.friends, friendRequests });
+      serverRes(res, 200, null, { friendIds: friends.friends, friendRequests });
     } catch (err) {
       console.log("Err: Get Friend Requests", err);
       const msg = getErrMsg("err", "fetch", "friend request");

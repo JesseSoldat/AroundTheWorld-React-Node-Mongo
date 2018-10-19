@@ -9,6 +9,10 @@ import {
   asyncActionError
 } from "./asyncActions";
 // types
+// friends
+export const GET_FRIENDS_REQUESTED = "GET_FRIENDS_REQUESTED";
+export const GET_FRIENDS_LOADED = "GET_FRIENDS_LOADED";
+// friend request
 export const FRIEND_REQUESTS_REQUESTED = "FRIEND_REQUESTS_REQUESTED";
 export const FRIEND_REQUESTS_LOADED = "FRIEND_REQUESTS_LOADED";
 export const FRIEND_REQUEST_STARTED = "FRIEND_REQUEST_STARTED";
@@ -16,10 +20,36 @@ export const FRIEND_REQUEST_FINISHED = "FRIEND_REQUEST_FINISHED";
 export const ACCEPT_FRIEND_REQUEST_STARTED = "ACCEPT_FRIEND_REQUEST_STARTED";
 export const ACCEPT_FRIEND_REQUEST_FINISHED = "ACCEPT_FRIEND_REQUEST_FINISHED";
 
+// get friends
+export const getFriends = ({ friends }) => ({
+  type: GET_FRIENDS_LOADED,
+  friends
+});
+
+export const startGetFriends = userId => async dispatch => {
+  try {
+    dispatch(asyncActionStart());
+    dispatch({ type: GET_FRIENDS_REQUESTED });
+
+    const res = await axios.get(`api/friends/${userId}`);
+
+    const { payload } = res.data;
+
+    console.log(payload);
+
+    dispatch(getFriends(payload));
+    dispatch(asyncActionFinish());
+  } catch (err) {
+    errorHandling(dispatch, err, "get", "friends");
+    dispatch(asyncActionError());
+  }
+};
+
+// --------------- friend requests ----------------------
 // get friends and friend request
-export const getFriendRequests = ({ friends, friendRequests }) => ({
+export const getFriendRequests = ({ friendIds, friendRequests }) => ({
   type: FRIEND_REQUESTS_LOADED,
-  friends,
+  friendIds,
   friendRequests
 });
 
@@ -47,25 +77,23 @@ export const sendFriendRequest = ({ friendRequest }) => ({
 });
 
 export const startSendFriendRequest = (userId, friendId) => async dispatch => {
-  {
-    try {
-      dispatch(asyncActionStart());
-      dispatch({ type: FRIEND_REQUEST_STARTED });
+  try {
+    dispatch(asyncActionStart());
+    dispatch({ type: FRIEND_REQUEST_STARTED });
 
-      const res = await axios.post("/api/friend/request", { userId, friendId });
+    const res = await axios.post("/api/friend/request", { userId, friendId });
 
-      const { msg, payload } = res.data;
+    const { msg, payload } = res.data;
 
-      console.log(payload);
+    console.log(payload);
 
-      toastr.success("Success", msg);
+    toastr.success("Success", msg);
 
-      dispatch(sendFriendRequest(payload));
-      dispatch(asyncActionFinish());
-    } catch (err) {
-      errorHandling(dispatch, err, "send", "friend request");
-      dispatch(asyncActionError());
-    }
+    dispatch(sendFriendRequest(payload));
+    dispatch(asyncActionFinish());
+  } catch (err) {
+    errorHandling(dispatch, err, "send", "friend request");
+    dispatch(asyncActionError());
   }
 };
 

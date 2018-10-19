@@ -54,7 +54,7 @@ class MatchedDetails extends Component {
       loading,
       userId,
       matchedDetails,
-      friends,
+      friendIds,
       friendRequests
     } = this.props;
     let content;
@@ -66,7 +66,7 @@ class MatchedDetails extends Component {
       const status = checkFriendStatus({
         userId,
         matchedUserId: data.matchedUserId,
-        friends,
+        friendIds,
         friendRequests
       });
 
@@ -101,7 +101,7 @@ const mapStateToProps = ({ async, story, friend, auth }) => ({
   loading: async.loading,
   matchedDetails: story.matchedDetails,
   friendRequests: friend.friendRequests,
-  friends: friend.friends,
+  friendIds: friend.friendIds,
   userId: auth._id
 });
 

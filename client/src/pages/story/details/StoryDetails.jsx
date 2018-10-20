@@ -28,6 +28,11 @@ class StoryDetails extends Component {
     return data;
   };
 
+  addPhotos = () => {
+    console.log("add photos");
+    this.props.history.push("/uploadPhotos");
+  };
+
   render() {
     const { loading, details } = this.props;
 
@@ -42,7 +47,11 @@ class StoryDetails extends Component {
           data={data}
           accordionTop={<p>{data.description}</p>}
           accordionMiddle={<StaticMap coordinates={data.coordinates} />}
-          accordionBottom={<div />}
+          accordionBottom={
+            <div>
+              <button onClick={this.addPhotos}>Add Photos</button>
+            </div>
+          }
         />
       );
     }

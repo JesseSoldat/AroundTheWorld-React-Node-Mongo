@@ -8,12 +8,14 @@ import ViewImageModal from "./ViewImageModal";
 import withStorage from "../components/hoc/withStorage";
 // actions
 import { closeModal } from "../actions/modalActions";
+import { startDeleteImageFromStory } from "../actions/imageActions";
 
 // Modal Manager
 const ComponentNeedingStorage = ({
   modalType,
   data,
   closeModal,
+  startDeleteImageFromStory,
   history,
   save
 }) => {
@@ -25,6 +27,7 @@ const ComponentNeedingStorage = ({
   };
 
   // viewPhoto
+  const deleteImgFromStory = img => startDeleteImageFromStory(img);
 
   return (
     <span>
@@ -32,7 +35,11 @@ const ComponentNeedingStorage = ({
         <MatchUsersModal data={data} onHide={closeModal} viewUser={viewUser} />
       )}
       {modalType === "viewPhoto" && (
-        <ViewImageModal data={data} onHide={closeModal} />
+        <ViewImageModal
+          data={data}
+          onHide={closeModal}
+          deleteImgFromStory={deleteImgFromStory}
+        />
       )}
     </span>
   );
@@ -47,5 +54,5 @@ const mapStateToProps = ({ modal }) => ({
 
 export default connect(
   mapStateToProps,
-  { closeModal }
+  { closeModal, startDeleteImageFromStory }
 )(withRouter(ModalManager));

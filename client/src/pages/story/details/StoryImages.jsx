@@ -16,7 +16,7 @@ const StoryImages = ({ images, addPhotos, viewLargePhotoModal }) => {
         {images.map(img => (
           <div
             key={img._id}
-            className="col-xs-4 col-md-3 col-lg-2 m-2"
+            className="cursorAllowed col-xs-4 col-md-3 col-lg-2 m-2"
             onClick={onViewLargePhotoModal(img)}
           >
             <img className="img-fluid" src={img.downloadURL} />

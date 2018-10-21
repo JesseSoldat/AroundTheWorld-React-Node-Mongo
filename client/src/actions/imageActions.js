@@ -14,14 +14,17 @@ import {
 // types
 export const UPLOAD_STORY_IMG_STARTED = "UPLOAD_STORY_IMG_STARTED";
 export const UPLOAD_STORY_IMG_FINISHED = "UPLOAD_STORY_IMG_STARTED";
+export const DELETE_IMG_FROM_STORY_STARTED = "DELETE_IMG_FROM_STORY_STARTED";
+export const DELETE_IMG_FROM_STORY_FINISHED = "DELETE_IMG_FROM_STORY_FINISHED";
 
+// upload image to story
 export const uploadStoryImage = () => ({
   type: UPLOAD_STORY_IMG_FINISHED
 });
 
 const postUrlToServer = async (dispatch, imgObj, storyId) => {
   try {
-    const res = await axios.post(`/api/uploadStoryImage/${storyId}`, {
+    const res = await axios.post(`/api/story/image/${storyId}`, {
       imgObj
     });
 
@@ -78,5 +81,37 @@ export const startUploadStoryImage = (file, storyId) => async (
     );
   } catch (err) {
     errorHandling(dispatch, err, "upload", "story image");
+  }
+};
+
+// delete image from story
+export const deleteImageFromStory = () => ({
+  type: DELETE_IMG_FROM_STORY_FINISHED
+});
+
+const deleteUrlFromServer = async (dispatch, storyId, imageId) => {
+  try {
+    const res = await axios.delete(`/api/story/image/${storyId}/${imageId}`);
+
+    const { msg, payload } = res.data;
+
+    console.log(msg, payload);
+  } catch (err) {
+    errorHandling(dispatch, err, "delete", "story image");
+  }
+};
+
+export const startDeleteImageFromStory = imgObj => async dispatch => {
+  try {
+    dispatch({ type: DELETE_IMG_FROM_STORY_STARTED });
+    const { path, storyId, _id: imageId } = imgObj;
+
+    const storageRef = firebase.storage().ref(path);
+
+    // await storageRef.delete();
+
+    deleteUrlFromServer(dispatch, storyId, imageId);
+  } catch (err) {
+    errorHandling(dispatch, err, "delete", "story image");
   }
 };

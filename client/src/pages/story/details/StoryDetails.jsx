@@ -36,7 +36,11 @@ class StoryDetails extends Component {
   };
 
   viewLargePhotoModal = data => {
-    this.props.openModal({ modalType: "viewPhoto", data });
+    const { storyId } = this.props.match.params;
+    this.props.openModal({
+      modalType: "viewPhoto",
+      data: { ...data, storyId }
+    });
   };
 
   render() {

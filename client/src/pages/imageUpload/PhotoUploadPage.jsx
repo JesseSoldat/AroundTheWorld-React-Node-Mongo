@@ -5,6 +5,8 @@ import "cropperjs/dist/cropper.css";
 
 // common components
 import Heading from "../../components/Heading";
+// css
+import "./PhotoUploadPage.css";
 
 class PhotoUploadPage extends Component {
   state = {
@@ -53,52 +55,74 @@ class PhotoUploadPage extends Component {
               <div className="card col-12">
                 <div className="card-body">
                   <div className="row">
-                    <div className="col-xs-12 col-md-4">
-                      <h4 className="mb-2">Step 1 - Add Photo</h4>
-                      <Dropzone onDrop={this.onDrop} multiple={false}>
-                        <div
-                          style={{ paddingTop: "30px", textAlign: "center" }}
-                        >
-                          <i className="fas fa-upload" />
+                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
+                      <div className="card">
+                        <div className="card-body d-flex flex-column align-items-center">
+                          <h4 className="mb-4 imgUploadTitle">
+                            Step 1 - Add Photo
+                          </h4>
+                          <div>
+                            <Dropzone onDrop={this.onDrop} multiple={false}>
+                              <div
+                                style={{
+                                  paddingTop: "30px",
+                                  textAlign: "center"
+                                }}
+                              >
+                                <i className="fas fa-upload" />
 
-                          <h3>Drop image here or click to upload</h3>
+                                <h3>Drop image here or click to upload</h3>
+                              </div>
+                            </Dropzone>
+                          </div>
                         </div>
-                      </Dropzone>
+                      </div>
                     </div>
 
-                    <div className="col-xs-12 col-md-4">
-                      <h4 className="mb-2">Step 2 - Resize image</h4>
-                      {this.state.files[0] && (
-                        <Cropper
-                          style={{ height: 200, width: "100%" }}
-                          ref="cropper"
-                          src={this.state.files[0].preview}
-                          aspectRatio={4 / 3}
-                          viewMode={0}
-                          dragMode="move"
-                          guides={false}
-                          scalable={true}
-                          cropBoxMovable={true}
-                          cropBoxResizable={true}
-                          crop={this.cropImage}
-                        />
-                      )}
+                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
+                      <div className="card">
+                        <div className="card-body text-center d-flex flex-column align-items-center">
+                          <h4 className="mb-4 imgUploadTitle">
+                            Step 2 - Resize image
+                          </h4>
+                          <div className="cropperWrapper">
+                            {this.state.files[0] && (
+                              <Cropper
+                                className="cropper"
+                                style={{ height: 200, width: 280 }}
+                                ref="cropper"
+                                src={this.state.files[0].preview}
+                                aspectRatio={4 / 3}
+                                viewMode={0}
+                                dragMode="move"
+                                guides={false}
+                                scalable={true}
+                                cropBoxMovable={true}
+                                cropBoxResizable={true}
+                                crop={this.cropImage}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="col-xs-12 col-md-4">
-                      <h4 className="mb-2">Step 3 - Preview and Upload</h4>
-                      {this.state.files[0] && (
-                        <div>
-                          <img
-                            style={{
-                              width: "100%",
-                              minHeight: "200px",
-                              minWidth: "200px"
-                            }}
-                            src={this.state.cropResult}
-                          />
+                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
+                      <div className="card">
+                        <div className="card-body text-center">
+                          <h4 className="mb-4 imgUploadTitle">
+                            Step 3 - Preview and Upload
+                          </h4>
+                          {this.state.files[0] && (
+                            <div className="finalImageWrapper">
+                              <img
+                                className="previewImg"
+                                src={this.state.cropResult}
+                              />
+                            </div>
+                          )}
                         </div>
-                      )}
+                      </div>
                     </div>
                   </div>
                 </div>

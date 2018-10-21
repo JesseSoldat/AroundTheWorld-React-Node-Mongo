@@ -1,0 +1,36 @@
+.card {
+  min-height: 350px;
+}
+
+.imgUploadTitle {
+  font-size: 1.5em;
+}
+
+.cropperWrapper {
+}
+
+.finalImageWrapper {
+  width: 100%;
+}
+
+.previewImg {
+  width: 100%;
+  margin: 0 auto;
+  min-height: "200px";
+  min-width: "200px";
+}
+
+@media only screen and (max-width: 1400px) {
+  .imgUploadTitle {
+    font-size: 1.2em;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .imgUploadTitle {
+    font-size: 1.5em;
+  }
+  .previewImg {
+    width: 80%;
+  }
+}

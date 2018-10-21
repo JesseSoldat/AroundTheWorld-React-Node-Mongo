@@ -6,6 +6,14 @@ body {
   background: url(./_images/pattern.png) repeat;
 }
 
+.floatRight {
+  float: right;
+}
+
+.floatLeft {
+  float: left;
+}
+
 .cursorAllowed {
   cursor: pointer !important;
 }

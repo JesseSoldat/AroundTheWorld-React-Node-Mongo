@@ -6,7 +6,9 @@ import Spinner from "../../../components/Spinner";
 import Accordion from "../../../components/Accordion";
 // custom components
 import StaticMap from "../../map/StaticMap";
+import StoryImages from "./StoryImages";
 // actions
+import { openModal } from "../../../actions/modalActions";
 import { startGetStoryDetails } from "../../../actions/storyActions";
 
 class StoryDetails extends Component {
@@ -33,6 +35,10 @@ class StoryDetails extends Component {
     this.props.history.push(`/uploadPhotos/${storyId}`);
   };
 
+  viewLargePhotoModal = data => {
+    this.props.openModal({ modalType: "viewPhoto", data });
+  };
+
   render() {
     const { loading, details } = this.props;
 
@@ -48,9 +54,11 @@ class StoryDetails extends Component {
           accordionTop={<p>{data.description}</p>}
           accordionMiddle={<StaticMap coordinates={data.coordinates} />}
           accordionBottom={
-            <div>
-              <button onClick={this.addPhotos}>Add Photos</button>
-            </div>
+            <StoryImages
+              images={details.images}
+              addPhotos={this.addPhotos}
+              viewLargePhotoModal={this.viewLargePhotoModal}
+            />
           }
         />
       );
@@ -74,5 +82,5 @@ const mapStateToProps = ({ async, story, friend, auth }) => ({
 
 export default connect(
   mapStateToProps,
-  { startGetStoryDetails }
+  { startGetStoryDetails, openModal }
 )(StoryDetails);

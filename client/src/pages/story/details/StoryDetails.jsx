@@ -29,8 +29,8 @@ class StoryDetails extends Component {
   };
 
   addPhotos = () => {
-    console.log("add photos");
-    this.props.history.push("/uploadPhotos");
+    const { storyId } = this.props.match.params;
+    this.props.history.push(`/uploadPhotos/${storyId}`);
   };
 
   render() {

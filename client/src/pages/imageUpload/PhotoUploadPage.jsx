@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Dropzone from "react-dropzone";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
 // common components
 import Heading from "../../components/Heading";
+// actions
+import { startUploadStoryImage } from "../../actions/imageActions";
 // css
 import "./PhotoUploadPage.css";
 
@@ -15,6 +18,8 @@ class PhotoUploadPage extends Component {
     cropResult: null,
     image: {}
   };
+
+  componentDidMount() {}
 
   onDrop = files => {
     this.setState({
@@ -42,7 +47,10 @@ class PhotoUploadPage extends Component {
     });
   };
 
-  uploadImage = () => {};
+  uploadImage = () => {
+    const { storyId } = this.props.match.params;
+    this.props.startUploadStoryImage(this.state.image, storyId);
+  };
 
   render() {
     return (
@@ -56,7 +64,7 @@ class PhotoUploadPage extends Component {
                 <div className="card-body">
                   <div className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
-                      <div className="card">
+                      <div className="imageUploadCard card">
                         <div className="card-body d-flex flex-column align-items-center">
                           <h4 className="mb-4 imgUploadTitle">
                             Step 1 - Add Photo
@@ -80,7 +88,7 @@ class PhotoUploadPage extends Component {
                     </div>
 
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
-                      <div className="card">
+                      <div className="imageUploadCard card">
                         <div className="card-body text-center d-flex flex-column align-items-center">
                           <h4 className="mb-4 imgUploadTitle">
                             Step 2 - Resize image
@@ -108,17 +116,27 @@ class PhotoUploadPage extends Component {
                     </div>
 
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
-                      <div className="card">
+                      <div className="imageUploadCard card">
                         <div className="card-body text-center">
                           <h4 className="mb-4 imgUploadTitle">
                             Step 3 - Preview and Upload
                           </h4>
                           {this.state.files[0] && (
-                            <div className="finalImageWrapper">
-                              <img
-                                className="previewImg"
-                                src={this.state.cropResult}
-                              />
+                            <div>
+                              <div className="finalImageWrapper">
+                                <img
+                                  className="previewImg"
+                                  src={this.state.cropResult}
+                                />
+                              </div>
+                              <div>
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={this.uploadImage}
+                                >
+                                  Upload
+                                </button>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -135,4 +153,7 @@ class PhotoUploadPage extends Component {
   }
 }
 
-export default PhotoUploadPage;
+export default connect(
+  null,
+  { startUploadStoryImage }
+)(PhotoUploadPage);

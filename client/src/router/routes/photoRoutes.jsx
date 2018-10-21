@@ -5,8 +5,8 @@ import PhotoUploadPage from "../../pages/imageUpload/PhotoUploadPage";
 
 const PhotoRoutes = [
   <PrivateRoute
-    key="uploadPhotos"
-    path="/uploadPhotos"
+    key="uploadPhotos/:storyId"
+    path="/uploadPhotos/:storyId"
     component={PhotoUploadPage}
     exact
   />

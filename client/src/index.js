@@ -8,6 +8,9 @@ import "font-awesome/css/font-awesome.min.css";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import "./index.css";
 
+// config
+import "./_config/firebase";
+
 import AppRouter from "./router/AppRouter";
 import { configureStore } from "./store/configureStore";
 import handleInitialAuth from "./utils/auth/handleInitialAuth";

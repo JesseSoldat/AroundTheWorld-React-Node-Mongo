@@ -8,13 +8,14 @@ class Map extends Component {
     const {
       map,
       marker,
-      zoom,
+      zoom = 8,
       height = "100vh",
-      moveMarker,
+      moveMarker = () => {},
       showBtns = false,
-      cancel,
-      selectPlace
+      cancel = () => {},
+      selectPlace = () => {}
     } = this.props;
+
     return (
       <div style={{ height, width: "100%", position: "relative" }}>
         {showBtns && (

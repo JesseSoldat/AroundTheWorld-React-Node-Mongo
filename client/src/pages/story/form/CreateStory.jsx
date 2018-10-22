@@ -83,7 +83,6 @@ class CreateStory extends Component {
                       map={{ lat: markerLat, lng: markerLng }}
                       marker={{ markerLat, markerLng }}
                       moveMarker={this.moveMarker}
-                      zoom={8}
                       height="400px"
                     />
                   )}

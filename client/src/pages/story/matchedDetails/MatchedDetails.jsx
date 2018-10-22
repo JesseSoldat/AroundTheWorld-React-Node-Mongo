@@ -6,7 +6,7 @@ import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // custom components
-import StaticMap from "../../map/StaticMap";
+import Map from "../../map/Map";
 import MatchedUserImages from "./components/MatchedUserImages";
 // utils
 import checkFriendStatus from "../../../utils/checkFriendStatus";
@@ -80,7 +80,16 @@ class MatchedDetails extends Component {
         <Accordion
           data={data}
           accordionTop={<p>{data.description}</p>}
-          accordionMiddle={<StaticMap coordinates={data.coordinates} />}
+          accordionMiddle={
+            <Map
+              map={data.coordinates}
+              height="400px"
+              marker={{
+                markerLng: data.coordinates[1],
+                markerLat: data.coordinates[0]
+              }}
+            />
+          }
           accordionBottom={
             <MatchedUserImages
               status={status}

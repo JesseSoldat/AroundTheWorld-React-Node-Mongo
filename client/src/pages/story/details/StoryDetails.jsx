@@ -7,8 +7,8 @@ import Accordion from "../../../components/Accordion";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
 import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 // custom components
-import StaticMap from "../../map/StaticMap";
 import StoryImages from "./StoryImages";
+import Map from "../../map/Map";
 // actions
 import { openModal } from "../../../actions/modalActions";
 import {
@@ -42,19 +42,6 @@ class StoryDetails extends Component {
     this.props.getStoryDetails({ story: null });
   }
 
-  // format data to pass to children
-  formatAccordionData = details => {
-    const data = {
-      title1: "Story",
-      title2: "Map",
-      title3: "Photos",
-      description: details.description,
-      coordinates: details.geometry.coordinates
-    };
-
-    return data;
-  };
-
   // cbs & events
   goBack = () => {
     this.props.history.push("/storyList");
@@ -80,6 +67,19 @@ class StoryDetails extends Component {
     });
   };
 
+  // format data to pass to children
+  formatAccordionData = details => {
+    const data = {
+      title1: "Story",
+      title2: "Map",
+      title3: "Photos",
+      description: details.description,
+      coordinates: details.geometry.coordinates
+    };
+
+    return data;
+  };
+
   render() {
     const { loading, details } = this.props;
 
@@ -88,12 +88,22 @@ class StoryDetails extends Component {
     if (loading) content = <Spinner />;
     else if (details) {
       const data = this.formatAccordionData(details);
+      console.log(data);
 
       content = (
         <Accordion
           data={data}
           accordionTop={<p>{data.description}</p>}
-          accordionMiddle={<StaticMap coordinates={data.coordinates} />}
+          accordionMiddle={
+            <Map
+              map={[data.coordinates[1], data.coordinates[0]]}
+              height="400px"
+              marker={{
+                markerLng: data.coordinates[0],
+                markerLat: data.coordinates[1]
+              }}
+            />
+          }
           accordionBottom={
             <StoryImages
               images={details.images}

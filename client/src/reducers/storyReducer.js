@@ -4,6 +4,8 @@ import {
   STORIES_LOADED,
   CREATE_STORY_STARTED,
   CREATE_STORY_FINISHED,
+  EDIT_STORY_STARTED,
+  EDIT_STORY_FINISHED,
   DELETE_STORY_STARTED,
   DELETE_STORY_FINISHED,
   STORY_DETAILS_REQUESTED,
@@ -28,20 +30,32 @@ const initialState = {
 };
 
 // helpers
-const createStory = (preStories, newStory) => {
-  if (!preStories) return null;
+const createStory = (prevStories, newStory) => {
+  if (!prevStories) return null;
 
-  const newStories = [...preStories];
+  const newStories = [...prevStories];
 
   newStories.unshift(newStory);
 
   return newStories;
 };
 
-const deleteStory = (preStories, deletedStory) => {
-  if (!preStories) return null;
+const editStory = (prevStories, editStory) => {
+  if (!prevStories) return null;
 
-  let newStories = [...preStories];
+  let newStories = [...prevStories];
+
+  newStories = newStories.filter(story => story._id !== editStory._id);
+
+  newStories.unshift(editStory);
+
+  return newStories;
+};
+
+const deleteStory = (prevStories, deletedStory) => {
+  if (!prevStories) return null;
+
+  let newStories = [...prevStories];
 
   newStories = newStories.filter(story => story._id !== deletedStory._id);
 
@@ -71,6 +85,19 @@ export default (state = initialState, action) => {
       const newStories = createStory(state.stories, update);
 
       return { ...state, overlay: false, stories: newStories, details: update };
+
+    // edit story
+    case EDIT_STORY_STARTED:
+      return { ...state, overlay: true };
+
+    case EDIT_STORY_FINISHED:
+      const editStories = editStory(state.stories, update);
+      return {
+        ...state,
+        overlay: false,
+        stories: editStories,
+        details: update
+      };
 
     // delete story
     case DELETE_STORY_STARTED:

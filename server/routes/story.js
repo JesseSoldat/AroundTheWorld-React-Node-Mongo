@@ -72,6 +72,33 @@ module.exports = app => {
     }
   });
 
+  app.put("/api/story/edit/:storyId", isAuth, async (req, res) => {
+    try {
+      const { storyId } = req.params;
+      const { title, description, geometry } = req.body.updatedStory;
+
+      if (!title) {
+        const msg = getErrMsg("requiredFields");
+        return serverRes(res, 400, msg, null);
+      }
+
+      const story = await Story.findByIdAndUpdate(
+        storyId,
+        {
+          $set: { title, description, geometry }
+        },
+        { new: true }
+      );
+
+      const msg = "Your story has been updated";
+      serverRes(res, 200, msg, { story });
+    } catch (err) {
+      console.log("Err: Edit Story", err);
+      const msg = getErrMsg("err", "edit", "story");
+      serverRes(res, 400, msg, null);
+    }
+  });
+
   // delete a story
   app.delete("/api/story/delete/:storyId", isAuth, async (req, res) => {
     try {

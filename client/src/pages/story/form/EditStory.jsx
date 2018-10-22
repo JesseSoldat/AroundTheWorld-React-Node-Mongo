@@ -34,7 +34,7 @@ class EditStory extends Component {
     if (stories) {
       story = stories.find(story => story._id === storyId);
       console.log("story", story);
-      this.getStoryDetails({ story });
+      this.props.getStoryDetails({ story });
     } else {
       console.log("fetch story from api");
       this.props.startGetStoryDetails(storyId);
@@ -56,11 +56,25 @@ class EditStory extends Component {
   }
 
   // map
-  moveMarker = ({ lat, lng, x, y }) => {
+  moveMarker = ({ lat, lng }) => {
     this.setState({ markerLat: lat, markerLng: lng });
   };
 
-  submitStory = () => {};
+  submitStory = values => {
+    const { storyId } = this.props.match.params;
+    const { markerLat: lat, markerLng: lng } = this.state;
+
+    const story = {
+      title: values.title,
+      description: values.description,
+      geometry: {
+        type: "Point",
+        coordinates: [lng, lat]
+      }
+    };
+
+    this.props.startEditStory(storyId, story, this.props.history);
+  };
 
   cancel = () => {
     this.props.history.push("/storyList");

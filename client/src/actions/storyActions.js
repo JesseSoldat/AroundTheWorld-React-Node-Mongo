@@ -111,10 +111,27 @@ export const editStory = update => ({
   update
 });
 
-export const startEditStory = (storyId, history) => async dispatch => {
+export const startEditStory = (
+  storyId,
+  updatedStory,
+  history
+) => async dispatch => {
   try {
     dispatch({ type: EDIT_STORY_STARTED });
-  } catch (err) {}
+
+    const res = await axios.put(`/api/story/edit/${storyId}`, { updatedStory });
+
+    const { msg, payload } = res.data;
+
+    dispatch(editStory(payload.story));
+
+    history.push(`/storyDetails/${storyId}`);
+
+    toastr.success("Success", msg);
+  } catch (err) {
+    errorHandling(dispatch, err, "edit", "story");
+    dispatch(storyError());
+  }
 };
 
 // delete story

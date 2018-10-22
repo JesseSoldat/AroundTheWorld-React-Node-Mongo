@@ -10,7 +10,7 @@ const IconBtn = ({
 }) => {
   return (
     <button
-      className={`btn ${btnClass}`}
+      className={`btn ${btnClass} btn-sm`}
       onClick={cb}
       disabled={disabled}
       type={type}

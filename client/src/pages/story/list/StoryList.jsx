@@ -77,8 +77,8 @@ class StoryList extends Component {
   }
 }
 
-const mapStateToProps = ({ async, story }) => ({
-  loading: async.loading,
+const mapStateToProps = ({ story }) => ({
+  loading: story.loading,
   stories: story.stories
 });
 

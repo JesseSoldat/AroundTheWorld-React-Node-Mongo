@@ -18,6 +18,8 @@ export const STORIES_REQUESTED = "STORIES_REQUESTED";
 export const STORIES_LOADED = "STORIES_LOADED";
 export const CREATE_STORY_STARTED = "CREATE_STORY_STARTED";
 export const CREATE_STORY_FINISHED = "CREATE_STORY_FINISHED";
+export const EDIT_STORY_STARTED = "EDIT_STORY_STARTED";
+export const EDIT_STORY_FINISHED = "EDIT_STORY_FINISHED";
 export const DELETE_STORY_STARTED = "DELETE_STORY_STARTED";
 export const DELETE_STORY_FINISHED = "DELETE_STORY_FINISHED";
 export const STORY_DETAILS_REQUESTED = "STORY_DETAILS_REQUESTED";
@@ -42,7 +44,6 @@ export const getStories = ({ stories }) => ({
 
 export const startGetStories = () => async (dispatch, getState) => {
   try {
-    dispatch(asyncActionStart());
     dispatch({ type: STORIES_REQUESTED });
 
     const userId = getState().auth._id;
@@ -52,10 +53,9 @@ export const startGetStories = () => async (dispatch, getState) => {
     const { payload } = res.data;
 
     dispatch(getStories(payload));
-    dispatch(asyncActionFinish());
   } catch (err) {
     errorHandling(dispatch, err, "get", "stories");
-    dispatch(asyncActionError());
+    dispatch(storyError());
   }
 };
 
@@ -75,8 +75,8 @@ export const startGetStoryDetails = storyId => async dispatch => {
 
     dispatch(getStoryDetails(payload));
   } catch (err) {
-    dispatch(storyError());
     errorHandling(dispatch, err, "get", "story");
+    dispatch(storyError());
   }
 };
 // create story
@@ -108,6 +108,18 @@ export const startCreateStory = (newStory, history) => async (
     dispatch(storyError());
     errorHandling(dispatch, err, "create", "story");
   }
+};
+
+// edit story
+export const editStory = update => ({
+  type: EDIT_STORY_FINISHED,
+  update
+});
+
+export const startEditStory = (storyId, history) => async dispatch => {
+  try {
+    dispatch({ type: EDIT_STORY_STARTED });
+  } catch (err) {}
 };
 
 // delete story

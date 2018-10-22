@@ -48,7 +48,7 @@ module.exports = app => {
     }
   });
 
-  // create story
+  // create a story
   app.post("/api/story/add/:userId", isAuth, async (req, res) => {
     try {
       const { userId } = req.params;
@@ -68,6 +68,23 @@ module.exports = app => {
     } catch (err) {
       console.log("Err: Create Story", err);
       const msg = getErrMsg("err", "create", "story");
+      serverRes(res, 400, msg, null);
+    }
+  });
+
+  // delete a story
+  app.delete("/api/story/delete/:storyId", isAuth, async (req, res) => {
+    try {
+      const { storyId } = req.params;
+
+      const story = await Story.findByIdAndDelete(storyId);
+
+      const msg = "The story was deleted";
+
+      serverRes(res, 200, msg, { story });
+    } catch (err) {
+      console.log("Err: Delete Story", err);
+      const msg = getErrMsg("err", "delete", "story");
       serverRes(res, 400, msg, null);
     }
   });

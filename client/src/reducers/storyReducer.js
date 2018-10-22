@@ -1,5 +1,6 @@
 import {
   STORY_ACTION_ERROR,
+  STORIES_REQUESTED,
   STORIES_LOADED,
   CREATE_STORY_STARTED,
   CREATE_STORY_FINISHED,
@@ -23,6 +24,7 @@ const initialState = {
   matchedDetails: null
 };
 
+// helpers
 const createStory = (preStories, newStory) => {
   if (!preStories) return null;
 
@@ -52,8 +54,11 @@ export default (state = initialState, action) => {
       return { ...state, overlay: false, loading: false };
 
     // get all stories
+    case STORIES_REQUESTED:
+      return { ...state, loading: true };
+
     case STORIES_LOADED:
-      return { ...state, stories: [...stories] };
+      return { ...state, stories: [...stories], loading: false };
 
     // create story
     case CREATE_STORY_STARTED:

@@ -16,9 +16,9 @@ const TopRowBtns = ({
       <div className="row">
         <div className="col-12">
           {showLeftBtns && (
-            <div className="float-left ml-5">
+            <div className="float-left ml-3">
               <IconBtn
-                btnClass="btn-primary mr-1"
+                btnClass="btn-secondary mr-1"
                 iconClass="fas fa-chevron-left d-none d-sm-inline mr-1"
                 text="Go Back"
                 cb={btn0Cb}
@@ -27,7 +27,7 @@ const TopRowBtns = ({
           )}
 
           {showRightBtns && (
-            <div className="float-right mr-5">
+            <div className="float-right mr-3">
               <IconBtn
                 btnClass="btn-danger mr-1"
                 iconClass="fas fa-trash-alt d-none d-sm-inline mr-1"

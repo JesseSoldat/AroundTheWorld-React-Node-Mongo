@@ -6,6 +6,7 @@ import "cropperjs/dist/cropper.css";
 
 // common components
 import Heading from "../../components/Heading";
+import TopRowBtns from "../../components/buttons/TopRowBtns";
 import OverlaySpinner from "../../components/loading/OverlaySpinner";
 // actions
 import { startUploadStoryImage } from "../../actions/imageActions";
@@ -20,8 +21,7 @@ class PhotoUploadPage extends Component {
     image: {}
   };
 
-  componentDidMount() {}
-
+  // drop file and crop
   onDrop = files => {
     this.setState({
       files,
@@ -48,6 +48,7 @@ class PhotoUploadPage extends Component {
     });
   };
 
+  // api call
   uploadImage = () => {
     const { storyId } = this.props.match.params;
     this.props.startUploadStoryImage(
@@ -57,11 +58,19 @@ class PhotoUploadPage extends Component {
     );
   };
 
+  // cb
+  goBack = () => {
+    const { storyId } = this.props.match.params;
+    this.props.history.push(`/storyDetails/${storyId}`);
+  };
+
   render() {
     return (
       <div>
         <OverlaySpinner showOverlay={this.props.showOverlay} />
-        <Heading title="Upload Image" />
+        <Heading title="Upload Image">
+          <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
+        </Heading>
 
         <div className="row mt-3">
           <div className="col-xs-12 col-md-10 mx-auto">

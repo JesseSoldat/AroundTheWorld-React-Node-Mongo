@@ -1,4 +1,5 @@
 import React from "react";
+import IconBtn from "../../../components/buttons/IconBtn";
 
 const StoryImages = ({ images, addPhotos, viewLargePhotoModal }) => {
   const onViewLargePhotoModal = img => () => viewLargePhotoModal(img);
@@ -7,9 +8,13 @@ const StoryImages = ({ images, addPhotos, viewLargePhotoModal }) => {
     <div>
       <div className="row">
         <div className="col-12">
-          <button className="floatRight btn btn-primary" onClick={addPhotos}>
-            Add Photos
-          </button>
+          <IconBtn
+            btnClass="floatRight btn btn-sm btn-primary"
+            iconClass="fas fa-plus"
+            text="Add Photos"
+            cb={addPhotos}
+            type="button"
+          />
         </div>
       </div>
       <div className="row">

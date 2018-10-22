@@ -19,7 +19,6 @@ module.exports = app => {
     try {
       const { userId } = req.params;
       const friends = await queryAllFriends(userId);
-      console.log(friends);
 
       serverRes(res, 200, null, { friends: friends.friends });
     } catch (err) {

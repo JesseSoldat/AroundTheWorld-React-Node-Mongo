@@ -70,7 +70,7 @@ const ListCard = ({
     <div className="card my-4">
       <div className="card-body">
         <div className="row">
-          <div className="text-left col-xs-12 col-xs-12 col-md-12 col-lg-6">
+          <div className="text-left col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <h3 className="card-title">{title}</h3>
             <p className="card-text">{description}</p>
 
@@ -107,7 +107,7 @@ const ListCard = ({
             </form>
           </div>
 
-          <div className="cardImg col-xs-12 col-sm-12 col-md-6">
+          <div className="cardImg col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <StaticMap coordinates={geometry.coordinates} />
           </div>
         </div>

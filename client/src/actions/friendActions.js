@@ -10,6 +10,7 @@ import {
 } from "./asyncActions";
 // types
 // friends
+export const FRIEND_ACTION_ERROR = "FRIEND_ACTION_ERROR";
 export const GET_FRIENDS_REQUESTED = "GET_FRIENDS_REQUESTED";
 export const GET_FRIENDS_LOADED = "GET_FRIENDS_LOADED";
 // friend request
@@ -28,7 +29,6 @@ export const getFriends = ({ friends }) => ({
 
 export const startGetFriends = userId => async dispatch => {
   try {
-    dispatch(asyncActionStart());
     dispatch({ type: GET_FRIENDS_REQUESTED });
 
     const res = await axios.get(`api/friends/${userId}`);
@@ -38,10 +38,9 @@ export const startGetFriends = userId => async dispatch => {
     console.log(payload);
 
     dispatch(getFriends(payload));
-    dispatch(asyncActionFinish());
   } catch (err) {
     errorHandling(dispatch, err, "get", "friends");
-    dispatch(asyncActionError());
+    dispatch({ type: FRIEND_ACTION_ERROR });
   }
 };
 

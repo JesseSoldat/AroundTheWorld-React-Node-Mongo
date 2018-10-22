@@ -5,6 +5,7 @@ import {
   CREATE_STORY_FINISHED,
   DELETE_STORY_STARTED,
   DELETE_STORY_FINISHED,
+  STORY_DETAILS_REQUESTED,
   STORY_DETAILS_LOADED,
   MATCHED_STORY_DETAILS_LOADED
 } from "../actions/storyActions";
@@ -68,11 +69,7 @@ export default (state = initialState, action) => {
       return { ...state, overlay: true };
 
     case DELETE_STORY_FINISHED:
-      console.log("update", update);
-
       const deleteStories = deleteStory(state.stories, update);
-      console.log("deleted", deleteStories);
-
       return {
         ...state,
         overlay: false,
@@ -81,8 +78,11 @@ export default (state = initialState, action) => {
       };
 
     // get details for a story
+    case STORY_DETAILS_REQUESTED:
+      return { ...state, loading: true };
+
     case STORY_DETAILS_LOADED:
-      return { ...state, details };
+      return { ...state, details, loading: false };
 
     // get the details of a matched user's story
     case MATCHED_STORY_DETAILS_LOADED:

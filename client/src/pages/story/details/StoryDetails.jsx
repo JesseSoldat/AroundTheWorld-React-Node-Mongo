@@ -5,6 +5,7 @@ import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
+import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 // custom components
 import StaticMap from "../../map/StaticMap";
 import StoryImages from "./StoryImages";
@@ -56,7 +57,7 @@ class StoryDetails extends Component {
 
   // cbs & events
   goBack = () => {
-    this.props.history.goBack();
+    this.props.history.push("/storyList");
   };
 
   onDeleteStory = () => {
@@ -106,6 +107,7 @@ class StoryDetails extends Component {
 
     return (
       <div className="storyDetailsWrapper">
+        <OverlaySpinner showOverlay={this.props.showOverlay} />
         <Heading title="Story Details">
           <TopRowBtns
             btn0Cb={this.goBack}
@@ -123,8 +125,9 @@ class StoryDetails extends Component {
   }
 }
 
-const mapStateToProps = ({ async, story, friend, auth }) => ({
-  loading: async.loading,
+const mapStateToProps = ({ story }) => ({
+  showOverlay: story.overlay,
+  loading: story.loading,
   stories: story.stories,
   details: story.details
 });

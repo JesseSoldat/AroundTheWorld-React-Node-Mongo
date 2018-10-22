@@ -1,5 +1,7 @@
 import axios from "axios";
 import { toastr } from "react-redux-toastr";
+import * as firebase from "firebase/app";
+import "firebase/storage";
 // helpers
 import errorHandling from "./helpers/errorHandling";
 // actions
@@ -28,6 +30,10 @@ export const MATCHED_STORY_DETAILS_REQUESTED =
   "MATCHED_STORY_DETAILS_REQUESTED";
 export const MATCHED_STORY_DETAILS_LOADED = "MATCHED_STORY_DETAILS_LOADED";
 
+// error
+export const storyError = () => ({
+  type: STORY_ACTION_ERROR
+});
 // get stories
 export const getStories = ({ stories }) => ({
   type: STORIES_LOADED,
@@ -68,10 +74,9 @@ export const startGetStoryDetails = storyId => async dispatch => {
     const { payload } = res.data;
 
     dispatch(getStoryDetails(payload));
-    dispatch(asyncActionFinish());
   } catch (err) {
+    dispatch(storyError());
     errorHandling(dispatch, err, "get", "story");
-    dispatch(asyncActionError());
   }
 };
 // create story
@@ -100,12 +105,19 @@ export const startCreateStory = (newStory, history) => async (
 
     toastr.success("Success", msg);
   } catch (err) {
+    dispatch(storyError());
     errorHandling(dispatch, err, "create", "story");
-    dispatch({ type: STORY_ACTION_ERROR });
   }
 };
 
 // delete story
+const deleteImagesFromStory = images => {
+  images.forEach(img => {
+    const storageRef = firebase.storage().ref(img.path);
+    storageRef.delete();
+  });
+};
+
 export const deleteStory = update => ({
   type: DELETE_STORY_FINISHED,
   update
@@ -115,20 +127,23 @@ export const startDeleteStory = (storyId, history) => async dispatch => {
   try {
     dispatch({ type: DELETE_STORY_STARTED });
 
-    // TODO delete images
-
     const res = await axios.delete(`/api/story/delete/${storyId}`);
 
     const { msg, payload } = res.data;
 
+    const { story } = payload;
+
+    // delete images from firebase
+    deleteImagesFromStory(story.images);
+
     history.push("/storyList");
 
-    dispatch(deleteStory(payload.story));
+    dispatch(deleteStory(story));
 
     toastr.success("Success", msg);
   } catch (err) {
+    dispatch(storyError());
     errorHandling(dispatch, err, "delete", "story");
-    dispatch({ type: STORY_ACTION_ERROR });
   }
 };
 

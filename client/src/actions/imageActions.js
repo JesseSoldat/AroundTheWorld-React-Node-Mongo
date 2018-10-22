@@ -18,7 +18,7 @@ export const uploadStoryImage = update => ({
   update
 });
 
-const postUrlToServer = async (dispatch, imgObj, storyId) => {
+const postUrlToServer = async (dispatch, history, imgObj, storyId) => {
   try {
     const res = await axios.post(`/api/story/image/${storyId}`, {
       imgObj
@@ -29,13 +29,15 @@ const postUrlToServer = async (dispatch, imgObj, storyId) => {
     dispatch(uploadStoryImage(payload.story));
 
     toastr.success("Success", msg);
+
+    history.push(`/storyDetails/${storyId}`);
   } catch (err) {
     dispatch({ type: IMAGE_ACTION_ERROR });
     errorHandling(dispatch, err, "upload", "story image");
   }
 };
 
-export const startUploadStoryImage = (file, storyId) => async (
+export const startUploadStoryImage = (file, storyId, history) => async (
   dispatch,
   getState
 ) => {
@@ -75,7 +77,7 @@ export const startUploadStoryImage = (file, storyId) => async (
         // Upload completed successfully, now we can get the download URL
         uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
           console.log("File available at", downloadURL);
-          postUrlToServer(dispatch, { path, downloadURL }, storyId);
+          postUrlToServer(dispatch, history, { path, downloadURL }, storyId);
         });
       }
     );

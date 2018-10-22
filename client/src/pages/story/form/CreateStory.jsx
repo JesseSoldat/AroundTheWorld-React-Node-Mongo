@@ -6,6 +6,7 @@ import { Field, reduxForm } from "redux-form";
 import Heading from "../../../components/Heading";
 import TextInput from "../../../components/form/TextInput";
 import TextArea from "../../../components/form/TextArea";
+import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 // custom components
 import Map from "../../map/Map";
 // utils
@@ -67,6 +68,7 @@ class CreateStory extends Component {
 
     return (
       <div>
+        <OverlaySpinner showOverlay={this.props.showOverlay} />
         <Heading title="Tell your Story" />
         <div className="container">
           {/* progress bar */}
@@ -137,7 +139,11 @@ const validate = combineValidators({
   title: isRequired({ message: "The story title is a required field" })
 });
 
+const mapStateToProps = ({ story }) => ({
+  showOverlay: story.showOverlay
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { startCreateStory }
 )(reduxForm({ form: "createStoryForm", validate })(CreateStory));

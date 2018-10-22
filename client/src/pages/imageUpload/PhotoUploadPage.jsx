@@ -6,7 +6,7 @@ import "cropperjs/dist/cropper.css";
 
 // common components
 import Heading from "../../components/Heading";
-import OverlaySpinner from "../../components/overlay/OverlaySpinner";
+import OverlaySpinner from "../../components/loading/OverlaySpinner";
 // actions
 import { startUploadStoryImage } from "../../actions/imageActions";
 // css
@@ -50,7 +50,11 @@ class PhotoUploadPage extends Component {
 
   uploadImage = () => {
     const { storyId } = this.props.match.params;
-    this.props.startUploadStoryImage(this.state.image, storyId);
+    this.props.startUploadStoryImage(
+      this.state.image,
+      storyId,
+      this.props.history
+    );
   };
 
   render() {

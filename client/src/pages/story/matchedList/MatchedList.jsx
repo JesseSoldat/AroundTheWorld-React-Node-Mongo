@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // common component
 import Heading from "../../../components/Heading";
-import Spinner from "../../../components/Spinner";
+import Spinner from "../../../components/loading/Spinner";
 import ImgCard from "../../../components/cards/ImgCard";
 import withStorage from "../../../components/hoc/withStorage";
 

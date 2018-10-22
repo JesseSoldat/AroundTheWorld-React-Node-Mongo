@@ -2,19 +2,42 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // common components
 import Heading from "../../../components/Heading";
-import Spinner from "../../../components/Spinner";
+import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
+import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // custom components
 import StaticMap from "../../map/StaticMap";
 import StoryImages from "./StoryImages";
 // actions
 import { openModal } from "../../../actions/modalActions";
-import { startGetStoryDetails } from "../../../actions/storyActions";
+import {
+  getStoryDetails,
+  startGetStoryDetails
+} from "../../../actions/storyActions";
+import "./StoryDetails.css";
 
 class StoryDetails extends Component {
+  // lifecycles
   componentDidMount() {
-    const { storyId } = this.props.match.params;
-    this.props.startGetStoryDetails(storyId);
+    const { stories, match } = this.props;
+    const { storyId } = match.params;
+
+    let story;
+    if (stories) {
+      story = stories.find(story => story._id === storyId);
+    }
+
+    if (story) {
+      console.log("fetch story from store");
+      this.props.getStoryDetails({ story });
+    } else {
+      console.log("fetch story from api");
+      this.props.startGetStoryDetails(storyId);
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.getStoryDetails({ story: null });
   }
 
   // format data to pass to children
@@ -29,6 +52,15 @@ class StoryDetails extends Component {
 
     return data;
   };
+
+  // cbs & events
+  goBack = () => {
+    this.props.history.goBack();
+  };
+
+  onDeleteStory = () => {};
+
+  onEditStory = () => {};
 
   addPhotos = () => {
     const { storyId } = this.props.match.params;
@@ -70,7 +102,15 @@ class StoryDetails extends Component {
 
     return (
       <div className="storyDetailsWrapper">
-        <Heading title="Story Details" />
+        <Heading title="Story Details">
+          <TopRowBtns
+            btn0Cb={this.goBack}
+            btn1Cb={this.onDeleteStory}
+            btn2Cb={this.onEditStory}
+            showLeftBtns={true}
+            showRightBtns={true}
+          />
+        </Heading>
         <div className="row mt-4">
           <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
         </div>
@@ -81,10 +121,11 @@ class StoryDetails extends Component {
 
 const mapStateToProps = ({ async, story, friend, auth }) => ({
   loading: async.loading,
+  stories: story.stories,
   details: story.details
 });
 
 export default connect(
   mapStateToProps,
-  { startGetStoryDetails, openModal }
+  { getStoryDetails, startGetStoryDetails, openModal }
 )(StoryDetails);

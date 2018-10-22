@@ -11,9 +11,11 @@ import {
 import { openModal } from "./modalActions";
 // types
 // user
+export const STORY_ACTION_ERROR = "STORY_ACTION_ERROR";
 export const STORIES_REQUESTED = "STORIES_REQUESTED";
 export const STORIES_LOADED = "STORIES_LOADED";
-export const CREATE_STORY = "CREATE_STORY";
+export const CREATE_STORY_STARTED = "CREATE_STORY_STARTED";
+export const CREATE_STORY_FINISHED = "CREATE_STORY_FINISHED";
 export const STORY_DETAILS_REQUESTED = "STORY_DETAILS_REQUESTED";
 export const STORY_DETAILS_LOADED = "STORY_DETAILS_LOADED";
 
@@ -57,7 +59,6 @@ export const getStoryDetails = ({ story }) => ({
 
 export const startGetStoryDetails = storyId => async dispatch => {
   try {
-    dispatch(asyncActionStart());
     dispatch({ type: STORY_DETAILS_REQUESTED });
 
     const res = await axios.get(`/api/story/details/${storyId}`);
@@ -72,8 +73,9 @@ export const startGetStoryDetails = storyId => async dispatch => {
   }
 };
 // create story
-export const createStory = () => ({
-  type: CREATE_STORY
+export const createStory = update => ({
+  type: CREATE_STORY_FINISHED,
+  update
 });
 
 export const startCreateStory = (newStory, history) => async (
@@ -81,20 +83,23 @@ export const startCreateStory = (newStory, history) => async (
   getState
 ) => {
   try {
-    dispatch(asyncActionStart());
-
+    dispatch({ type: CREATE_STORY_STARTED });
     const userId = getState().auth._id;
 
     const res = await axios.post(`/api/story/add/${userId}`, newStory);
 
     const { msg, payload } = res.data;
 
-    toastr.success("Success", msg);
+    dispatch(createStory(payload.story));
 
-    dispatch(asyncActionFinish());
+    const storyId = payload.story._id;
+
+    history.push(`/storyDetails/${storyId}`);
+
+    toastr.success("Success", msg);
   } catch (err) {
     errorHandling(dispatch, err, "create", "story");
-    dispatch(asyncActionError());
+    dispatch({ type: STORY_ACTION_ERROR });
   }
 };
 

@@ -8,6 +8,7 @@ import modalReducer from "./modalReducer";
 import authReducer from "./authReducer";
 import storyReducer from "./storyReducer";
 import friendReducer from "./friendReducer";
+import imageReducer from "./imageReducer";
 
 const rootReducer = combineReducers({
   form: FormReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   async: asyncReducer,
   auth: authReducer,
   story: storyReducer,
-  friend: friendReducer
+  friend: friendReducer,
+  image: imageReducer
 });
 
 export default rootReducer;

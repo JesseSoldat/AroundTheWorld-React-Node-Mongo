@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // common components
 import Heading from "../../../components/Heading";
-import Spinner from "../../../components/Spinner";
+import Spinner from "../../../components/loading/Spinner";
 // custom components
 import ListCard from "../../../components/cards/ListCard";
 // actions
@@ -21,7 +21,7 @@ class StoryList extends Component {
 
   // lifecycles
   componentDidMount() {
-    this.props.startGetStories();
+    if (!this.props.stories) this.props.startGetStories();
   }
 
   // cbs & events

@@ -5,21 +5,17 @@ import * as firebase from "firebase/app";
 import "firebase/storage";
 // helpers
 import errorHandling from "./helpers/errorHandling";
-// actions
-import {
-  asyncActionStart,
-  asyncActionFinish,
-  asyncActionError
-} from "./asyncActions";
 // types
+export const IMAGE_ACTION_ERROR = "IMAGE_ACTION_ERROR";
 export const UPLOAD_STORY_IMG_STARTED = "UPLOAD_STORY_IMG_STARTED";
-export const UPLOAD_STORY_IMG_FINISHED = "UPLOAD_STORY_IMG_STARTED";
+export const UPLOAD_STORY_IMG_FINISHED = "UPLOAD_STORY_IMG_FINISHED";
 export const DELETE_IMG_FROM_STORY_STARTED = "DELETE_IMG_FROM_STORY_STARTED";
 export const DELETE_IMG_FROM_STORY_FINISHED = "DELETE_IMG_FROM_STORY_FINISHED";
 
 // upload image to story
-export const uploadStoryImage = () => ({
-  type: UPLOAD_STORY_IMG_FINISHED
+export const uploadStoryImage = update => ({
+  type: UPLOAD_STORY_IMG_FINISHED,
+  update
 });
 
 const postUrlToServer = async (dispatch, imgObj, storyId) => {
@@ -29,8 +25,12 @@ const postUrlToServer = async (dispatch, imgObj, storyId) => {
     });
 
     const { msg, payload } = res.data;
-    console.log(msg, payload);
+
+    dispatch(uploadStoryImage(payload.story));
+
+    toastr.success("Success", msg);
   } catch (err) {
+    dispatch({ type: IMAGE_ACTION_ERROR });
     errorHandling(dispatch, err, "upload", "story image");
   }
 };
@@ -85,8 +85,9 @@ export const startUploadStoryImage = (file, storyId) => async (
 };
 
 // delete image from story
-export const deleteImageFromStory = () => ({
-  type: DELETE_IMG_FROM_STORY_FINISHED
+export const deleteImageFromStory = update => ({
+  type: DELETE_IMG_FROM_STORY_FINISHED,
+  update
 });
 
 const deleteUrlFromServer = async (dispatch, storyId, imageId) => {
@@ -95,7 +96,9 @@ const deleteUrlFromServer = async (dispatch, storyId, imageId) => {
 
     const { msg, payload } = res.data;
 
-    console.log(msg, payload);
+    toastr.success("Success", msg);
+
+    dispatch(deleteImageFromStory(payload.story));
   } catch (err) {
     errorHandling(dispatch, err, "delete", "story image");
   }
@@ -108,7 +111,7 @@ export const startDeleteImageFromStory = imgObj => async dispatch => {
 
     const storageRef = firebase.storage().ref(path);
 
-    // await storageRef.delete();
+    await storageRef.delete();
 
     deleteUrlFromServer(dispatch, storyId, imageId);
   } catch (err) {

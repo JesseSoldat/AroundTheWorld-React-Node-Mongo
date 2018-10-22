@@ -6,6 +6,7 @@ import "cropperjs/dist/cropper.css";
 
 // common components
 import Heading from "../../components/Heading";
+import OverlaySpinner from "../../components/overlay/OverlaySpinner";
 // actions
 import { startUploadStoryImage } from "../../actions/imageActions";
 // css
@@ -55,6 +56,7 @@ class PhotoUploadPage extends Component {
   render() {
     return (
       <div>
+        <OverlaySpinner showOverlay={this.props.showOverlay} />
         <Heading title="Upload Image" />
 
         <div className="row mt-3">
@@ -129,7 +131,13 @@ class PhotoUploadPage extends Component {
                                   src={this.state.cropResult}
                                 />
                               </div>
-                              <div>
+                              <div className="mt-2">
+                                <button
+                                  onClick={this.cancelCrop}
+                                  className="btn btn-danger mr-2"
+                                >
+                                  Cancel
+                                </button>
                                 <button
                                   className="btn btn-primary"
                                   onClick={this.uploadImage}
@@ -153,7 +161,11 @@ class PhotoUploadPage extends Component {
   }
 }
 
+const mapStateToProps = ({ image }) => ({
+  showOverlay: image.overlay
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { startUploadStoryImage }
 )(PhotoUploadPage);

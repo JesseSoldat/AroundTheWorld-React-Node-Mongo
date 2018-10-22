@@ -27,7 +27,10 @@ const ComponentNeedingStorage = ({
   };
 
   // viewPhoto
-  const deleteImgFromStory = img => startDeleteImageFromStory(img);
+  const deleteImgFromStory = img => {
+    closeModal();
+    startDeleteImageFromStory(img);
+  };
 
   return (
     <span>

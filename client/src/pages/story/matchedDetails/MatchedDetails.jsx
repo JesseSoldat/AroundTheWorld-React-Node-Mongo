@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // common components
 import Heading from "../../../components/Heading";
-import Spinner from "../../../components/Spinner";
+import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
 // custom components
 import StaticMap from "../../map/StaticMap";

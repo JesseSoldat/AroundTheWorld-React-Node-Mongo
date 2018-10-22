@@ -1,15 +1,10 @@
 import axios from "axios";
 import { toastr } from "react-redux-toastr";
-import * as firebase from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/storage";
 // helpers
 import errorHandling from "./helpers/errorHandling";
 // actions
-import {
-  asyncActionStart,
-  asyncActionFinish,
-  asyncActionError
-} from "./asyncActions";
 import { openModal } from "./modalActions";
 // types
 // user

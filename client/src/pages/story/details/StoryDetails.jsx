@@ -52,7 +52,10 @@ class StoryDetails extends Component {
     this.props.startDeleteStory(storyId, this.props.history);
   };
 
-  onEditStory = () => {};
+  onEditStory = () => {
+    const { storyId } = this.props.match.params;
+    this.props.history.push(`/editStory/${storyId}`);
+  };
 
   addPhotos = () => {
     const { storyId } = this.props.match.params;
@@ -88,7 +91,6 @@ class StoryDetails extends Component {
     if (loading) content = <Spinner />;
     else if (details) {
       const data = this.formatAccordionData(details);
-      console.log(data);
 
       content = (
         <Accordion

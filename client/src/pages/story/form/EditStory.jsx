@@ -4,19 +4,22 @@ import { combineValidators, isRequired } from "revalidate";
 import { Field, reduxForm } from "redux-form";
 // common components
 import Heading from "../../../components/Heading";
+import OverlaySpinner from "../../../components/loading/OverlaySpinner";
+import Spinner from "../../../components/loading/Spinner";
 import TextInput from "../../../components/form/TextInput";
 import TextArea from "../../../components/form/TextArea";
-import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 // custom components
 import Map from "../../map/Map";
-// utils
-import getUrlParameter from "../../../utils/getUrlParameter";
 // data
 import storyFields from "./helpers/storyFields";
 // actions
-import { startCreateStory } from "../../../actions/storyActions";
+import {
+  startGetStoryDetails,
+  getStoryDetails,
+  startEditStory
+} from "../../../actions/storyActions";
 
-class CreateStory extends Component {
+class EditStory extends Component {
   state = {
     markerLat: 0,
     markerLng: 0,
@@ -24,69 +27,62 @@ class CreateStory extends Component {
   };
 
   componentDidMount() {
-    this.setUpState();
+    const { match, stories } = this.props;
+    const { storyId } = match.params;
+
+    let story;
+    if (stories) {
+      story = stories.find(story => story._id === storyId);
+      console.log("story", story);
+      this.getStoryDetails({ story });
+    } else {
+      console.log("fetch story from api");
+      this.props.startGetStoryDetails(storyId);
+    }
   }
 
-  setUpState() {
-    const lat = parseFloat(getUrlParameter("lat"));
-    const lng = parseFloat(getUrlParameter("lng"));
-
-    this.setState({
-      markerLat: lat,
-      markerLng: lng,
-      showMap: true
-    });
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.showMap) {
+      const { details } = this.props;
+      if (details && details.geometry) {
+        const { coordinates } = details.geometry;
+        this.setState({
+          showMap: true,
+          markerLat: coordinates[1],
+          markerLng: coordinates[0]
+        });
+      }
+    }
   }
+
   // map
   moveMarker = ({ lat, lng, x, y }) => {
     this.setState({ markerLat: lat, markerLng: lng });
   };
 
-  // form
+  submitStory = () => {};
+
   cancel = () => {
     this.props.history.push("/storyList");
   };
 
-  submitStory = values => {
-    const { markerLat: lat, markerLng: lng } = this.state;
-
-    const story = {
-      title: values.title,
-      description: values.description,
-      geometry: {
-        type: "Point",
-        coordinates: [lng, lat]
-      }
-    };
-
-    this.props.startCreateStory(story, this.props.history);
-  };
-
-  render() {
+  renderContent = () => {
     const { showMap, markerLat, markerLng } = this.state;
     const { handleSubmit, invalid, submitting } = this.props;
-
     return (
-      <div>
-        <OverlaySpinner showOverlay={this.props.showOverlay} />
-        <Heading title="Tell your Story" />
-        <div className="container">
-          {/* progress bar */}
-
-          {/* google maps  */}
-          <div className="mapContainer">
-            <div className="row">
-              <div className="col-xs-12 col-sm-11 mx-auto">
-                <div>
-                  {showMap && (
-                    <Map
-                      map={{ lat: markerLat, lng: markerLng }}
-                      marker={{ markerLat, markerLng }}
-                      moveMarker={this.moveMarker}
-                      height="400px"
-                    />
-                  )}
-                </div>
+      <div className="container">
+        <div className="mapContainer">
+          <div className="row">
+            <div className="col-xs-12 col-sm-11 mx-auto">
+              <div>
+                {showMap && (
+                  <Map
+                    map={{ lat: markerLat, lng: markerLng }}
+                    marker={{ markerLat, markerLng }}
+                    moveMarker={this.moveMarker}
+                    height="400px"
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -131,6 +127,24 @@ class CreateStory extends Component {
         </div>
       </div>
     );
+  };
+
+  render() {
+    // const { showMap, markerLat, markerLng } = this.state;
+    const { loading, initialValues } = this.props;
+    let content;
+    if (loading) content = <Spinner />;
+    else if (initialValues) {
+      content = this.renderContent();
+    }
+
+    return (
+      <div>
+        <OverlaySpinner showOverlay={this.props.showOverlay} />
+        <Heading title="Edit Story" />
+        {content}
+      </div>
+    );
   }
 }
 
@@ -138,11 +152,26 @@ const validate = combineValidators({
   title: isRequired({ message: "The story title is a required field" })
 });
 
-const mapStateToProps = ({ story }) => ({
-  showOverlay: story.showOverlay
-});
+const mapStateToProps = ({ story }) => {
+  const title = (story.details && story.details.title) || "";
+  const description = (story.details && story.details.description) || "";
+
+  const initialValues = { title, description };
+
+  return {
+    loading: story.loading,
+    showOverlay: story.overlay,
+    stories: story.stories,
+    details: story.details,
+    initialValues
+  };
+};
 
 export default connect(
   mapStateToProps,
-  { startCreateStory }
-)(reduxForm({ form: "createStoryForm", validate })(CreateStory));
+  { getStoryDetails, startGetStoryDetails, startEditStory }
+)(
+  reduxForm({ form: "editStoryForm", enableReinitialize: true, validate })(
+    EditStory
+  )
+);

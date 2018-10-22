@@ -22,7 +22,7 @@ const ComponentNeedingStorage = ({
   // matchUser
   const viewUser = matched => {
     save("matchedUser", JSON.stringify(matched));
-    history.push("/matchedList");
+    history.push(`/matchedList/${matched._id}`);
     closeModal();
   };
 

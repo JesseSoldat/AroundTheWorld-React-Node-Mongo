@@ -32,7 +32,7 @@ export const MATCHED_STORY_DETAILS_REQUESTED =
   "MATCHED_STORY_DETAILS_REQUESTED";
 export const MATCHED_STORY_DETAILS_LOADED = "MATCHED_STORY_DETAILS_LOADED";
 
-// error
+// handle any story action errors
 export const storyError = () => ({
   type: STORY_ACTION_ERROR
 });
@@ -105,8 +105,8 @@ export const startCreateStory = (newStory, history) => async (
 
     toastr.success("Success", msg);
   } catch (err) {
-    dispatch(storyError());
     errorHandling(dispatch, err, "create", "story");
+    dispatch(storyError());
   }
 };
 
@@ -154,17 +154,21 @@ export const startDeleteStory = (storyId, history) => async dispatch => {
 
     toastr.success("Success", msg);
   } catch (err) {
-    dispatch(storyError());
     errorHandling(dispatch, err, "delete", "story");
+    dispatch(storyError());
   }
 };
 
 // match with Other peoples stories
+export const matchWithOthers = () => ({
+  type: MATCHED_STORIES_LOADED
+});
 export const startMatchWithOthers = matchQuery => async (
   dispatch,
   getState
 ) => {
   try {
+    dispatch({ type: MATCHED_STORIES_REQUESTED });
     const userId = getState().auth._id;
     const { unit, maxDistance, coordinates } = matchQuery;
     const lng = coordinates[0];
@@ -176,9 +180,11 @@ export const startMatchWithOthers = matchQuery => async (
 
     const { payload } = res.data;
 
+    dispatch(matchWithOthers());
     dispatch(openModal({ modalType: "matchUser", data: payload.match }));
   } catch (err) {
     errorHandling(dispatch, err, "match", "others");
+    dispatch(storyError());
   }
 };
 
@@ -189,7 +195,6 @@ export const getMatchedStoryDetails = ({ story }) => ({
 
 export const startGetMatchedStoryDetails = storyId => async dispatch => {
   try {
-    dispatch(asyncActionStart());
     dispatch({ type: MATCHED_STORY_DETAILS_REQUESTED });
 
     const res = await axios.get(`/api/story/details/${storyId}`);
@@ -197,9 +202,8 @@ export const startGetMatchedStoryDetails = storyId => async dispatch => {
     const { payload } = res.data;
 
     dispatch(getMatchedStoryDetails(payload));
-    dispatch(asyncActionFinish());
   } catch (err) {
     errorHandling(dispatch, err, "get", "story");
-    dispatch(asyncActionError());
+    dispatch(storyError());
   }
 };

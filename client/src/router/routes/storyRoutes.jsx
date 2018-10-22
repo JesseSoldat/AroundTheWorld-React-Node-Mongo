@@ -27,14 +27,14 @@ const StoryRoutes = [
     exact
   />,
   <PrivateRoute
-    key="matchedList"
-    path="/matchedList"
+    key="matchedList/:userId"
+    path="/matchedList/:userId"
     component={MatchedList}
     exact
   />,
   <PrivateRoute
     key="matchedDetails"
-    path="/matchedDetails/:storyId"
+    path="/matchedDetails/:userId/:storyId"
     component={MatchedDetails}
     exact
   />

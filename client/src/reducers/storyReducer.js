@@ -8,6 +8,9 @@ import {
   DELETE_STORY_FINISHED,
   STORY_DETAILS_REQUESTED,
   STORY_DETAILS_LOADED,
+  MATCHED_STORIES_REQUESTED,
+  MATCHED_STORIES_LOADED,
+  MATCHED_STORY_DETAILS_REQUESTED,
   MATCHED_STORY_DETAILS_LOADED
 } from "../actions/storyActions";
 import {
@@ -89,9 +92,19 @@ export default (state = initialState, action) => {
     case STORY_DETAILS_LOADED:
       return { ...state, details, loading: false };
 
+    // get the stories of a matched user
+    case MATCHED_STORIES_REQUESTED:
+      return { ...state, overlay: true };
+
+    case MATCHED_STORIES_LOADED:
+      return { ...state, overlay: false };
+
     // get the details of a matched user's story
+    case MATCHED_STORY_DETAILS_REQUESTED:
+      return { ...state, loading: true };
+
     case MATCHED_STORY_DETAILS_LOADED:
-      return { ...state, matchedDetails };
+      return { ...state, matchedDetails, loading: false };
 
     // add an image to a story
     case UPLOAD_STORY_IMG_FINISHED:

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
+import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // custom components
 import StaticMap from "../../map/StaticMap";
 import MatchedUserImages from "./components/MatchedUserImages";
@@ -49,6 +50,11 @@ class MatchedDetails extends Component {
     startAcceptFriendRequest(userId, matchedUserId);
   };
 
+  goBack = () => {
+    const { userId } = this.props.match.params;
+    this.props.history.push(`/matchedList/${userId}`);
+  };
+
   render() {
     const {
       loading,
@@ -89,7 +95,9 @@ class MatchedDetails extends Component {
 
     return (
       <div className="storyDetailsWrapper">
-        <Heading title="Story Details" />
+        <Heading title="Story Details">
+          <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
+        </Heading>
         <div className="row mt-4">
           <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
         </div>

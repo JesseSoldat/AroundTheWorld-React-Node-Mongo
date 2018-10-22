@@ -5,6 +5,7 @@ import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import ImgCard from "../../../components/cards/ImgCard";
 import withStorage from "../../../components/hoc/withStorage";
+import TopRowBtns from "../../../components/buttons/TopRowBtns";
 
 // MatchedList
 class ComponentNeedingStorage extends Component {
@@ -27,8 +28,12 @@ class ComponentNeedingStorage extends Component {
   };
 
   viewDetails = story => {
-    console.log(story._id);
-    this.props.history.push(`/matchedDetails/${story._id}`);
+    const { userId } = this.props.match.params;
+    this.props.history.push(`/matchedDetails/${userId}/${story._id}`);
+  };
+
+  goBack = () => {
+    this.props.history.push("/storyList");
   };
 
   render() {
@@ -54,7 +59,9 @@ class ComponentNeedingStorage extends Component {
 
     return (
       <div className="storyListWrapper">
-        <Heading title="Matched User" />
+        <Heading title="Matched User">
+          <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
+        </Heading>
 
         <div className="row">
           <div className="col-xs-12 col-sm-11 mx-auto my-3 d-flex flex-wrap justify-content-between storiesContainer">
@@ -68,8 +75,8 @@ class ComponentNeedingStorage extends Component {
 
 const MatchedList = withStorage(ComponentNeedingStorage);
 
-const mapStateToProps = ({ async }) => ({
-  loading: async.loading
+const mapStateToProps = ({ story }) => ({
+  loading: story.loading
 });
 
 export default connect(

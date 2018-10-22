@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 // common components
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
+import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 // custom components
 import ListCard from "../../../components/cards/ListCard";
 // actions
@@ -68,6 +69,7 @@ class StoryList extends Component {
     }
     return (
       <div className="storyListWrapper">
+        <OverlaySpinner showOverlay={this.props.showOverlay} />
         <Heading title="Stories" />
         <div className="storiesContainer col-xs-12 col-sm-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
           {content}
@@ -79,6 +81,7 @@ class StoryList extends Component {
 
 const mapStateToProps = ({ story }) => ({
   loading: story.loading,
+  showOverlay: story.overlay,
   stories: story.stories
 });
 

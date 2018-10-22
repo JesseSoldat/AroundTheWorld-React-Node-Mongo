@@ -16,6 +16,8 @@ export const STORIES_REQUESTED = "STORIES_REQUESTED";
 export const STORIES_LOADED = "STORIES_LOADED";
 export const CREATE_STORY_STARTED = "CREATE_STORY_STARTED";
 export const CREATE_STORY_FINISHED = "CREATE_STORY_FINISHED";
+export const DELETE_STORY_STARTED = "DELETE_STORY_STARTED";
+export const DELETE_STORY_FINISHED = "DELETE_STORY_FINISHED";
 export const STORY_DETAILS_REQUESTED = "STORY_DETAILS_REQUESTED";
 export const STORY_DETAILS_LOADED = "STORY_DETAILS_LOADED";
 
@@ -99,6 +101,33 @@ export const startCreateStory = (newStory, history) => async (
     toastr.success("Success", msg);
   } catch (err) {
     errorHandling(dispatch, err, "create", "story");
+    dispatch({ type: STORY_ACTION_ERROR });
+  }
+};
+
+// delete story
+export const deleteStory = update => ({
+  type: DELETE_STORY_FINISHED,
+  update
+});
+
+export const startDeleteStory = (storyId, history) => async dispatch => {
+  try {
+    dispatch({ type: DELETE_STORY_STARTED });
+
+    // TODO delete images
+
+    const res = await axios.delete(`/api/story/delete/${storyId}`);
+
+    const { msg, payload } = res.data;
+
+    history.push("/storyList");
+
+    dispatch(deleteStory(payload.story));
+
+    toastr.success("Success", msg);
+  } catch (err) {
+    errorHandling(dispatch, err, "delete", "story");
     dispatch({ type: STORY_ACTION_ERROR });
   }
 };

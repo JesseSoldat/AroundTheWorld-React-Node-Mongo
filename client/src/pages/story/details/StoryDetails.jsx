@@ -12,7 +12,8 @@ import StoryImages from "./StoryImages";
 import { openModal } from "../../../actions/modalActions";
 import {
   getStoryDetails,
-  startGetStoryDetails
+  startGetStoryDetails,
+  startDeleteStory
 } from "../../../actions/storyActions";
 import "./StoryDetails.css";
 
@@ -58,7 +59,10 @@ class StoryDetails extends Component {
     this.props.history.goBack();
   };
 
-  onDeleteStory = () => {};
+  onDeleteStory = () => {
+    const { storyId } = this.props.match.params;
+    this.props.startDeleteStory(storyId, this.props.history);
+  };
 
   onEditStory = () => {};
 
@@ -127,5 +131,5 @@ const mapStateToProps = ({ async, story, friend, auth }) => ({
 
 export default connect(
   mapStateToProps,
-  { getStoryDetails, startGetStoryDetails, openModal }
+  { getStoryDetails, startGetStoryDetails, startDeleteStory, openModal }
 )(StoryDetails);

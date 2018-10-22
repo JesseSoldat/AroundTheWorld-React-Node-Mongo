@@ -3,6 +3,8 @@ import {
   STORIES_LOADED,
   CREATE_STORY_STARTED,
   CREATE_STORY_FINISHED,
+  DELETE_STORY_STARTED,
+  DELETE_STORY_FINISHED,
   STORY_DETAILS_LOADED,
   MATCHED_STORY_DETAILS_LOADED
 } from "../actions/storyActions";
@@ -20,11 +22,23 @@ const initialState = {
   matchedDetails: null
 };
 
-const createNewStory = (preStories, newStory) => {
-  let newStories = preStories;
-  if (newStories && newStories.length) {
-    newStories.unshift(newStory);
-  }
+const createStory = (preStories, newStory) => {
+  if (!preStories) return null;
+
+  const newStories = [...preStories];
+
+  newStories.unshift(newStory);
+
+  return newStories;
+};
+
+const deleteStory = (preStories, deletedStory) => {
+  if (!preStories) return null;
+
+  let newStories = [...preStories];
+
+  newStories = newStories.filter(story => story._id !== deletedStory._id);
+
   return newStories;
 };
 
@@ -45,9 +59,26 @@ export default (state = initialState, action) => {
       return { ...state, overlay: true };
 
     case CREATE_STORY_FINISHED:
-      const newStories = createNewStory(state.stories, update);
+      const newStories = createStory(state.stories, update);
 
       return { ...state, overlay: false, stories: newStories, details: update };
+
+    // delete story
+    case DELETE_STORY_STARTED:
+      return { ...state, overlay: true };
+
+    case DELETE_STORY_FINISHED:
+      console.log("update", update);
+
+      const deleteStories = deleteStory(state.stories, update);
+      console.log("deleted", deleteStories);
+
+      return {
+        ...state,
+        overlay: false,
+        stories: deleteStories,
+        details: null
+      };
 
     // get details for a story
     case STORY_DETAILS_LOADED:

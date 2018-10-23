@@ -3,7 +3,8 @@ import React from "react";
 const FriendsRequestListItem = ({
   numberOfRequests,
   viewFriends,
-  acceptFriendRequest
+  acceptFriendRequest,
+  viewProfile
 }) => {
   const liClass = numberOfRequests
     ? "cursorAllowed"
@@ -30,6 +31,13 @@ const FriendsRequestListItem = ({
       <a>
         <i className="fas fa-user-friends mr-2" />
         <span>View Friends</span>{" "}
+      </a>
+    </li>,
+
+    <li key="updateProfile" className="nav-item py-2" onClick={viewProfile}>
+      <a>
+        <i className="fas fa-user-circle mr-2" />
+        <span>Profile</span>{" "}
       </a>
     </li>
   ];

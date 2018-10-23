@@ -40,12 +40,13 @@ class NavBar extends Component {
     this.props.history.push("/friends");
   };
 
+  viewProfile = () => this.props.history.push(`/profile/${this.props.userId}`);
+
   acceptFriendRequest = () => {
     // display a modal with request
   };
 
-  onStartLogout = e => {
-    // e.preventDefault();
+  onStartLogout = () => {
     this.props.startLogout();
   };
 
@@ -84,6 +85,7 @@ class NavBar extends Component {
             numberOfRequests={numberOfRequests}
             viewFriends={this.viewFriends}
             acceptFriendRequest={this.acceptFriendRequest}
+            viewProfile={this.viewProfile}
           />
         </ShowHide>
 
@@ -109,6 +111,7 @@ class NavBar extends Component {
             numberOfRequests={numberOfRequests}
             viewFriends={this.viewFriends}
             acceptFriendRequest={this.acceptFriendRequest}
+            viewProfile={this.viewProfile}
             logout={this.onStartLogout}
           />
         </ShowHide>

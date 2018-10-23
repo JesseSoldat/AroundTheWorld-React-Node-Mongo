@@ -125,8 +125,6 @@ class StoryDetails extends Component {
             btn0Cb={this.goBack}
             btn1Cb={this.onDeleteStory}
             btn2Cb={this.onEditStory}
-            showLeftBtns={true}
-            showRightBtns={true}
           />
         </Heading>
         <div className="row mt-4">

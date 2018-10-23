@@ -9,6 +9,7 @@ import MapRoutes from "./routes/mapRoutes";
 import StoryRoutes from "./routes/storyRoutes";
 import FriendRoutes from "./routes/friendRoutes";
 import PhotoRoutes from "./routes/photoRoutes";
+import ProfileRoutes from "./routes/profileRoutes";
 // components
 import NavBar from "../components/navbar/_NavBar";
 import ModalManager from "../modals/ModalManager";
@@ -34,6 +35,7 @@ const AppRouter = () => (
         {StoryRoutes}
         {FriendRoutes}
         {PhotoRoutes}
+        {ProfileRoutes}
       </Switch>
     </ScrollToTop>
   </Router>

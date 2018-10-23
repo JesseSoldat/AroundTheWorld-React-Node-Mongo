@@ -24,6 +24,15 @@ const UserSchema = new Schema(
       required: true,
       minlength: 6
     },
+    avatar: { type: String, default: null },
+    gender: { type: String, default: "gender is unknown" },
+    hometown: { type: String, default: "hometown is unknown" },
+    birthDate: { type: Date },
+    about: {
+      type: String,
+      default: "no additional information about the user"
+    },
+    occupation: { type: String, default: "occupation is unknown" },
     role: { type: String, default: "user" },
     friends: { type: [String] }
   },

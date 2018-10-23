@@ -9,6 +9,7 @@ import authReducer from "./authReducer";
 import storyReducer from "./storyReducer";
 import friendReducer from "./friendReducer";
 import imageReducer from "./imageReducer";
+import profileReducer from "./profileReducer";
 
 const rootReducer = combineReducers({
   form: FormReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   story: storyReducer,
   friend: friendReducer,
-  image: imageReducer
+  image: imageReducer,
+  profile: profileReducer
 });
 
 export default rootReducer;

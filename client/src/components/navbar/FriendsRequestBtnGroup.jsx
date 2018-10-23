@@ -3,6 +3,7 @@ import React from "react";
 const FriendsRequestBtnGroup = ({
   numberOfRequests,
   viewFriends,
+  viewProfile,
   acceptFriendRequest,
   logout
 }) => {
@@ -57,6 +58,13 @@ const FriendsRequestBtnGroup = ({
             onClick={viewFriends}
           >
             View Friends
+          </button>
+          <button
+            className="dropdown-item cursorAllowed"
+            type="button"
+            onClick={viewProfile}
+          >
+            Profile
           </button>
           <div className="dropdown-divider" />
           <button

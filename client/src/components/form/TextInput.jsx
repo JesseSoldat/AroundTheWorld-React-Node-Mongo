@@ -5,8 +5,8 @@ const TextInput = ({ fieldObj, input, type, meta: { touched, error } }) => {
 
   const inputClass =
     error && touched
-      ? "form-control form-control-lg mb-2 is-invalid"
-      : "form-control form-control-lg mb-2";
+      ? "form-control form-control mb-2 is-invalid"
+      : "form-control form-control mb-2";
 
   return (
     <div>

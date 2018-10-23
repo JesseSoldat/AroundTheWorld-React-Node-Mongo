@@ -9,20 +9,54 @@ import errorHandling from "./helpers/errorHandling";
 export const IMAGE_ACTION_ERROR = "IMAGE_ACTION_ERROR";
 export const UPLOAD_STORY_IMG_STARTED = "UPLOAD_STORY_IMG_STARTED";
 export const UPLOAD_STORY_IMG_FINISHED = "UPLOAD_STORY_IMG_FINISHED";
+export const UPLOAD_AVATAR_IMG_STARTED = "UPLOAD_AVATAR_IMG_STARTED";
+export const UPLOAD_AVATAR_IMG_FINISHED = "UPLOAD_AVATAR_IMG_FINISHED";
 export const DELETE_IMG_FROM_STORY_STARTED = "DELETE_IMG_FROM_STORY_STARTED";
 export const DELETE_IMG_FROM_STORY_FINISHED = "DELETE_IMG_FROM_STORY_FINISHED";
 
-// upload image to story
-export const uploadStoryImage = update => ({
-  type: UPLOAD_STORY_IMG_FINISHED,
-  update
-});
+// firebase helpers
+const listenToUploadProgress = (uploadTask, uploadToServer) => {
+  // changes, errors, and completion of the upload.
+  uploadTask.on(
+    firebase.storage.TaskEvent.STATE_CHANGED,
+    snapshot => {
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log("Upload is " + progress + "% done");
+    },
+    error => {
+      switch (error.code) {
+        case "storage/unauthorized":
+          // User doesn't have permission to access the object
+          break;
 
-const postUrlToServer = async (dispatch, history, imgObj, storyId) => {
+        default:
+          // Unknown error occurred, inspect error.serverResponse
+          break;
+      }
+    },
+    () => {
+      // Upload completed successfully, now we can get the download URL
+      uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+        console.log("File available at", downloadURL);
+
+        if (uploadToServer.type === "avatar") {
+          postAvatarUrlToServer(uploadToServer, downloadURL);
+        } else {
+          postStoryUrlToServer(uploadToServer, downloadURL);
+        }
+      });
+    }
+  );
+};
+
+// upload image to story
+const postStoryUrlToServer = async (uploadToServer, downloadURL) => {
+  const { storyId, path, dispatch, history } = uploadToServer;
+
+  const imgObj = { path, downloadURL };
+
   try {
-    const res = await axios.post(`/api/story/image/${storyId}`, {
-      imgObj
-    });
+    const res = await axios.post(`/api/story/image/${storyId}`, { imgObj });
 
     const { msg, payload } = res.data;
 
@@ -36,6 +70,11 @@ const postUrlToServer = async (dispatch, history, imgObj, storyId) => {
     errorHandling(dispatch, err, "upload", "story image");
   }
 };
+
+export const uploadStoryImage = update => ({
+  type: UPLOAD_STORY_IMG_FINISHED,
+  update
+});
 
 export const startUploadStoryImage = (file, storyId, history) => async (
   dispatch,
@@ -54,35 +93,63 @@ export const startUploadStoryImage = (file, storyId, history) => async (
 
     const uploadTask = storageRef.put(file);
 
-    // Listen for state changes, errors, and completion of the upload.
-    uploadTask.on(
-      firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-      snapshot => {
-        // Get task progress
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-      },
-      error => {
-        switch (error.code) {
-          case "storage/unauthorized":
-            // User doesn't have permission to access the object
-            break;
+    const uploadToServer = {
+      dispatch,
+      type: "story",
+      path,
+      storyId,
+      history
+    };
 
-          default:
-            // Unknown error occurred, inspect error.serverResponse
-            break;
-        }
-      },
-      () => {
-        // Upload completed successfully, now we can get the download URL
-        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          console.log("File available at", downloadURL);
-          postUrlToServer(dispatch, history, { path, downloadURL }, storyId);
-        });
-      }
-    );
+    listenToUploadProgress(uploadTask, uploadToServer);
   } catch (err) {
     errorHandling(dispatch, err, "upload", "story image");
+  }
+};
+
+// upload avatar image
+export const uploadAvatarImage = update => ({
+  type: UPLOAD_AVATAR_IMG_FINISHED,
+  update
+});
+
+export const postAvatarUrlToServer = async (uploadToServer, downloadURL) => {
+  const { userId, dispatch } = uploadToServer;
+
+  const res = await axios.post(`/api/profile/${userId}`, {
+    profile: { avatar: downloadURL }
+  });
+
+  const { msg, payload } = res.data;
+
+  dispatch(uploadAvatarImage(payload.profile));
+
+  toastr.success("Success", msg);
+};
+
+export const startUploadAvatarImage = file => async (dispatch, getState) => {
+  try {
+    dispatch({ type: UPLOAD_AVATAR_IMG_STARTED });
+    const userId = getState().auth._id;
+
+    const imageName = `avatar-${userId}`;
+
+    const path = `${userId}/avatar/${imageName}`;
+
+    const storageRef = firebase.storage().ref(path);
+
+    const uploadTask = storageRef.put(file);
+
+    const uploadToServer = {
+      dispatch,
+      type: "avatar",
+      path,
+      userId
+    };
+
+    listenToUploadProgress(uploadTask, uploadToServer);
+  } catch (err) {
+    errorHandling(dispatch, err, "upload", "avatar");
   }
 };
 
@@ -92,7 +159,7 @@ export const deleteImageFromStory = update => ({
   update
 });
 
-const deleteUrlFromServer = async (dispatch, storyId, imageId) => {
+const deleteStoryUrlFromServer = async (dispatch, storyId, imageId) => {
   try {
     const res = await axios.delete(`/api/story/image/${storyId}/${imageId}`);
 
@@ -115,7 +182,7 @@ export const startDeleteImageFromStory = imgObj => async dispatch => {
 
     await storageRef.delete();
 
-    deleteUrlFromServer(dispatch, storyId, imageId);
+    deleteStoryUrlFromServer(dispatch, storyId, imageId);
   } catch (err) {
     errorHandling(dispatch, err, "delete", "story image");
   }

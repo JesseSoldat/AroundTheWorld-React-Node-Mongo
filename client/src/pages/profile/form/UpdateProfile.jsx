@@ -8,13 +8,12 @@ import TopRowBtns from "../../../components/buttons/TopRowBtns";
 import SideBar from "./components/SideBar";
 import BasicForm from "./components/BasicForm";
 import AboutForm from "./components/AboutForm";
+import AvatarForm from "./components/AvatarForm";
 // actions
 import {
   startGetProfile,
   startEditProfile
 } from "../../../actions/profileActions";
-// images
-import UserAvatar from "../../../_images/userdefault.png";
 
 class UpdateProfile extends Component {
   state = {
@@ -40,7 +39,10 @@ class UpdateProfile extends Component {
     this.props.startEditProfile({ ...profile, ...values });
   };
 
-  goBack = () => {};
+  goBack = () => {
+    const { history, match } = this.props;
+    history.push(`/profile/${match.params.userId}`);
+  };
 
   renderCurrentForm = (currentForm, profile) => {
     console.log(profile);
@@ -57,6 +59,14 @@ class UpdateProfile extends Component {
       case "about":
         return (
           <AboutForm
+            initialValues={profile}
+            updateProfile={this.updateProfile}
+          />
+        );
+
+      case "avatar":
+        return (
+          <AvatarForm
             initialValues={profile}
             updateProfile={this.updateProfile}
           />
@@ -87,7 +97,7 @@ class UpdateProfile extends Component {
 
     return (
       <div className="row">
-        <div className="col-xs-12 col-sm-11 col-lg-8 mx-auto">
+        <div className="col-xs-12 col-sm-11 col-lg-10 mx-auto">
           <Heading title="Update Profile">
             <TopRowBtns btn0Cb={this.goBack} />
           </Heading>

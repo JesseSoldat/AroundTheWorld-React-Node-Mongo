@@ -17,10 +17,9 @@ class Friends extends Component {
     this.props.startGetFriends(this.props.userId);
   }
 
-  updateFilter = e => {
-    const { value } = e.target;
-    this.setState({ name: value });
-  };
+  viewStories = userId => this.props.history.push(`/matchedList/${userId}`);
+
+  updateFilter = e => this.setState({ name: e.target.value });
 
   filterFriends = friends => {
     const { name } = this.state;
@@ -38,7 +37,7 @@ class Friends extends Component {
           <div className="col-12">
             {friends.length > 1 && (
               <input
-                placeholder="Search for a friend..."
+                placeholder="Search for a friend by name..."
                 type="text"
                 value={this.state.name}
                 onChange={this.updateFilter}
@@ -50,7 +49,11 @@ class Friends extends Component {
         <div className="row">
           <div className="col-12">
             {filteredFriends.map(friend => (
-              <FriendCard key={friend._id} friend={friend} />
+              <FriendCard
+                key={friend._id}
+                friend={friend}
+                viewStories={this.viewStories}
+              />
             ))}
           </div>
         </div>

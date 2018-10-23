@@ -3,19 +3,28 @@ import { connect } from "react-redux";
 // common component
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
+import StaticMap from "../../map/StaticMap";
 import ImgCard from "../../../components/cards/ImgCard";
 import withStorage from "../../../components/hoc/withStorage";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
+// actions
+import {
+  getMatchedUserStoriesRequested,
+  getMatchedUserStories,
+  startGetMatchedUserStories
+} from "../../../actions/storyActions";
 
 // MatchedList
 class ComponentNeedingStorage extends Component {
   componentDidMount() {
+    const { userId } = this.props.match.params;
     const matchedUser = this.checkStorage();
-    if (matchedUser) {
-      console.log(matchedUser);
+    if (matchedUser && matchedUser._id === userId) {
+      this.props.getMatchedUserStoriesRequested();
+      this.props.getMatchedUserStories(matchedUser.stories);
     } else {
-      // store?
       // api call
+      this.props.startGetMatchedUserStories(userId);
     }
   }
 
@@ -33,25 +42,30 @@ class ComponentNeedingStorage extends Component {
   };
 
   goBack = () => {
-    this.props.history.push("/storyList");
+    this.props.history.goBack();
   };
 
   render() {
-    const { loading } = this.props;
-    const lsMatchedUser = this.checkStorage();
+    const { loading, matchedStories } = this.props;
+
     let content;
 
     if (loading) content = <Spinner />;
-    else if (lsMatchedUser) {
-      const { stories } = lsMatchedUser;
-
-      if (stories.length) {
-        content = lsMatchedUser.stories.map(story => (
+    else if (matchedStories) {
+      if (matchedStories.length) {
+        content = matchedStories.map(story => (
           <ImgCard
             key={story._id}
             storyId={story._id}
             data={story}
             cb={this.viewDetails}
+            image={
+              <StaticMap
+                coordinates={story.geometry.coordinates}
+                width="100%"
+                zoom={6}
+              />
+            }
           />
         ));
       }
@@ -76,10 +90,15 @@ class ComponentNeedingStorage extends Component {
 const MatchedList = withStorage(ComponentNeedingStorage);
 
 const mapStateToProps = ({ story }) => ({
-  loading: story.loading
+  loading: story.loading,
+  matchedStories: story.matchedStories
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  {
+    getMatchedUserStoriesRequested,
+    getMatchedUserStories,
+    startGetMatchedUserStories
+  }
 )(withStorage(MatchedList));

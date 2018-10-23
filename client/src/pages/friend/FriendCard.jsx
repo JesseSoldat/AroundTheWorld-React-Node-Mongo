@@ -4,12 +4,14 @@ import capitalizeFirstLetter from "../../utils/stringManipulation/capitalizeFirs
 // images
 import UserAvatar from "../../_images/userdefault.png";
 
-const FriendCard = ({ friend }) => {
-  let { username, email, avatar = null } = friend;
+const FriendCard = ({ friend, viewStories }) => {
+  let { username, email, location = null, avatar = null } = friend;
 
   username = capitalizeFirstLetter(username);
-
+  const defaultLocation = location ? location : "Unknown";
   const defaultAvatar = avatar ? avatar : UserAvatar;
+
+  const viewFriendStories = () => viewStories(friend._id);
 
   return (
     <div className="card my-4">
@@ -24,8 +26,16 @@ const FriendCard = ({ friend }) => {
           </div>
 
           <div className="col-xs-12 col-sm-12 col-md-7 col-lg-8">
-            <h3 className="card-title">{username}</h3>
-            <p className="card-text">{email}</p>
+            <h3 className="card-title mt-2">{username}</h3>
+            <p className="card-text">
+              <b>email:</b> {email}
+            </p>
+            <p className="card-text">
+              <b>location:</b> {defaultLocation}
+            </p>
+            <button onClick={viewFriendStories} className="btn btn-primary">
+              View Stories
+            </button>
           </div>
         </div>
       </div>

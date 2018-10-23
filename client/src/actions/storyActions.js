@@ -21,6 +21,8 @@ export const STORY_DETAILS_REQUESTED = "STORY_DETAILS_REQUESTED";
 export const STORY_DETAILS_LOADED = "STORY_DETAILS_LOADED";
 
 // matched user
+export const MATCHED_USERS_REQUESTED = "MATCHED_USERS_REQUESTED";
+export const MATCHED_USERS_LOADED = "MATCHED_USERS_LOADED";
 export const MATCHED_STORIES_REQUESTED = "MATCHED_STORIES_REQUESTED";
 export const MATCHED_STORIES_LOADED = "MATCHED_STORIES_LOADED";
 export const MATCHED_STORY_DETAILS_REQUESTED =
@@ -171,16 +173,18 @@ export const startDeleteStory = (storyId, history) => async dispatch => {
   }
 };
 
-// match with Other peoples stories
-export const matchWithOthers = () => ({
-  type: MATCHED_STORIES_LOADED
+// get a list of users who have stories close to your story
+export const matchWithOthers = stories => ({
+  type: MATCHED_USERS_LOADED,
+  matchedStories: stories
 });
+
 export const startMatchWithOthers = matchQuery => async (
   dispatch,
   getState
 ) => {
   try {
-    dispatch({ type: MATCHED_STORIES_REQUESTED });
+    dispatch({ type: MATCHED_USERS_REQUESTED });
     const userId = getState().auth._id;
     const { unit, maxDistance, coordinates } = matchQuery;
     const lng = coordinates[0];
@@ -200,6 +204,31 @@ export const startMatchWithOthers = matchQuery => async (
   }
 };
 
+// get a matches users list of stories
+export const getMatchedUserStoriesRequested = () => ({
+  type: MATCHED_STORIES_REQUESTED
+});
+
+export const getMatchedUserStories = matchedStories => ({
+  type: MATCHED_STORIES_LOADED,
+  matchedStories
+});
+
+export const startGetMatchedUserStories = userId => async dispatch => {
+  try {
+    dispatch(getMatchedUserStoriesRequested());
+    const res = await axios.get(`/api/story/${userId}`);
+
+    const { payload } = res.data;
+
+    dispatch(getMatchedUserStories(payload.stories));
+  } catch (err) {
+    errorHandling(dispatch, err, "get", "stories");
+    dispatch(storyError());
+  }
+};
+
+// get matched user story details
 export const getMatchedStoryDetails = ({ story }) => ({
   type: MATCHED_STORY_DETAILS_LOADED,
   matchedDetails: story

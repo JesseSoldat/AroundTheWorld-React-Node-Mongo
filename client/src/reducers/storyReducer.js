@@ -10,6 +10,9 @@ import {
   DELETE_STORY_FINISHED,
   STORY_DETAILS_REQUESTED,
   STORY_DETAILS_LOADED,
+  // matched
+  MATCHED_USERS_LOADED,
+  MATCHED_USERS_REQUESTED,
   MATCHED_STORIES_REQUESTED,
   MATCHED_STORIES_LOADED,
   MATCHED_STORY_DETAILS_REQUESTED,
@@ -63,7 +66,14 @@ const deleteStory = (prevStories, deletedStory) => {
 };
 
 export default (state = initialState, action) => {
-  const { type, stories, details, matchedDetails, update } = action;
+  const {
+    type,
+    stories,
+    details,
+    matchedStories,
+    matchedDetails,
+    update
+  } = action;
 
   switch (type) {
     // handle error
@@ -83,7 +93,6 @@ export default (state = initialState, action) => {
 
     case CREATE_STORY_FINISHED:
       const newStories = createStory(state.stories, update);
-
       return { ...state, overlay: false, stories: newStories, details: update };
 
     // edit story
@@ -119,12 +128,19 @@ export default (state = initialState, action) => {
     case STORY_DETAILS_LOADED:
       return { ...state, details, loading: false };
 
-    // get the stories of a matched user
-    case MATCHED_STORIES_REQUESTED:
+    // get a list of matched users
+    case MATCHED_USERS_REQUESTED:
       return { ...state, overlay: true };
 
-    case MATCHED_STORIES_LOADED:
+    case MATCHED_USERS_LOADED:
       return { ...state, overlay: false };
+
+    // get the stories of a matched user
+    case MATCHED_STORIES_REQUESTED:
+      return { ...state, loading: true };
+
+    case MATCHED_STORIES_LOADED:
+      return { ...state, matchedStories: [...matchedStories], loading: false };
 
     // get the details of a matched user's story
     case MATCHED_STORY_DETAILS_REQUESTED:

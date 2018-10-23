@@ -35,8 +35,6 @@ export const startGetFriends = userId => async dispatch => {
 
     const { payload } = res.data;
 
-    console.log(payload);
-
     dispatch(getFriends(payload));
   } catch (err) {
     errorHandling(dispatch, err, "get", "friends");
@@ -54,7 +52,6 @@ export const getFriendRequests = ({ friendIds, friendRequests }) => ({
 
 export const startGetFriendRequests = userId => async dispatch => {
   try {
-    dispatch(asyncActionStart());
     dispatch({ type: FRIEND_REQUESTS_REQUESTED });
 
     const res = await axios.get(`/api/friend/request/${userId}`);
@@ -62,10 +59,8 @@ export const startGetFriendRequests = userId => async dispatch => {
     const { payload } = res.data;
 
     dispatch(getFriendRequests(payload));
-    dispatch(asyncActionFinish());
   } catch (err) {
     errorHandling(dispatch, err, "get", "friend requests");
-    dispatch(asyncActionError());
   }
 };
 

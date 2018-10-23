@@ -26,6 +26,20 @@ const profileFields = {
     name: "gender",
     type: "radio",
     value: "female"
+  },
+  about: {
+    label: "About",
+    placeholder: " About",
+    name: "about",
+    info: "",
+    type: "text"
+  },
+  occupation: {
+    label: "Occupation ",
+    placeholder: " Occupation",
+    name: "occupation",
+    info: "",
+    type: "text"
   }
 };
 

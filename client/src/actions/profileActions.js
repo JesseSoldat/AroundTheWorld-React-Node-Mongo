@@ -33,8 +33,6 @@ export const startGetProfile = () => async (dispatch, getState) => {
 
     const { payload } = res.data;
 
-    console.log(payload);
-
     dispatch(getProfile(payload.profile));
   } catch (err) {
     errorHandling(dispatch, err, "get", "profile");

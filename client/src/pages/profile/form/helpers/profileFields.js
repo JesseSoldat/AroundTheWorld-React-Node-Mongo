@@ -14,6 +14,18 @@ const profileFields = {
     name: "hometown",
     info: "",
     type: "text"
+  },
+  genderMale: {
+    label: "Male",
+    name: "gender",
+    type: "radio",
+    value: "male"
+  },
+  genderFemale: {
+    label: "Female",
+    name: "gender",
+    type: "radio",
+    value: "female"
   }
 };
 

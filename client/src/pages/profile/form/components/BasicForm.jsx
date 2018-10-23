@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 // common components
 import TextInput from "../../../../components/form/TextInput";
+import RadioInput from "../../../../components/form/RadioInput";
 // data
 import profileFields from "../helpers/profileFields";
 
 class BasicForm extends Component {
-  updateProfile = () => [];
   render() {
     const { pristine, submitting, handleSubmit } = this.props;
 
@@ -17,7 +17,7 @@ class BasicForm extends Component {
             <div className="row">
               <div className="col-12">
                 <h4>Basics</h4>
-                <form onSubmit={handleSubmit(this.updateProfile)}>
+                <form onSubmit={handleSubmit(this.props.updateProfile)}>
                   <Field
                     fieldObj={profileFields["username"]}
                     name={profileFields["username"].name}
@@ -30,6 +30,35 @@ class BasicForm extends Component {
                     type={profileFields["hometown"].type}
                     component={TextInput}
                   />
+                  <div>
+                    <label className="p-0 m-0 pl-1">
+                      <small>Gender</small>
+                    </label>
+                    <div>
+                      <Field
+                        name={profileFields["genderMale"].name}
+                        type={profileFields["genderMale"].type}
+                        label={profileFields["genderMale"].label}
+                        value={profileFields["genderMale"].value}
+                        component={RadioInput}
+                      />
+                      <Field
+                        name={profileFields["genderFemale"].name}
+                        type={profileFields["genderFemale"].type}
+                        label={profileFields["genderFemale"].label}
+                        value={profileFields["genderFemale"].value}
+                        component={RadioInput}
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitting || pristine}
+                    className="mt-2 btn btn-outline-secondary btn-sm btn-block"
+                  >
+                    Submit
+                  </button>
                 </form>
               </div>
             </div>

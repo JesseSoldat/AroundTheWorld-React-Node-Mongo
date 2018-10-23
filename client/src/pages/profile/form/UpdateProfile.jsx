@@ -7,7 +7,10 @@ import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // custom components
 import BasicForm from "./components/BasicForm";
 // actions
-import { startGetProfile } from "../../../actions/profileActions";
+import {
+  startGetProfile,
+  startEditProfile
+} from "../../../actions/profileActions";
 // images
 import UserAvatar from "../../../_images/userdefault.png";
 
@@ -21,6 +24,10 @@ class UpdateProfile extends Component {
   }
 
   // cbs & events
+  updateProfile = values => {
+    console.log(values);
+    this.props.startEditProfile(values);
+  };
   goBack = () => {};
 
   // render dom
@@ -72,7 +79,9 @@ class UpdateProfile extends Component {
 
     if (loading) content = <Spinner />;
     else if (profile && profile._id === userId) {
-      content = <BasicForm profile={profile} />;
+      content = (
+        <BasicForm initialValues={profile} updateProfile={this.updateProfile} />
+      );
       sideBar = this.renderSideBar();
     }
 
@@ -99,5 +108,5 @@ const mapStateToProps = ({ profile }) => ({
 
 export default connect(
   mapStateToProps,
-  { startGetProfile }
+  { startGetProfile, startEditProfile }
 )(UpdateProfile);

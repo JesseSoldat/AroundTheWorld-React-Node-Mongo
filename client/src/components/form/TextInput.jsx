@@ -17,7 +17,7 @@ const TextInput = ({ fieldObj, input, type, meta: { touched, error } }) => {
       )}
       {required &&
         index === "0" && (
-          <small className="d-block pb-3 float-right">
+          <small className="d-block float-right">
             <strong>* = required fields</strong>
           </small>
         )}

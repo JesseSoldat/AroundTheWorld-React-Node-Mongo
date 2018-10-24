@@ -140,7 +140,11 @@ export default (state = initialState, action) => {
       return { ...state, loading: true };
 
     case MATCHED_STORIES_LOADED:
-      return { ...state, matchedStories: [...matchedStories], loading: false };
+      return {
+        ...state,
+        matchedStories: [...matchedStories],
+        loading: false
+      };
 
     // get the details of a matched user's story
     case MATCHED_STORY_DETAILS_REQUESTED:

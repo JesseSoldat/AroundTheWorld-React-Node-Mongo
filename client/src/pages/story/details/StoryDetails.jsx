@@ -76,6 +76,9 @@ class StoryDetails extends Component {
       title1: "Story",
       title2: "Map",
       title3: "Photos",
+      icon1: "fas fa-atlas mr-2",
+      icon2: "fas fa-map-marked-alt mr-2",
+      icon3: "fas fa-images mr-2",
       description: details.description,
       coordinates: details.geometry.coordinates
     };

@@ -20,8 +20,14 @@ class ComponentNeedingStorage extends Component {
     const { userId } = this.props.match.params;
     const matchedUser = this.checkStorage();
     if (matchedUser && matchedUser._id === userId) {
+      const { userInfo, stories } = matchedUser;
+
+      const username = userInfo[0].username;
+      const user = { username };
+      stories[0] = { ...stories[0], user };
+
       this.props.getMatchedUserStoriesRequested();
-      this.props.getMatchedUserStories(matchedUser.stories);
+      this.props.getMatchedUserStories(stories, userInfo[0]);
     } else {
       // api call
       this.props.startGetMatchedUserStories(userId);
@@ -48,11 +54,13 @@ class ComponentNeedingStorage extends Component {
   render() {
     const { loading, matchedStories } = this.props;
 
-    let content;
+    let content, title;
 
     if (loading) content = <Spinner />;
     else if (matchedStories) {
       if (matchedStories.length) {
+        title = matchedStories[0].user.username + "'s Stories";
+
         content = matchedStories.map(story => (
           <ImgCard
             key={story._id}
@@ -74,7 +82,7 @@ class ComponentNeedingStorage extends Component {
     return (
       <div className="row">
         <div className="col-11 mx-auto">
-          <Heading title="Matched User">
+          <Heading title={title}>
             <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
           </Heading>
 

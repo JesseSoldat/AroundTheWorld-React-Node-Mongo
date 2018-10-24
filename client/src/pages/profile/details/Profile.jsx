@@ -8,6 +8,8 @@ import TopRowBtns from "../../../components/buttons/TopRowBtns";
 import { startGetProfile } from "../../../actions/profileActions";
 // images
 import UserAvatar from "../../../_images/userdefault.png";
+// utils
+import capitalizeFirstLetter from "../../../utils/stringManipulation/capitalizeFirstLetter";
 
 class Profile extends Component {
   // lifecycles
@@ -31,8 +33,10 @@ class Profile extends Component {
       <div className="card my-4">
         <div className="card-body">
           <div className="row">
-            <div className="col-xs-12 col-sm-12 col-md-8">
-              <h4 className="text-center">{profile.username}</h4>
+            <div className="col-xs-12 col-sm-12 col-md-8 mb-4">
+              <h3 className="text-center">
+                {capitalizeFirstLetter(profile.username)}
+              </h3>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                   <span className="mr-2 font-weight-bold">Gender:</span>{" "}
@@ -59,9 +63,9 @@ class Profile extends Component {
                 </li>
               </ul>
             </div>
-            <div className="col-xs-12 col-sm-12 col-md-4">
+            <div className="col-xs-12 col-sm-12 col-md-4 d-flex justify-content-center align-items-center">
               <img
-                style={{ maxHeight: "150px", float: "right" }}
+                style={{ height: "220px" }}
                 className="img-fluid img-thumbnail"
                 src={defaultAvatar}
                 alt="avatar"
@@ -84,7 +88,7 @@ class Profile extends Component {
     }
     return (
       <div className="row">
-        <div className="col-xs-12 col-sm-11 col-lg-8 mx-auto">
+        <div className="col-sm-11 mx-auto">
           <Heading title="Profile">
             <TopRowBtns btn2Cb={this.editProfile} />
           </Heading>

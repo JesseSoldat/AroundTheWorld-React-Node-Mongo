@@ -25,8 +25,7 @@ class MatchedUserImages extends Component {
       case "requested":
         content = (
           <div>
-            <p>You must be friends to view this user's images.</p>
-            <p>You have sent this user a request. Now it is up to them.</p>
+            <p>Waiting for user to accept friend request.</p>
           </div>
         );
         break;
@@ -40,7 +39,14 @@ class MatchedUserImages extends Component {
         break;
 
       default:
-        content = <p>Unknown</p>;
+        content = (
+          <div
+            className="text-center"
+            style={{ width: "50px", margin: "auto" }}
+          >
+            <i className="fas fa-spinner fa-7x fa-spin mt-4" />
+          </div>
+        );
         break;
     }
 

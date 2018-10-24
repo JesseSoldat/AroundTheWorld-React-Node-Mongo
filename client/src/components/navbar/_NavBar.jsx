@@ -54,7 +54,7 @@ class NavBar extends Component {
   getBrand = () => {
     return (
       <Link
-        className="navbar-brand "
+        className="navbar-brand ml-3"
         to={this.props.userId ? "/dashboard" : "/"}
       >
         <img className="logo" src={jLogo} />
@@ -65,7 +65,7 @@ class NavBar extends Component {
 
   getPublicRoutes = () => {
     return (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto mr-3">
         <li className={`${navLinkClass} mt-2 mt-md-0`}>
           <SiteLink text="Login" icon="fas fa-sign-in-alt" />
         </li>
@@ -79,7 +79,7 @@ class NavBar extends Component {
   getPrivateRoutes = () => {
     const { numberOfRequests } = this.props;
     return (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto mr-3">
         <ShowHide size={"sm"}>
           <FriendsRequestListItem
             numberOfRequests={numberOfRequests}

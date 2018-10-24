@@ -6,7 +6,7 @@ const Accordion = ({
   accordionMiddle,
   accordionBottom
 }) => {
-  const { title1, title2, title3 } = data;
+  const { title1, title2, title3, icon1, icon2, icon3 } = data;
 
   return (
     <div className="accordion" id="accordionExample">
@@ -14,6 +14,7 @@ const Accordion = ({
         <div className="card-header" id="headingOne">
           <h5 className="mb-0">
             <button
+              style={{ color: "black", textDecoration: "none" }}
               className="btn btn-link"
               type="button"
               data-toggle="collapse"
@@ -21,6 +22,7 @@ const Accordion = ({
               aria-expanded="true"
               aria-controls="collapseOne"
             >
+              <i className={icon1} />
               {title1}
             </button>
           </h5>
@@ -38,6 +40,7 @@ const Accordion = ({
         <div className="card-header" id="headingTwo">
           <h5 className="mb-0">
             <button
+              style={{ color: "black", textDecoration: "none" }}
               className="btn btn-link collapsed"
               type="button"
               data-toggle="collapse"
@@ -45,6 +48,7 @@ const Accordion = ({
               aria-expanded="false"
               aria-controls="collapseTwo"
             >
+              <i className={icon2} />
               {title2}
             </button>
           </h5>
@@ -62,6 +66,7 @@ const Accordion = ({
         <div className="card-header" id="headingThree">
           <h5 className="mb-0">
             <button
+              style={{ color: "black", textDecoration: "none" }}
               className="btn btn-link collapsed"
               type="button"
               data-toggle="collapse"
@@ -69,6 +74,7 @@ const Accordion = ({
               aria-expanded="false"
               aria-controls="collapseThree"
             >
+              <i className={icon3} />
               {title3}
             </button>
           </h5>

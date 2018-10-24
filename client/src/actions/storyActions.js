@@ -209,9 +209,10 @@ export const getMatchedUserStoriesRequested = () => ({
   type: MATCHED_STORIES_REQUESTED
 });
 
-export const getMatchedUserStories = matchedStories => ({
+export const getMatchedUserStories = (matchedStories, matchedUserInfo) => ({
   type: MATCHED_STORIES_LOADED,
-  matchedStories
+  matchedStories,
+  matchedUserInfo
 });
 
 export const startGetMatchedUserStories = userId => async dispatch => {

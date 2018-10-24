@@ -3,10 +3,8 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 // css
-
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // import "../node_modules/bootswatch/dist/flatly/bootstrap.min.css";
-
 import "font-awesome/css/font-awesome.min.css";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import "./index.css";

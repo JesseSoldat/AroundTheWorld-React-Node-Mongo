@@ -29,11 +29,13 @@ class MatchedDetails extends Component {
       title1: "Story",
       title2: "Map",
       title3: "Photos",
+      icon1: "fas fa-atlas mr-2",
+      icon2: "fas fa-map-marked-alt mr-2",
+      icon3: "fas fa-images mr-2",
       matchedUserId: matchedDetails.user._id,
       description: matchedDetails.description,
       coordinates: matchedDetails.geometry.coordinates
     };
-
     return data;
   };
 
@@ -63,18 +65,23 @@ class MatchedDetails extends Component {
       friendIds,
       friendRequests
     } = this.props;
-    let content;
+    let content, title, status;
 
     if (loading) content = <Spinner />;
-    else if (matchedDetails) {
+    else if (matchedDetails && matchedDetails.geometry) {
+      title = matchedDetails.title;
       const data = this.formatAccordionData(matchedDetails);
 
-      const status = checkFriendStatus({
-        userId,
-        matchedUserId: data.matchedUserId,
-        friendIds,
-        friendRequests
-      });
+      if (friendRequests) {
+        console.log("friendRequest", friendRequests);
+
+        status = checkFriendStatus({
+          userId,
+          matchedUserId: data.matchedUserId,
+          friendIds,
+          friendRequests
+        });
+      }
 
       content = (
         <Accordion
@@ -82,11 +89,11 @@ class MatchedDetails extends Component {
           accordionTop={<p>{data.description}</p>}
           accordionMiddle={
             <Map
-              map={data.coordinates}
+              map={[data.coordinates[1], data.coordinates[0]]}
               height="400px"
               marker={{
-                markerLng: data.coordinates[1],
-                markerLat: data.coordinates[0]
+                markerLng: data.coordinates[0],
+                markerLat: data.coordinates[1]
               }}
             />
           }
@@ -103,12 +110,14 @@ class MatchedDetails extends Component {
     }
 
     return (
-      <div className="storyDetailsWrapper">
-        <Heading title="Story Details">
-          <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
-        </Heading>
-        <div className="row mt-4">
-          <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
+      <div className="row">
+        <div className="col-sm-11 mx-auto">
+          <Heading title={title}>
+            <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
+          </Heading>
+          <div className="row mt-4">
+            <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
+          </div>
         </div>
       </div>
     );

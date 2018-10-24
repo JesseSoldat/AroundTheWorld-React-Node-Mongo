@@ -38,7 +38,7 @@ const FriendsRequestBtnGroup = ({
       >
         <span>Friend Request</span>
         <span
-          className={`friendRequestMenuBadge ml-2 badge badge-pill ${spanClass}`}
+          className={`friendRequestMenuBadge mx-2 badge badge-pill ${spanClass}`}
         >
           {numberOfRequests}
         </span>
@@ -47,10 +47,10 @@ const FriendsRequestBtnGroup = ({
   };
 
   return (
-    <div className="friendBtnGroup">
-      <div className="btn-group mr-3">
+    <div className="friendBtnGroup mr-5">
+      <div className="btn-group">
         {getMenuBtn()}
-        <div className="dropdown-menu dropdown-menu-right">
+        <div className="dropdown-menu">
           {getMenuLinkBtn()}
           <button
             className="dropdown-item cursorAllowed"

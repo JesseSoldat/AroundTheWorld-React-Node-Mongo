@@ -1,4 +1,6 @@
 import React from "react";
+// common components
+import IconBtn from "../../../../components/buttons/IconBtn";
 
 const SendFriendRequest = ({ cb }) => {
   return (
@@ -6,9 +8,12 @@ const SendFriendRequest = ({ cb }) => {
       <p className="pr-3">
         You must be friends to view this user's photos. Send a friends request?
       </p>
-      <button onClick={cb} className="btn btn-primary">
-        Send Friends Request
-      </button>
+      <IconBtn
+        btnClass="btn-secondary"
+        iconClass="fas fa-arrow-alt-circle-right mr-2"
+        text="Send Friends Request"
+        cb={cb}
+      />
     </div>
   );
 };

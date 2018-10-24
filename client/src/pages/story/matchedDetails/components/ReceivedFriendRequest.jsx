@@ -1,4 +1,6 @@
 import React from "react";
+// common components
+import IconBtn from "../../../../components/buttons/IconBtn";
 
 const ReceivedFriendRequest = ({ cb }) => {
   return (
@@ -7,9 +9,12 @@ const ReceivedFriendRequest = ({ cb }) => {
         You received a friends request. If you accept this request you will be
         able to view this user's photos.
       </p>
-      <button onClick={cb} className="btn btn-primary">
-        Accept
-      </button>
+      <IconBtn
+        btnClass="btn-secondary"
+        iconClass="fas fa-arrow-alt-circle-left mr-2"
+        text="Accept Friends Request"
+        cb={cb}
+      />
     </div>
   );
 };

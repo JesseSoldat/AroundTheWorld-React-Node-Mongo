@@ -8,6 +8,8 @@ import RadioInput from "../form/RadioInput";
 import ShowHide from "../ShowHide";
 // custom components
 import StaticMap from "../../pages/map/StaticMap";
+// utils
+import truncateStr from "../../utils/stringManipulation/truncateStr";
 // css
 import "./ListCard.css";
 
@@ -72,7 +74,7 @@ const ListCard = ({
         <div className="row">
           <div className="text-left col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <h3 className="card-title">{title}</h3>
-            <p className="card-text">{description}</p>
+            <p className="card-text">{truncateStr(description)}</p>
 
             <form className="form" onSubmit={handleSubmit(matchOthers)}>
               <Field

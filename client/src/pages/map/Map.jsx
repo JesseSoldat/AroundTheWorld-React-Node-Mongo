@@ -25,7 +25,7 @@ class Map extends Component {
             <button onClick={cancel} className="btn btn-danger mr-2">
               Cancel
             </button>
-            <button onClick={selectPlace} className="btn btn-primary">
+            <button onClick={selectPlace} className="btn btn-secondary">
               Select
             </button>
           </div>

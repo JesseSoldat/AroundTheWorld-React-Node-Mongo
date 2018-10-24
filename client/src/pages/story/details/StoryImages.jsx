@@ -9,7 +9,7 @@ const StoryImages = ({ images, addPhotos, viewLargePhotoModal }) => {
       <div className="row">
         <div className="col-12">
           <IconBtn
-            btnClass="floatRight btn btn-sm btn-primary"
+            btnClass="floatRight btn btn-sm btn-secondary"
             iconClass="fas fa-plus"
             text="Add Photos"
             cb={addPhotos}

@@ -11,8 +11,10 @@ const TileCard = ({ data }) => {
           <p className="card-text py-4">{subtitle}</p>
         </div>
 
-        <Link to={link}>
-          <button className="btn-primary btn-block">{linkText}</button>
+        <Link className="w-100" to={link}>
+          <button className="btn btn-outline-dark btn-sm btn-block">
+            {linkText}
+          </button>
         </Link>
       </div>
     </div>

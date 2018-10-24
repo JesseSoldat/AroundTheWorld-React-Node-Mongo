@@ -113,14 +113,17 @@ class CreateStory extends Component {
                     <div className="spacer10" />
                     <div>
                       <button
-                        className="btn btn-primary mr-2"
+                        onClick={this.cancel}
+                        className="btn btn-danger mr-2"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="btn btn-secondary"
                         type="submit"
                         disabled={invalid || submitting}
                       >
                         Submit
-                      </button>
-                      <button onClick={this.cancel} className="btn btn-danger">
-                        Cancel
                       </button>
                     </div>
                   </form>

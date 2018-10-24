@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 // common components
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
@@ -62,7 +63,16 @@ class StoryList extends Component {
       content = (
         <div className="row">
           <div className="col-12 text-center">
-            <h3 className="mt-3">No stories found for this user</h3>
+            <div className="card mt-5 w-75 mx-auto">
+              <div className="card-body">
+                <h3>No stories found for this user</h3>
+                <Link to="/map">
+                  <button className="my-5 btn btn-secondary btn-sm btn-block w-75 mx-auto">
+                    Create your first story?
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       );

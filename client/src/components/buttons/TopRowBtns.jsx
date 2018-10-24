@@ -36,7 +36,7 @@ const TopRowBtns = ({
             )}
             {btn2Cb && (
               <IconBtn
-                btnClass="btn-primary"
+                btnClass="btn-secondary"
                 iconClass="fas fa-edit d-none d-sm-inline mr-1"
                 text="Edit"
                 cb={btn2Cb}

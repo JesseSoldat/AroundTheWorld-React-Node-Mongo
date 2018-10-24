@@ -86,10 +86,11 @@ class StoryDetails extends Component {
   render() {
     const { loading, details } = this.props;
 
-    let content;
+    let content, title;
 
     if (loading) content = <Spinner />;
     else if (details) {
+      title = details.title;
       const data = this.formatAccordionData(details);
 
       content = (
@@ -118,17 +119,19 @@ class StoryDetails extends Component {
     }
 
     return (
-      <div className="storyDetailsWrapper">
-        <OverlaySpinner showOverlay={this.props.showOverlay} />
-        <Heading title="Story Details">
-          <TopRowBtns
-            btn0Cb={this.goBack}
-            btn1Cb={this.onDeleteStory}
-            btn2Cb={this.onEditStory}
-          />
-        </Heading>
-        <div className="row mt-4">
-          <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
+      <div className="row">
+        <div className="col-11 mx-auto">
+          <OverlaySpinner showOverlay={this.props.showOverlay} />
+          <Heading title={title}>
+            <TopRowBtns
+              btn0Cb={this.goBack}
+              btn1Cb={this.onDeleteStory}
+              btn2Cb={this.onEditStory}
+            />
+          </Heading>
+          <div className="row mt-4">
+            <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
+          </div>
         </div>
       </div>
     );

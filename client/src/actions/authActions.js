@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toastr } from "react-redux-toastr";
+import { reset } from "redux-form";
 // utils
 import setAxiosHeader from "../utils/auth/setAxiosHeader";
 // helpers
@@ -11,10 +12,13 @@ import {
   asyncActionError
 } from "./asyncActions";
 // types
+export const AUTH_ACTION_ERROR = "AUTH_ACTION_ERROR";
 export const AUTH_LOGIN = "AUTH_LOGIN";
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
+export const CHANGE_PASSWORD_STARTED = "CHANGE_PASSWORD_STARTED";
+export const CHANGE_PASSWORD_FINISHED = "CHANGE_PASSWORD_FINISHED";
 
-// auth
+// helpers
 const authSetup = (dispatch, { _id, token, expires, role }, msg) => {
   // axios headers
   setAxiosHeader(token);
@@ -27,6 +31,11 @@ const authSetup = (dispatch, { _id, token, expires, role }, msg) => {
   // finish async
   dispatch(asyncActionFinish());
 };
+
+// auth actions errors
+export const authError = () => ({
+  type: AUTH_ACTION_ERROR
+});
 
 // check token
 export const startCheckToken = () => async dispatch => {
@@ -81,4 +90,34 @@ export const startLogout = () => dispatch => {
   localStorage.removeItem("user");
 
   dispatch({ type: AUTH_LOGOUT });
+};
+
+// change password
+export const changePassword = () => ({
+  type: CHANGE_PASSWORD_FINISHED
+});
+
+export const startChangePassword = newPassword => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: CHANGE_PASSWORD_STARTED });
+    const userId = getState().auth._id;
+
+    const res = await axios.put(`/api/password/${userId}`, {
+      password: newPassword
+    });
+
+    const { msg } = res.data;
+
+    dispatch(changePassword());
+
+    dispatch(reset("passwordForm"));
+
+    toastr.success("Success", msg);
+  } catch (err) {
+    errorHandling(dispatch, err, "change", "password");
+    dispatch(authError());
+  }
 };

@@ -1,12 +1,18 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import {
+  combineValidators,
+  composeValidators,
+  isRequired,
+  hasLengthBetween
+} from "revalidate";
 // common components
 import TextInput from "../../../../components/form/TextInput";
 import RadioInput from "../../../../components/form/RadioInput";
 // data
 import profileFields from "../helpers/profileFields";
 
-const BasicForm = ({ submitting, handleSubmit, updateProfile }) => {
+const BasicForm = ({ submitting, invalid, handleSubmit, updateProfile }) => {
   return (
     <div className="col-xs-12 col-md-8 mx-auto">
       <div className="card">
@@ -51,7 +57,7 @@ const BasicForm = ({ submitting, handleSubmit, updateProfile }) => {
 
                 <button
                   type="submit"
-                  disabled={submitting}
+                  disabled={invalid || submitting}
                   className="mt-2 btn btn-outline-secondary btn-sm btn-block"
                 >
                   Submit
@@ -65,8 +71,18 @@ const BasicForm = ({ submitting, handleSubmit, updateProfile }) => {
   );
 };
 
+const validate = combineValidators({
+  username: composeValidators(
+    isRequired({ message: "Username is a required field" }),
+    hasLengthBetween(3, 15)({
+      message: "Username must be between 3-15 characters"
+    })
+  )()
+});
+
 export default reduxForm({
   form: "profileForm",
   enableReinitialize: true,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  validate
 })(BasicForm);

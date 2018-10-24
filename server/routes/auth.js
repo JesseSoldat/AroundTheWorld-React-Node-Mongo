@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs");
 // models
 const User = require("../models/user");
 // middlewares
@@ -74,6 +75,38 @@ module.exports = app => {
       serverRes(res, 200, msg, { _id, role, token });
     } catch (err) {
       const msg = getErrMsg("err", "login", "user");
+      serverRes(res, 401, msg, null);
+    }
+  });
+
+  // change password
+  const hashPassword = password => {
+    return new Promise((resolve, reject) => {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(password, salt, (err, hash) => {
+          if (err) reject();
+          resolve(hash);
+        });
+      });
+    });
+  };
+
+  app.put("/api/password/:userId", isAuth, async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { password } = req.body;
+
+      const hashedPassword = await hashPassword(password);
+
+      await User.findByIdAndUpdate(userId, {
+        $set: { password: hashedPassword }
+      });
+
+      const msg = "The password was changed";
+
+      serverRes(res, 200, msg, null);
+    } catch (err) {
+      const msg = getErrMsg("err", "change", "password");
       serverRes(res, 401, msg, null);
     }
   });

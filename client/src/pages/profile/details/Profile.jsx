@@ -31,7 +31,34 @@ class Profile extends Component {
       <div className="card my-4">
         <div className="card-body">
           <div className="row">
-            <div className="col-xs-12 col-sm-12 col-md-8">{/* userinfo */}</div>
+            <div className="col-xs-12 col-sm-12 col-md-8">
+              <h4 className="text-center">{profile.username}</h4>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">
+                  <span className="mr-2 font-weight-bold">Gender:</span>{" "}
+                  {profile.gender}
+                </li>
+                <li className="list-group-item">
+                  <span className="mr-2 font-weight-bold">Age:</span> ?
+                </li>
+                <li className="list-group-item">
+                  <span className="mr-2 font-weight-bold">Occupation:</span>{" "}
+                  {profile.occupation}
+                </li>
+                <li className="list-group-item">
+                  <span className="mr-2 font-weight-bold">Hometown:</span>{" "}
+                  {profile.hometown}
+                </li>
+                <li className="list-group-item">
+                  <span className="mr-2 font-weight-bold">Email:</span>{" "}
+                  {profile.email}
+                </li>
+                <li className="list-group-item">
+                  <span className="mr-2 font-weight-bold">About:</span>{" "}
+                  {profile.about}
+                </li>
+              </ul>
+            </div>
             <div className="col-xs-12 col-sm-12 col-md-4">
               <img
                 style={{ maxHeight: "150px", float: "right" }}

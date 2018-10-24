@@ -9,11 +9,13 @@ import SideBar from "./components/SideBar";
 import BasicForm from "./components/BasicForm";
 import AboutForm from "./components/AboutForm";
 import AvatarForm from "./components/AvatarForm";
+import PasswordForm from "./components/PasswordForm";
 // actions
 import {
   startGetProfile,
   startEditProfile
 } from "../../../actions/profileActions";
+import { startChangePassword } from "../../../actions/authActions";
 
 class UpdateProfile extends Component {
   state = {
@@ -39,14 +41,17 @@ class UpdateProfile extends Component {
     this.props.startEditProfile({ ...profile, ...values });
   };
 
+  updatePassword = values => {
+    const { password } = values;
+    this.props.startChangePassword(password);
+  };
+
   goBack = () => {
     const { history, match } = this.props;
     history.push(`/profile/${match.params.userId}`);
   };
 
   renderCurrentForm = (currentForm, profile) => {
-    console.log(profile);
-
     switch (currentForm) {
       case "basic":
         return (
@@ -71,6 +76,9 @@ class UpdateProfile extends Component {
             updateProfile={this.updateProfile}
           />
         );
+
+      case "password":
+        return <PasswordForm updatePassword={this.updatePassword} />;
 
       default:
         break;
@@ -118,5 +126,5 @@ const mapStateToProps = ({ profile }) => ({
 
 export default connect(
   mapStateToProps,
-  { startGetProfile, startEditProfile }
+  { startGetProfile, startEditProfile, startChangePassword }
 )(UpdateProfile);

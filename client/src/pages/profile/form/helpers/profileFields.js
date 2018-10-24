@@ -40,6 +40,20 @@ const profileFields = {
     name: "occupation",
     info: "",
     type: "text"
+  },
+  password: {
+    label: "New Password",
+    placeholder: "New Password",
+    name: "password",
+    info: "",
+    type: "password"
+  },
+  confirm: {
+    label: "Confirm Password",
+    placeholder: "Confirm Password",
+    name: "confirm",
+    info: "",
+    type: "password"
   }
 };
 

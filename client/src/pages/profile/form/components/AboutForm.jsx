@@ -31,7 +31,7 @@ const AboutForm = ({ submitting, handleSubmit, updateProfile }) => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="mt-2 btn btn-outline-secondary btn-sm btn-block"
+                  className="mt-4 btn btn-outline-secondary btn-sm btn-block"
                 >
                   Submit
                 </button>

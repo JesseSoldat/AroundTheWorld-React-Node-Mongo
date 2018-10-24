@@ -110,7 +110,15 @@ const ListCard = ({
           </div>
 
           <div className="cardImg col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            <StaticMap coordinates={geometry.coordinates} />
+            <div
+              className="mx-auto p-2"
+              style={{
+                overflow: "hidden",
+                borderRadius: "5px"
+              }}
+            >
+              <StaticMap coordinates={geometry.coordinates} />
+            </div>
           </div>
         </div>
       </div>

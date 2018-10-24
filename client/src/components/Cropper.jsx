@@ -14,9 +14,14 @@ class Crop extends Component {
   };
 
   render() {
-    const { text = "Step 2 - Resize image", files } = this.props;
+    const {
+      wrapperClass = "col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2",
+      aspectRatio = 4 / 3,
+      text = "Step 2 - Resize image",
+      files
+    } = this.props;
     return (
-      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
+      <div className={wrapperClass}>
         <div className="imageUploadCard card">
           <div className="card-body text-center d-flex flex-column align-items-center">
             <h4 className="mb-4 imgUploadTitle">{text}</h4>
@@ -27,7 +32,7 @@ class Crop extends Component {
                   style={{ height: 200, width: 280 }}
                   ref="cropper"
                   src={files[0].preview}
-                  aspectRatio={4 / 3}
+                  aspectRatio={aspectRatio}
                   viewMode={0}
                   dragMode="move"
                   guides={false}

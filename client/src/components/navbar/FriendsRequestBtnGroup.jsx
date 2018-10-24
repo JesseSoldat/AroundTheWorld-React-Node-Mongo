@@ -19,7 +19,7 @@ const FriendsRequestBtnGroup = ({
       >
         <i className="fas fa-user-friends" />
 
-        {numberOfRequests.length && (
+        {numberOfRequests && (
           <span className="badge badge-pill badge-danger ml-2">
             {numberOfRequests}
           </span>

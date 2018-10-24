@@ -1,16 +1,23 @@
 import React from "react";
 import IconBtns from "./buttons/IconBtn";
 
-const CropperPreview = ({ files, cropResult, cancelCrop, uploadImage }) => {
+const CropperPreview = ({
+  wrapperClass = "col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2",
+  imgClass = "",
+  files,
+  cropResult,
+  cancelCrop,
+  uploadImage
+}) => {
   return (
-    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
+    <div className={wrapperClass}>
       <div className="imageUploadCard card">
         <div className="card-body text-center">
           <h4 className="mb-4 imgUploadTitle">Step 3 - Preview and Upload</h4>
           {files[0] && (
             <div>
               <div className="finalImageWrapper">
-                <img className="previewImg" src={cropResult} />
+                <img className={`previewImg ${imgClass}`} src={cropResult} />
               </div>
               <div className="mt-2">
                 <IconBtns

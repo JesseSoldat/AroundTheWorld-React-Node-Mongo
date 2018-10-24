@@ -10,7 +10,7 @@ button:focus {
   outline: 0;
 }
 
-/* a {
+a {
   text-decoration: none !important;
   color: black !important;
 }
@@ -18,7 +18,7 @@ button:focus {
 a:hover {
   text-decoration: none !important;
   color: black !important;
-} */
+}
 
 .floatRight {
   float: right;

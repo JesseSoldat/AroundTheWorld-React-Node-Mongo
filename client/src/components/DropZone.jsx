@@ -2,12 +2,13 @@ import React from "react";
 import Dropzone from "react-dropzone";
 
 const DropZone = ({
+  wrapperClass = "col-sm-12 col-lg-4 my-2",
   text = "Step 1 - Add Photo",
   multiple = false,
   onDrop
 }) => {
   return (
-    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 my-2">
+    <div className={wrapperClass}>
       <div className="imageUploadCard card">
         <div className="card-body d-flex flex-column align-items-center">
           <h4 className="mb-4 imgUploadTitle">{text}</h4>

@@ -36,9 +36,7 @@ class NavBar extends Component {
   }
 
   // cbs and events
-  viewFriends = () => {
-    this.props.history.push("/friends");
-  };
+  viewFriends = () => this.props.history.push("/friends");
 
   viewProfile = () => this.props.history.push(`/profile/${this.props.userId}`);
 
@@ -46,9 +44,7 @@ class NavBar extends Component {
     // display a modal with request
   };
 
-  onStartLogout = () => {
-    this.props.startLogout();
-  };
+  onStartLogout = () => this.props.startLogout();
 
   // render dom elements
   getBrand = () => {
@@ -141,8 +137,8 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = ({ auth, friend }) => {
-  const numberOfRequests = friend.friendRequest
-    ? friend.friendRequest.length
+  const numberOfRequests = friend.friendRequests
+    ? friend.friendRequests.length
     : 0;
 
   return {

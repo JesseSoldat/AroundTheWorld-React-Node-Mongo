@@ -5,15 +5,12 @@ import { reset } from "redux-form";
 import setAxiosHeader from "../utils/auth/setAxiosHeader";
 // helpers
 import errorHandling from "./helpers/errorHandling";
-// actions
-import {
-  asyncActionStart,
-  asyncActionFinish,
-  asyncActionError
-} from "./asyncActions";
 // types
 export const AUTH_ACTION_ERROR = "AUTH_ACTION_ERROR";
-export const AUTH_LOGIN = "AUTH_LOGIN";
+export const AUTH_REGISTER_STARTED = "AUTH_REGISTER_STARTED";
+export const AUTH_LOGIN_STARTED = "AUTH_LOGIN_STARTED";
+export const AUTHENTICATION_FINISHED = "AUTHENTICATION_FINISHED";
+
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
 export const CHANGE_PASSWORD_STARTED = "CHANGE_PASSWORD_STARTED";
 export const CHANGE_PASSWORD_FINISHED = "CHANGE_PASSWORD_FINISHED";
@@ -25,11 +22,9 @@ const authSetup = (dispatch, { _id, token, expires, role }, msg) => {
   // set user to local storage
   localStorage.setItem("user", JSON.stringify({ _id, token, expires }));
   // login
-  dispatch(login(_id, token, role));
+  dispatch(authentication(_id, token, role));
   // msg
   toastr.success("Success", msg);
-  // finish async
-  dispatch(asyncActionFinish());
 };
 
 // auth actions errors
@@ -37,19 +32,19 @@ export const authError = () => ({
   type: AUTH_ACTION_ERROR
 });
 
-// check token
-export const startCheckToken = () => async dispatch => {
-  try {
-    await axios.get("/api/tokenCheck");
-  } catch (err) {
-    errorHandling(dispatch, err, "check", "token");
-  }
-};
+// login && register
+export const authentication = (_id, token, role) => ({
+  type: AUTHENTICATION_FINISHED,
+  _id,
+  token,
+  role
+});
 
 // register
 export const startRegister = user => async dispatch => {
-  dispatch(asyncActionStart());
   try {
+    dispatch({ type: AUTH_REGISTER_STARTED });
+
     const res = await axios.post("/api/register", user);
 
     const { msg, payload } = res.data;
@@ -57,20 +52,15 @@ export const startRegister = user => async dispatch => {
     authSetup(dispatch, payload, msg);
   } catch (err) {
     errorHandling(dispatch, err, "register", "user");
-    dispatch(asyncActionError());
+    dispatch(authError());
   }
 };
 
 // login
-export const login = (_id, token, role) => ({
-  type: AUTH_LOGIN,
-  _id,
-  token,
-  role
-});
-
 export const startLogin = user => async dispatch => {
   try {
+    dispatch({ type: AUTH_LOGIN_STARTED });
+
     const res = await axios.post("/api/login", user);
 
     const { msg, payload } = res.data;
@@ -78,7 +68,7 @@ export const startLogin = user => async dispatch => {
     authSetup(dispatch, payload, msg);
   } catch (err) {
     errorHandling(dispatch, err, "login", "user");
-    dispatch(asyncActionError());
+    dispatch(authError());
   }
 };
 
@@ -90,6 +80,15 @@ export const startLogout = () => dispatch => {
   localStorage.removeItem("user");
 
   dispatch({ type: AUTH_LOGOUT });
+};
+
+// check token
+export const startCheckToken = () => async dispatch => {
+  try {
+    await axios.get("/api/tokenCheck");
+  } catch (err) {
+    errorHandling(dispatch, err, "check", "token");
+  }
 };
 
 // change password

@@ -1,5 +1,5 @@
 import { toastr } from "react-redux-toastr";
-import { AUTH_LOGIN } from "../../actions/authActions";
+import { AUTHENTICATION_FINISHED } from "../../actions/authActions";
 // utils
 import setAxiosHeader from "./setAxiosHeader";
 import isTokenExp from "./isTokenExp";
@@ -25,7 +25,7 @@ const handleInitialAuth = (store, renderApp) => {
     // Token is good
     else {
       store.dispatch({
-        type: AUTH_LOGIN,
+        type: AUTHENTICATION_FINISHED,
         _id,
         token,
         role

@@ -3,13 +3,13 @@ import { toastr } from "react-redux-toastr";
 // helpers
 import errorHandling from "./helpers/errorHandling";
 // types
-// friends
 export const FRIEND_ACTION_ERROR = "FRIEND_ACTION_ERROR";
+// loading
 export const GET_FRIENDS_REQUESTED = "GET_FRIENDS_REQUESTED";
 export const GET_FRIENDS_LOADED = "GET_FRIENDS_LOADED";
-// friend request
 export const FRIEND_REQUESTS_REQUESTED = "FRIEND_REQUESTS_REQUESTED";
 export const FRIEND_REQUESTS_LOADED = "FRIEND_REQUESTS_LOADED";
+// overlay
 export const FRIEND_REQUEST_STARTED = "FRIEND_REQUEST_STARTED";
 export const FRIEND_REQUEST_FINISHED = "FRIEND_REQUEST_FINISHED";
 export const ACCEPT_FRIEND_REQUEST_STARTED = "ACCEPT_FRIEND_REQUEST_STARTED";

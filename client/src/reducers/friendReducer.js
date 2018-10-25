@@ -1,8 +1,13 @@
 const {
   FRIEND_ACTION_ERROR,
+  // loading
+  FRIEND_REQUESTS_REQUESTED,
   FRIEND_REQUESTS_LOADED,
   GET_FRIENDS_REQUESTED,
   GET_FRIENDS_LOADED,
+  // overlay
+  FRIEND_REQUEST_STARTED,
+  FRIEND_REQUEST_FINISHED,
   ACCEPT_FRIEND_REQUEST_STARTED,
   ACCEPT_FRIEND_REQUEST_FINISHED,
   DENY_FRIEND_REQUEST_STARTED,
@@ -21,9 +26,11 @@ export default (state = initialState, action) => {
   const { type, friends, friendIds, friendRequests } = action;
 
   switch (type) {
+    // clear loading and overlay
     case FRIEND_ACTION_ERROR:
       return { ...state, loading: false, overlay: false };
 
+    // loading
     case GET_FRIENDS_REQUESTED:
       return { ...state, loading: true };
 
@@ -34,6 +41,12 @@ export default (state = initialState, action) => {
         loading: false
       };
 
+    // nav component loads friends request at start of app for authenticated users
+    // when authentication updates it will requests the users friends
+    // do not show loading this will be handled in the background
+    case FRIEND_REQUESTS_REQUESTED:
+      return { ...state };
+
     case FRIEND_REQUESTS_LOADED:
       return {
         ...state,
@@ -41,10 +54,13 @@ export default (state = initialState, action) => {
         friendRequests
       };
 
+    // overlay
+    case FRIEND_REQUEST_STARTED:
     case ACCEPT_FRIEND_REQUEST_STARTED:
     case DENY_FRIEND_REQUEST_STARTED:
       return { ...state, overlay: true };
 
+    case FRIEND_REQUEST_FINISHED:
     case ACCEPT_FRIEND_REQUEST_FINISHED:
     case DENY_FRIEND_REQUEST_FINISHED:
       return { ...state, overlay: false };

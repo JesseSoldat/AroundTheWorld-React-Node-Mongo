@@ -24,7 +24,7 @@ const StoryImages = ({ images, addPhotos, viewLargePhotoModal }) => {
             className="cursorAllowed col-xs-4 col-md-3 col-lg-2 m-2"
             onClick={onViewLargePhotoModal(img)}
           >
-            <img className="img-fluid" src={img.downloadURL} />
+            <img className="img-fluid" src={img.downloadURL} alt="map" />
           </div>
         ))}
       </div>

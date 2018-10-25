@@ -45,7 +45,10 @@ class NavBar extends Component {
     openModal({ modalType: "friendRequests", data: friendRequests });
   };
 
-  onStartLogout = () => this.props.startLogout();
+  onStartLogout = e => {
+    e.preventDefault();
+    this.props.startLogout();
+  };
 
   // render dom elements
   getBrand = () => {
@@ -54,7 +57,7 @@ class NavBar extends Component {
         className="navbar-brand ml-3"
         to={this.props.userId ? "/dashboard" : "/"}
       >
-        <img className="logo" src={jLogo} />
+        <img className="logo" src={jLogo} alt="logo" />
         <span>Around The World</span>
       </Link>
     );
@@ -95,11 +98,11 @@ class NavBar extends Component {
         </li>
 
         <ShowHide size={"sm"}>
-          <li className="nav-item">
-            <a onClick={e => this.onStartLogout(e)}>
+          <li className="nav-item cursorAllowed">
+            <span onClick={e => this.onStartLogout(e)}>
               <i className="fas fa-sign-out-alt py-2 mr-2" />
               Logout
-            </a>
+            </span>
           </li>
         </ShowHide>
 

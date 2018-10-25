@@ -17,6 +17,7 @@ const StaticMap = ({
     <div className={containerCss}>
       <div className="mx-auto" style={{ width }}>
         <img
+          alt="static map"
           src={`${baseUrl}${query}${key}`}
           style={{ width, margin: "0 auto" }}
         />

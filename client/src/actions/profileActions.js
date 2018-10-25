@@ -1,7 +1,5 @@
 import axios from "axios";
 import { toastr } from "react-redux-toastr";
-import firebase from "firebase/app";
-import "firebase/storage";
 // helpers
 import errorHandling from "./helpers/errorHandling";
 // actions

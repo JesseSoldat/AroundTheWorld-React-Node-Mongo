@@ -17,7 +17,11 @@ const CropperPreview = ({
           {files[0] && (
             <div>
               <div className="finalImageWrapper">
-                <img className={`previewImg ${imgClass}`} src={cropResult} />
+                <img
+                  className={`previewImg ${imgClass}`}
+                  src={cropResult}
+                  alt="preview"
+                />
               </div>
               <div className="mt-2">
                 <IconBtns

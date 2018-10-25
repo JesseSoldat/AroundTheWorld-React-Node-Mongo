@@ -10,7 +10,11 @@ const ViewImageModal = ({ data, onHide, deleteImgFromStory }) => {
     <Modal visible={true} onClickBackdrop={onHide} dialogClassName="modal-lg">
       <div className="modal-body">
         {data && (
-          <img className="img-fluid img-thumbnail" src={data.downloadURL} />
+          <img
+            className="img-fluid img-thumbnail"
+            src={data.downloadURL}
+            alt="detail preview"
+          />
         )}
       </div>
 

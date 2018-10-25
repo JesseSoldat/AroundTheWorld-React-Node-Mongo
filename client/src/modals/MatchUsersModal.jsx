@@ -26,13 +26,13 @@ const MatchUsersModal = ({ data, onHide, viewUser }) => {
                       your location.{" "}
                     </span>
                     <br />
-                    <a
+                    <span
                       className="cursorAllowed"
                       style={{ color: "blue" }}
                       onClick={() => viewUser(match)}
                     >
                       Check out their stories.
-                    </a>
+                    </span>
                   </li>
                 );
               })

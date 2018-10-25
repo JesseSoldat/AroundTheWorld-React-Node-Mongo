@@ -7,8 +7,6 @@ import IconBtn from "../components/buttons/IconBtn";
 import capitalizeFirstLetter from "../utils/stringManipulation/capitalizeFirstLetter";
 
 const FriendRequestModal = ({ data, onHide, acceptRequest, denyRequest }) => {
-  console.log(data);
-
   return (
     <Modal visible={true} onClickBackdrop={onHide} dialogClassName="modal-lg">
       <div className="modal-header">

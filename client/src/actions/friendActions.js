@@ -132,7 +132,7 @@ export const startAcceptFriendRequest = (
 
     toastr.success("Success", msg);
 
-    dispatch(sendFriendRequest(payload));
+    dispatch(acceptFriendRequest(payload));
   } catch (err) {
     errorHandling(dispatch, err, "send", "friend request");
     dispatch(friendActionError());

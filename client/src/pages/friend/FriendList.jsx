@@ -13,9 +13,9 @@ const FriendList = ({
   );
 
   return (
-    <div>
-      <div className="row">
-        <div className="col-12">
+    <div className="bulletinBg  p-4">
+      <div className="row pt-3">
+        <div className="col-sm-12 col-md-8 mx-auto">
           {friends.length > 1 && (
             <input
               placeholder="Search for a friend by name..."
@@ -28,16 +28,15 @@ const FriendList = ({
         </div>
       </div>
       <div className="row">
-        <div className="col-12">
-          {filteredFriends.map(friend => (
+        {filteredFriends.map(friend => (
+          <div className="col-sm-12 col-md-4 mx-auto" key={friend._id}>
             <FriendCard
-              key={friend._id}
               friend={friend}
               viewDetails={viewDetails}
               viewStories={viewStories}
             />
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Spinner from "../../../components/loading/Spinner";
 import Heading from "../../../components/Heading";
 import UserDetailsCard from "../../../components/cards/UserDetailsCard";
+import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // actions
 import { startGetFriendDetails } from "../../../actions/friendActions";
 
@@ -16,11 +17,21 @@ class FriendDetails extends Component {
     this.props.startGetFriendDetails(friendId);
   }
 
+  // cbs & events
+  goBackToFriendsList = () => {
+    this.props.history.push("/friends");
+  };
+
   // render dom
   renderHeader = () => {
     const { friendDetails } = this.props;
 
-    if (friendDetails) return <Heading title={friendDetails.username} />;
+    if (friendDetails)
+      return (
+        <Heading title={friendDetails.username}>
+          <TopRowBtns btn0Cb={this.goBackToFriendsList} />
+        </Heading>
+      );
   };
 
   renderContent = () => {

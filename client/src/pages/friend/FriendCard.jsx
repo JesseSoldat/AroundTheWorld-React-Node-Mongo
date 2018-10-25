@@ -5,10 +5,9 @@ import capitalizeFirstLetter from "../../utils/stringManipulation/capitalizeFirs
 import UserAvatar from "../../_images/userdefault.png";
 
 const FriendCard = ({ friend, viewDetails, viewStories }) => {
-  let { username, email, location = null, avatar = null } = friend;
+  let { username, avatar = null } = friend;
 
   username = capitalizeFirstLetter(username);
-  const defaultLocation = location ? location : "Unknown";
   const defaultAvatar = avatar ? avatar : UserAvatar;
 
   const viewFriendDetails = () => viewDetails(friend._id);
@@ -18,30 +17,29 @@ const FriendCard = ({ friend, viewDetails, viewStories }) => {
   return (
     <div className="card my-4">
       <div className="card-body">
-        <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
-            <img
-              className="img-fluid img-thumbnail"
-              src={defaultAvatar}
-              alt="user"
-            />
-          </div>
+        <div className="row d-flex flex-column justify-content-around align-items-center">
+          <img
+            style={{ maxHeight: "250px" }}
+            className="img-fluid img-thumbnail"
+            src={defaultAvatar}
+            alt="user"
+          />
 
-          <div className="col-xs-12 col-sm-12 col-md-7 col-lg-8">
-            <h3 className="card-title mt-2">{username}</h3>
-            <p className="card-text">
-              <b>email:</b> {email}
-            </p>
-            <p className="card-text">
-              <b>location:</b> {defaultLocation}
-            </p>
+          <h3 className="card-title mt-4">{username}</h3>
+
+          <div className="btn-group mt-4">
             <button
+              style={{ width: "100px" }}
               onClick={viewFriendDetails}
-              className="btn btn-secondary mr-2"
+              className="btn btn-secondary btn-sm mr-2"
             >
               View Details
             </button>
-            <button onClick={viewFriendStories} className="btn btn-primary">
+            <button
+              style={{ width: "100px" }}
+              onClick={viewFriendStories}
+              className="btn btn-primary btn-sm"
+            >
               View Stories
             </button>
           </div>

@@ -190,14 +190,25 @@ export const startMatchWithOthers = matchQuery => async (
     const lng = coordinates[0];
     const lat = coordinates[1];
 
-    const url = `/api/story/match/${userId}?lat=${lat}&lng=${lng}&unit=${unit}&maxDistance=${maxDistance}`;
+    const matchOthersUrl = `/api/story/match/${userId}?lat=${lat}&lng=${lng}&unit=${unit}&maxDistance=${maxDistance}`;
+    const myFriendsUrl = `/api/profile/${userId}`;
 
-    const res = await axios.get(url);
+    const [matchOthers, myFriends] = await Promise.all([
+      axios.get(matchOthersUrl),
+      axios.get(myFriendsUrl)
+    ]);
 
-    const { payload } = res.data;
+    const { match } = matchOthers.data.payload;
+    const { friends } = myFriends.data.payload.profile;
 
-    dispatch(matchWithOthers());
-    dispatch(openModal({ modalType: "matchUser", data: payload.match }));
+    console.log(match);
+    console.log(friends);
+    const filteredMatch = match.filter(obj => !friends.includes(obj._id));
+
+    console.log(filteredMatch);
+
+    dispatch(matchWithOthers(filteredMatch));
+    dispatch(openModal({ modalType: "matchUser", data: filteredMatch }));
   } catch (err) {
     errorHandling(dispatch, err, "match", "others");
     dispatch(storyError());

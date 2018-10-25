@@ -18,6 +18,7 @@ const ComponentNeedingStorage = ({
   data,
   closeModal,
   startDeleteImageFromStory,
+  startAcceptFriendRequest,
   history,
   save
 }) => {
@@ -34,14 +35,17 @@ const ComponentNeedingStorage = ({
     startDeleteImageFromStory(img);
   };
 
-  // friend reques
+  // friend request
   const acceptRequest = request => {
     console.log("accept", request);
-    //this.props.startAcceptFriendRequest();
+    const { recipient, requester } = request;
+    startAcceptFriendRequest(recipient._id, requester._id);
+    closeModal();
   };
 
   const denyRequest = request => {
     console.log("deny", request);
+    closeModal();
   };
 
   return (

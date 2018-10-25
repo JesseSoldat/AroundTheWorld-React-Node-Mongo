@@ -16,7 +16,8 @@ class Friends extends Component {
   };
 
   componentDidMount() {
-    this.props.startGetFriends(this.props.userId);
+    const { friends } = this.props;
+    if (!friends) this.props.startGetFriends(this.props.userId);
   }
 
   // cbs & events
@@ -28,14 +29,15 @@ class Friends extends Component {
 
   goToStoryList = () => this.props.history.push("/storyList");
 
-  render() {
+  // render dom
+  renderContent = () => {
     const { loading, friends } = this.props;
 
-    let content;
-
-    if (loading) content = <Spinner />;
-    else if (friends && friends.length >= 1) {
-      content = (
+    // loading
+    if (loading) return <Spinner />;
+    // have friends
+    else if (friends && friends.length >= 1)
+      return (
         <FriendList
           friends={friends}
           name={this.state.name}
@@ -44,8 +46,9 @@ class Friends extends Component {
           viewStories={this.viewStories}
         />
       );
-    } else {
-      content = (
+    // no friends
+    else
+      return (
         <NoValuesCard
           title="No Friends"
           text="Start searching for new friends"
@@ -53,7 +56,11 @@ class Friends extends Component {
           cb={this.goToStoryList}
         />
       );
-    }
+  };
+
+  render() {
+    let content = this.renderContent();
+
     return (
       <div className="row">
         <div className="col-sm-11 mx-auto">

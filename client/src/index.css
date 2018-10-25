@@ -6,6 +6,11 @@ body {
   background: url(./_images/pattern.png) repeat;
 }
 
+.bulletinBg {
+  background: url(./_images/sand.jpg) repeat;
+  min-height: 400px;
+}
+
 button:focus {
   outline: 0;
 }

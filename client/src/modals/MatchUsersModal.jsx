@@ -24,7 +24,7 @@ const MatchUsersModal = ({ data, onHide, viewUser }) => {
                   <li key={i} className="list-group-item">
                     <span>
                       {capitalizeFirstLetter(match.userInfo[0].username)} has{" "}
-                      <b>{match.length}</b>{" "}
+                      {match.length}{" "}
                       {match.length === 1 ? "story " : "stories "} found near
                       your location.{" "}
                     </span>

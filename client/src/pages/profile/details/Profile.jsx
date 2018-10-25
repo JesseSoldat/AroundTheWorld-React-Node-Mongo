@@ -7,10 +7,6 @@ import TopRowBtns from "../../../components/buttons/TopRowBtns";
 import UserDetailsCard from "../../../components/cards/UserDetailsCard";
 // actions
 import { startGetProfile } from "../../../actions/profileActions";
-// images
-import UserAvatar from "../../../_images/userdefault.png";
-// utils
-import capitalizeFirstLetter from "../../../utils/stringManipulation/capitalizeFirstLetter";
 
 class Profile extends Component {
   // lifecycles

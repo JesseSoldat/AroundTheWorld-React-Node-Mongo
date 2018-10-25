@@ -66,9 +66,9 @@ export const startGetFriendRequests = userId => async dispatch => {
 };
 
 // send a friend request
-export const sendFriendRequest = ({ friendRequest }) => ({
+export const sendFriendRequest = update => ({
   type: FRIEND_REQUEST_FINISHED,
-  friendRequest
+  update
 });
 
 export const startSendFriendRequest = (userId, friendId) => async dispatch => {
@@ -81,7 +81,7 @@ export const startSendFriendRequest = (userId, friendId) => async dispatch => {
 
     toastr.success("Success", msg);
 
-    dispatch(sendFriendRequest(payload));
+    dispatch(sendFriendRequest(payload.friendRequest));
   } catch (err) {
     errorHandling(dispatch, err, "send", "friend request");
     dispatch(friendActionError());

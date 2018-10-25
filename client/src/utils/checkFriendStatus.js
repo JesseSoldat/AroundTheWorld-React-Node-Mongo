@@ -6,7 +6,7 @@ const checkFriendStatus = ({
 }) => {
   // console.log("userId", userId);
   // console.log("matchedUserId", matchedUserId);
-  // console.log("checking", friendRequests);
+  // console.log("friendRequests", friendRequests);
 
   let status = "unknown";
 
@@ -17,15 +17,19 @@ const checkFriendStatus = ({
     }
   });
 
+  // check friend requests
   friendRequests.forEach(request => {
     const { requester, recipient } = request;
-    if (requester._id === userId && recipient._id === matchedUserId) {
-      // user sent request already
+
+    // user sent request already
+    // new friends request requester && recipient will equal _id
+    if (requester === userId && recipient === matchedUserId)
       return (status = "requested");
-    } else if (requester._id === matchedUserId && recipient._id === userId) {
-      // user received a request
+    else if (requester._id === userId && recipient._id === matchedUserId)
+      return (status = "requested");
+    // user received a request
+    else if (requester._id === matchedUserId && recipient._id === userId)
       return (status = "received");
-    }
   });
   console.log("status", status);
 

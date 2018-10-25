@@ -73,8 +73,6 @@ class MatchedDetails extends Component {
       const data = this.formatAccordionData(matchedDetails);
 
       if (friendRequests) {
-        console.log("friendRequest", friendRequests);
-
         status = checkFriendStatus({
           userId,
           matchedUserId: data.matchedUserId,
@@ -124,8 +122,8 @@ class MatchedDetails extends Component {
   }
 }
 
-const mapStateToProps = ({ async, story, friend, auth }) => ({
-  loading: async.loading,
+const mapStateToProps = ({ story, friend, auth }) => ({
+  loading: story.loading,
   matchedDetails: story.matchedDetails,
   friendRequests: friend.friendRequests,
   friendIds: friend.friendIds,

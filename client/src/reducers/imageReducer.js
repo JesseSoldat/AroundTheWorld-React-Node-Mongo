@@ -1,4 +1,5 @@
 import {
+  // overlay
   UPLOAD_STORY_IMG_STARTED,
   UPLOAD_STORY_IMG_FINISHED,
   UPLOAD_AVATAR_IMG_STARTED,
@@ -14,6 +15,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // overlay
     case UPLOAD_STORY_IMG_STARTED:
     case UPLOAD_AVATAR_IMG_STARTED:
     case DELETE_IMG_FROM_STORY_STARTED:

@@ -1,7 +1,9 @@
 import {
   PROFILE_ACTION_ERROR,
+  // loading
   PROFILE_REQUESTED,
   PROFILE_LOADED,
+  // overlay
   EDIT_PROFILE_FINISHED,
   EDIT_PROFILE_STARTED
 } from "../actions/profileActions";
@@ -15,18 +17,18 @@ const initialState = {
 export default (state = initialState, action) => {
   const { type, profile, update } = action;
   switch (type) {
-    // profile errors
+    // profile errors clear loading and overlay
     case PROFILE_ACTION_ERROR:
       return { ...state, loading: false, overlay: false };
 
-    // get profile
+    // loading
     case PROFILE_REQUESTED:
       return { ...state, loading: true };
 
     case PROFILE_LOADED:
       return { ...state, loading: false, profile };
 
-    // edit profile
+    // overlay
     case EDIT_PROFILE_STARTED:
       return { ...state, overlay: true };
 

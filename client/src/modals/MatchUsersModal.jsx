@@ -1,5 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap4-modal";
+// utils
+import capitalizeFirstLetter from "../utils/stringManipulation/capitalizeFirstLetter";
 
 const MatchUsersModal = ({ data, onHide, viewUser }) => {
   return (
@@ -21,7 +23,8 @@ const MatchUsersModal = ({ data, onHide, viewUser }) => {
                 return (
                   <li key={i} className="list-group-item">
                     <span>
-                      {match.userInfo[0].username} has {match.length}{" "}
+                      {capitalizeFirstLetter(match.userInfo[0].username)} has{" "}
+                      <b>{match.length}</b>{" "}
                       {match.length === 1 ? "story " : "stories "} found near
                       your location.{" "}
                     </span>

@@ -22,8 +22,14 @@ const initialState = {
   friendRequests: null
 };
 
+const newFriendRequest = (prevFriendRequests, update) => {
+  if (!prevFriendRequests) prevFriendRequests = [];
+  prevFriendRequests.push(update);
+  return prevFriendRequests;
+};
+
 export default (state = initialState, action) => {
-  const { type, friends, friendIds, friendRequests } = action;
+  const { type, friends, friendIds, friendRequests, update } = action;
 
   switch (type) {
     // clear loading and overlay
@@ -61,6 +67,16 @@ export default (state = initialState, action) => {
       return { ...state, overlay: true };
 
     case FRIEND_REQUEST_FINISHED:
+      const updatedFriendRequests = newFriendRequest(
+        state.friendRequests,
+        update
+      );
+      return {
+        ...state,
+        friendRequests: [...updatedFriendRequests],
+        overlay: false
+      };
+
     case ACCEPT_FRIEND_REQUEST_FINISHED:
     case DENY_FRIEND_REQUEST_FINISHED:
       return { ...state, overlay: false };

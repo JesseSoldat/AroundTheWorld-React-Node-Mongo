@@ -6,8 +6,10 @@ import errorHandling from "./helpers/errorHandling";
 
 // types
 export const PROFILE_ACTION_ERROR = "PROFILE_ACTION_ERROR";
+// loading
 export const PROFILE_REQUESTED = "PROFILE_REQUESTED";
 export const PROFILE_LOADED = "PROFILE_LOADED";
+// overlay
 export const EDIT_PROFILE_STARTED = "EDIT_PROFILE_STARTED";
 export const EDIT_PROFILE_FINISHED = "EDIT_PROFILE_FINISHED";
 

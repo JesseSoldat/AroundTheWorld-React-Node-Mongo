@@ -1,24 +1,26 @@
 import {
   STORY_ACTION_ERROR,
+  // loading
   STORIES_REQUESTED,
   STORIES_LOADED,
-  CREATE_STORY_STARTED,
-  CREATE_STORY_FINISHED,
-  EDIT_STORY_STARTED,
-  EDIT_STORY_FINISHED,
-  DELETE_STORY_STARTED,
-  DELETE_STORY_FINISHED,
   STORY_DETAILS_REQUESTED,
   STORY_DETAILS_LOADED,
-  // matched
   MATCHED_USERS_LOADED,
   MATCHED_USERS_REQUESTED,
   MATCHED_STORIES_REQUESTED,
   MATCHED_STORIES_LOADED,
   MATCHED_STORY_DETAILS_REQUESTED,
-  MATCHED_STORY_DETAILS_LOADED
+  MATCHED_STORY_DETAILS_LOADED,
+  // overlay
+  CREATE_STORY_STARTED,
+  CREATE_STORY_FINISHED,
+  EDIT_STORY_STARTED,
+  EDIT_STORY_FINISHED,
+  DELETE_STORY_STARTED,
+  DELETE_STORY_FINISHED
 } from "../actions/storyActions";
 import {
+  // overlay
   UPLOAD_STORY_IMG_FINISHED,
   DELETE_IMG_FROM_STORY_FINISHED
 } from "../actions/imageActions";
@@ -80,6 +82,7 @@ export default (state = initialState, action) => {
     case STORY_ACTION_ERROR:
       return { ...state, overlay: false, loading: false };
 
+    // ------- loading -------
     // get all stories
     case STORIES_REQUESTED:
       return { ...state, loading: true };
@@ -87,6 +90,32 @@ export default (state = initialState, action) => {
     case STORIES_LOADED:
       return { ...state, stories: [...stories], loading: false };
 
+    // get details for a story
+    case STORY_DETAILS_REQUESTED:
+      return { ...state, loading: true };
+
+    case STORY_DETAILS_LOADED:
+      return { ...state, details, loading: false };
+
+    // get the stories of a matched user
+    case MATCHED_STORIES_REQUESTED:
+      return { ...state, loading: true };
+
+    case MATCHED_STORIES_LOADED:
+      return {
+        ...state,
+        matchedStories: [...matchedStories],
+        loading: false
+      };
+
+    // get the details of a matched user's story
+    case MATCHED_STORY_DETAILS_REQUESTED:
+      return { ...state, loading: true };
+
+    case MATCHED_STORY_DETAILS_LOADED:
+      return { ...state, matchedDetails, loading: false };
+
+    // -------- overlay --------
     // create story
     case CREATE_STORY_STARTED:
       return { ...state, overlay: true };
@@ -121,37 +150,12 @@ export default (state = initialState, action) => {
         details: null
       };
 
-    // get details for a story
-    case STORY_DETAILS_REQUESTED:
-      return { ...state, loading: true };
-
-    case STORY_DETAILS_LOADED:
-      return { ...state, details, loading: false };
-
     // get a list of matched users
     case MATCHED_USERS_REQUESTED:
       return { ...state, overlay: true };
 
     case MATCHED_USERS_LOADED:
       return { ...state, overlay: false };
-
-    // get the stories of a matched user
-    case MATCHED_STORIES_REQUESTED:
-      return { ...state, loading: true };
-
-    case MATCHED_STORIES_LOADED:
-      return {
-        ...state,
-        matchedStories: [...matchedStories],
-        loading: false
-      };
-
-    // get the details of a matched user's story
-    case MATCHED_STORY_DETAILS_REQUESTED:
-      return { ...state, loading: true };
-
-    case MATCHED_STORY_DETAILS_LOADED:
-      return { ...state, matchedDetails, loading: false };
 
     // add an image to a story
     case UPLOAD_STORY_IMG_FINISHED:

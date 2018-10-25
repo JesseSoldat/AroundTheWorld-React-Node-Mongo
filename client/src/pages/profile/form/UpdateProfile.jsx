@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // common components
 import Heading from "../../../components/Heading";
-import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 import Spinner from "../../../components/loading/Spinner";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // custom components
@@ -107,7 +106,6 @@ class UpdateProfile extends Component {
     return (
       <div className="row">
         <div className="col-xs-12 col-sm-11 col-lg-10 mx-auto">
-          <OverlaySpinner showOverlay={this.props.showOverlay} />
           <Heading title="Update Profile">
             <TopRowBtns btn0Cb={this.goBack} />
           </Heading>
@@ -121,8 +119,7 @@ class UpdateProfile extends Component {
   }
 }
 
-const mapStateToProps = ({ profile, image }) => ({
-  showOverlay: image.overlay,
+const mapStateToProps = ({ profile }) => ({
   loading: profile.loading,
   profile: profile.profile
 });

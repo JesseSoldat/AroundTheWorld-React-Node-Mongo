@@ -4,11 +4,13 @@ import { withRouter } from "react-router-dom";
 // modals
 import MatchUsersModal from "./MatchUsersModal";
 import ViewImageModal from "./ViewImageModal";
+import FriendRequestModal from "./FriendRequestModal";
 // common components
 import withStorage from "../components/hoc/withStorage";
 // actions
 import { closeModal } from "../actions/modalActions";
 import { startDeleteImageFromStory } from "../actions/imageActions";
+import { startAcceptFriendRequest } from "../actions/friendActions";
 
 // Modal Manager
 const ComponentNeedingStorage = ({
@@ -32,6 +34,16 @@ const ComponentNeedingStorage = ({
     startDeleteImageFromStory(img);
   };
 
+  // friend reques
+  const acceptRequest = request => {
+    console.log("accept", request);
+    //this.props.startAcceptFriendRequest();
+  };
+
+  const denyRequest = request => {
+    console.log("deny", request);
+  };
+
   return (
     <span>
       {modalType === "matchUser" && (
@@ -42,6 +54,14 @@ const ComponentNeedingStorage = ({
           data={data}
           onHide={closeModal}
           deleteImgFromStory={deleteImgFromStory}
+        />
+      )}
+      {modalType === "friendRequests" && (
+        <FriendRequestModal
+          data={data}
+          onHide={closeModal}
+          acceptRequest={acceptRequest}
+          denyRequest={denyRequest}
         />
       )}
     </span>
@@ -57,5 +77,5 @@ const mapStateToProps = ({ modal }) => ({
 
 export default connect(
   mapStateToProps,
-  { closeModal, startDeleteImageFromStory }
+  { closeModal, startDeleteImageFromStory, startAcceptFriendRequest }
 )(withRouter(ModalManager));

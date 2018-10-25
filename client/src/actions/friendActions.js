@@ -2,12 +2,6 @@ import axios from "axios";
 import { toastr } from "react-redux-toastr";
 // helpers
 import errorHandling from "./helpers/errorHandling";
-// actions
-import {
-  asyncActionStart,
-  asyncActionFinish,
-  asyncActionError
-} from "./asyncActions";
 // types
 // friends
 export const FRIEND_ACTION_ERROR = "FRIEND_ACTION_ERROR";
@@ -20,7 +14,13 @@ export const FRIEND_REQUEST_STARTED = "FRIEND_REQUEST_STARTED";
 export const FRIEND_REQUEST_FINISHED = "FRIEND_REQUEST_FINISHED";
 export const ACCEPT_FRIEND_REQUEST_STARTED = "ACCEPT_FRIEND_REQUEST_STARTED";
 export const ACCEPT_FRIEND_REQUEST_FINISHED = "ACCEPT_FRIEND_REQUEST_FINISHED";
+export const DENY_FRIEND_REQUEST_STARTED = "DENY_FRIEND_REQUEST_STARTED";
+export const DENY_FRIEND_REQUEST_FINISHED = "DENY_FRIEND_REQUEST_FINISHED";
 
+// friend action error
+export const friendActionError = () => ({
+  type: FRIEND_ACTION_ERROR
+});
 // get friends
 export const getFriends = ({ friends }) => ({
   type: GET_FRIENDS_LOADED,
@@ -38,7 +38,7 @@ export const startGetFriends = userId => async dispatch => {
     dispatch(getFriends(payload));
   } catch (err) {
     errorHandling(dispatch, err, "get", "friends");
-    dispatch({ type: FRIEND_ACTION_ERROR });
+    dispatch(friendActionError());
   }
 };
 
@@ -61,6 +61,7 @@ export const startGetFriendRequests = userId => async dispatch => {
     dispatch(getFriendRequests(payload));
   } catch (err) {
     errorHandling(dispatch, err, "get", "friend requests");
+    dispatch(friendActionError());
   }
 };
 
@@ -72,22 +73,18 @@ export const sendFriendRequest = ({ friendRequest }) => ({
 
 export const startSendFriendRequest = (userId, friendId) => async dispatch => {
   try {
-    dispatch(asyncActionStart());
     dispatch({ type: FRIEND_REQUEST_STARTED });
 
     const res = await axios.post("/api/friend/request", { userId, friendId });
 
     const { msg, payload } = res.data;
 
-    console.log(payload);
-
     toastr.success("Success", msg);
 
     dispatch(sendFriendRequest(payload));
-    dispatch(asyncActionFinish());
   } catch (err) {
     errorHandling(dispatch, err, "send", "friend request");
-    dispatch(asyncActionError());
+    dispatch(friendActionError());
   }
 };
 
@@ -102,7 +99,6 @@ export const startAcceptFriendRequest = (
   friendId
 ) => async dispatch => {
   try {
-    dispatch(asyncActionStart());
     dispatch({ type: ACCEPT_FRIEND_REQUEST_STARTED });
 
     const res = await axios.post("/api/friend/request/accept", {
@@ -112,14 +108,21 @@ export const startAcceptFriendRequest = (
 
     const { msg, payload } = res.data;
 
-    console.log(payload, msg);
-
     toastr.success("Success", msg);
 
     dispatch(sendFriendRequest(payload));
-    dispatch(asyncActionFinish());
   } catch (err) {
     errorHandling(dispatch, err, "send", "friend request");
-    dispatch(asyncActionError());
+    dispatch(friendActionError());
   }
+};
+
+export const denyFriendRequest = () => ({
+  type: DENY_FRIEND_REQUEST_FINISHED
+});
+
+export const startDenyFriendRequest = () => async dispatch => {
+  try {
+    dispatch({ type: DENY_FRIEND_REQUEST_STARTED });
+  } catch (err) {}
 };

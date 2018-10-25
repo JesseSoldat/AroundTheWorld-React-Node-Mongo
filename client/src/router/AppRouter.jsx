@@ -10,6 +10,8 @@ import StoryRoutes from "./routes/storyRoutes";
 import FriendRoutes from "./routes/friendRoutes";
 import PhotoRoutes from "./routes/photoRoutes";
 import ProfileRoutes from "./routes/profileRoutes";
+// custom components
+import OverylaySpinner from "../components/loading/OverlaySpinner";
 // components
 import NavBar from "../components/navbar/_NavBar";
 import ModalManager from "../modals/ModalManager";
@@ -22,6 +24,7 @@ const AppRouter = () => (
   <Router history={history}>
     <ScrollToTop>
       <NavBar />
+      <OverylaySpinner />
       <ModalManager />
       <ReduxToastr
         position="bottom-right"

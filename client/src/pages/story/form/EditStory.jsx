@@ -4,7 +4,6 @@ import { combineValidators, isRequired } from "revalidate";
 import { Field, reduxForm } from "redux-form";
 // common components
 import Heading from "../../../components/Heading";
-import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 import Spinner from "../../../components/loading/Spinner";
 import TextInput from "../../../components/form/TextInput";
 import TextArea from "../../../components/form/TextArea";
@@ -157,7 +156,6 @@ class EditStory extends Component {
 
     return (
       <div>
-        <OverlaySpinner showOverlay={this.props.showOverlay} />
         <Heading title="Edit Story" />
         {content}
       </div>
@@ -177,7 +175,6 @@ const mapStateToProps = ({ story }) => {
 
   return {
     loading: story.loading,
-    showOverlay: story.overlay,
     stories: story.stories,
     details: story.details,
     initialValues

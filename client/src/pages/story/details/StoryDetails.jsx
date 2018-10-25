@@ -5,7 +5,6 @@ import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
-import OverlaySpinner from "../../../components/loading/OverlaySpinner";
 // custom components
 import StoryImages from "./StoryImages";
 import Map from "../../map/Map";
@@ -124,7 +123,6 @@ class StoryDetails extends Component {
     return (
       <div className="row">
         <div className="col-11 mx-auto">
-          <OverlaySpinner showOverlay={this.props.showOverlay} />
           <Heading title={title}>
             <TopRowBtns
               btn0Cb={this.goBack}
@@ -142,7 +140,6 @@ class StoryDetails extends Component {
 }
 
 const mapStateToProps = ({ story }) => ({
-  showOverlay: story.overlay,
   loading: story.loading,
   stories: story.stories,
   details: story.details

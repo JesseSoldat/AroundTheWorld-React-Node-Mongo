@@ -49,6 +49,11 @@ const listenToUploadProgress = (uploadTask, uploadToServer) => {
   );
 };
 
+// image action errors
+export const imageActionError = () => ({
+  type: IMAGE_ACTION_ERROR
+});
+
 // upload image to story
 const postStoryUrlToServer = async (uploadToServer, downloadURL) => {
   const { storyId, path, dispatch, history } = uploadToServer;
@@ -66,8 +71,8 @@ const postStoryUrlToServer = async (uploadToServer, downloadURL) => {
 
     history.push(`/storyDetails/${storyId}`);
   } catch (err) {
-    dispatch({ type: IMAGE_ACTION_ERROR });
     errorHandling(dispatch, err, "upload", "story image");
+    dispatch(imageActionError());
   }
 };
 
@@ -104,6 +109,7 @@ export const startUploadStoryImage = (file, storyId, history) => async (
     listenToUploadProgress(uploadTask, uploadToServer);
   } catch (err) {
     errorHandling(dispatch, err, "upload", "story image");
+    dispatch(imageActionError());
   }
 };
 
@@ -115,16 +121,20 @@ export const uploadAvatarImage = update => ({
 
 export const postAvatarUrlToServer = async (uploadToServer, downloadURL) => {
   const { userId, dispatch } = uploadToServer;
+  try {
+    const res = await axios.post(`/api/profile/${userId}`, {
+      profile: { avatar: downloadURL }
+    });
 
-  const res = await axios.post(`/api/profile/${userId}`, {
-    profile: { avatar: downloadURL }
-  });
+    const { msg, payload } = res.data;
 
-  const { msg, payload } = res.data;
+    dispatch(uploadAvatarImage(payload.profile));
 
-  dispatch(uploadAvatarImage(payload.profile));
-
-  toastr.success("Success", msg);
+    toastr.success("Success", msg);
+  } catch (err) {
+    errorHandling(dispatch, err, "upload", "avatar");
+    dispatch(imageActionError());
+  }
 };
 
 export const startUploadAvatarImage = file => async (dispatch, getState) => {
@@ -150,6 +160,7 @@ export const startUploadAvatarImage = file => async (dispatch, getState) => {
     listenToUploadProgress(uploadTask, uploadToServer);
   } catch (err) {
     errorHandling(dispatch, err, "upload", "avatar");
+    dispatch(imageActionError());
   }
 };
 
@@ -170,6 +181,7 @@ const deleteStoryUrlFromServer = async (dispatch, storyId, imageId) => {
     dispatch(deleteImageFromStory(payload.story));
   } catch (err) {
     errorHandling(dispatch, err, "delete", "story image");
+    dispatch(imageActionError());
   }
 };
 
@@ -185,5 +197,6 @@ export const startDeleteImageFromStory = imgObj => async dispatch => {
     deleteStoryUrlFromServer(dispatch, storyId, imageId);
   } catch (err) {
     errorHandling(dispatch, err, "delete", "story image");
+    dispatch(imageActionError());
   }
 };

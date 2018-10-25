@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 // common components
 import Heading from "../../components/Heading";
 import TopRowBtns from "../../components/buttons/TopRowBtns";
-import OverlaySpinner from "../../components/loading/OverlaySpinner";
 import DropZone from "../../components/DropZone";
 import Cropper from "../../components/Cropper";
 import CropperPreview from "../../components/CropperPreview";
@@ -53,7 +52,6 @@ class PhotoUploadPage extends Component {
     return (
       <div className="row">
         <div className="col-sm-11 mx-auto">
-          <OverlaySpinner showOverlay={this.props.showOverlay} />
           <Heading title="Upload Image">
             <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
           </Heading>
@@ -89,11 +87,7 @@ class PhotoUploadPage extends Component {
   }
 }
 
-const mapStateToProps = ({ image }) => ({
-  showOverlay: image.overlay
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   { startUploadStoryImage }
 )(PhotoUploadPage);

@@ -10,7 +10,12 @@ module.exports = app => {
     try {
       const { userId } = req.params;
 
-      const profile = await User.findById(userId, { password: 0, role: 0 });
+      const profile = await User.findById(userId, {
+        password: 0,
+        role: 0,
+        createdAt: 0,
+        updatedAt: 0
+      });
 
       serverRes(res, 200, null, { profile });
     } catch (err) {

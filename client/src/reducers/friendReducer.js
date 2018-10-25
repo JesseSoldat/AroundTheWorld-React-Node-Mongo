@@ -5,6 +5,8 @@ const {
   FRIEND_REQUESTS_LOADED,
   GET_FRIENDS_REQUESTED,
   GET_FRIENDS_LOADED,
+  GET_FRIEND_DETAILS_REQUESTED,
+  GET_FRIEND_DETAILS_LOADED,
   // overlay
   FRIEND_REQUEST_STARTED,
   FRIEND_REQUEST_FINISHED,
@@ -18,6 +20,7 @@ const initialState = {
   loading: false,
   overlay: false,
   friends: null,
+  friendDetails: null,
   friendIds: null,
   friendRequests: null
 };
@@ -29,7 +32,14 @@ const newFriendRequest = (prevFriendRequests, update) => {
 };
 
 export default (state = initialState, action) => {
-  const { type, friends, friendIds, friendRequests, update } = action;
+  const {
+    type,
+    friends,
+    friendDetails,
+    friendIds,
+    friendRequests,
+    update
+  } = action;
 
   switch (type) {
     // clear loading and overlay
@@ -46,6 +56,12 @@ export default (state = initialState, action) => {
         friends,
         loading: false
       };
+
+    case GET_FRIEND_DETAILS_REQUESTED:
+      return { ...state, loading: true };
+
+    case GET_FRIEND_DETAILS_LOADED:
+      return { ...state, friendDetails, loading: false };
 
     // nav component loads friends request at start of app for authenticated users
     // when authentication updates it will requests the users friends

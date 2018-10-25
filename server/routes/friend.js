@@ -28,6 +28,27 @@ module.exports = app => {
     }
   });
 
+  // get friend details
+  app.get("/api/friendDetails/:userId", isAuth, async (req, res) => {
+    try {
+      const { userId } = req.params;
+
+      const friendDetails = await User.findById(userId, {
+        password: 0,
+        role: 0,
+        friends: 0,
+        createdAt: 0,
+        updatedAt: 0
+      });
+
+      serverRes(res, 200, null, { friendDetails });
+    } catch (err) {
+      console.log("Err get friend details", err);
+      const msg = getErrMsg("err", "fetch", "friend details");
+      serverRes(res, 401, msg, null);
+    }
+  });
+
   // get all friends request sent or received
   app.get("/api/friend/request/:userId", isAuth, async (req, res) => {
     try {

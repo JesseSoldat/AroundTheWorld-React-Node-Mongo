@@ -22,6 +22,8 @@ class Friends extends Component {
   // cbs & events
   updateFilter = e => this.setState({ name: e.target.value });
 
+  viewDetails = userId => this.props.history.push(`/friend/${userId}`);
+
   viewStories = userId => this.props.history.push(`/matchedList/${userId}`);
 
   goToStoryList = () => this.props.history.push("/storyList");
@@ -38,6 +40,7 @@ class Friends extends Component {
           friends={friends}
           name={this.state.name}
           updateFilter={this.updateFilter}
+          viewDetails={this.viewDetails}
           viewStories={this.viewStories}
         />
       );

@@ -35,12 +35,11 @@ const FriendRequestModal = ({ data, onHide, acceptRequest, denyRequest }) => {
                     className="list-group-item d-flex justify-content-between flex-wrap"
                   >
                     <span>
-                      <Link to={`/profile/${request.requester._id}`}>
+                      <Link to={`/friend/${request.requester._id}`}>
                         <span style={{ color: "blue" }}>
                           {capitalizeFirstLetter(request.requester.username)}{" "}
                         </span>
                       </Link>
-                      would like to be your friend
                     </span>
                     <div className="btn-group">
                       <IconBtn

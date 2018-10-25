@@ -4,12 +4,14 @@ import capitalizeFirstLetter from "../../utils/stringManipulation/capitalizeFirs
 // images
 import UserAvatar from "../../_images/userdefault.png";
 
-const FriendCard = ({ friend, viewStories }) => {
+const FriendCard = ({ friend, viewDetails, viewStories }) => {
   let { username, email, location = null, avatar = null } = friend;
 
   username = capitalizeFirstLetter(username);
   const defaultLocation = location ? location : "Unknown";
   const defaultAvatar = avatar ? avatar : UserAvatar;
+
+  const viewFriendDetails = () => viewDetails(friend._id);
 
   const viewFriendStories = () => viewStories(friend._id);
 
@@ -33,6 +35,12 @@ const FriendCard = ({ friend, viewStories }) => {
             <p className="card-text">
               <b>location:</b> {defaultLocation}
             </p>
+            <button
+              onClick={viewFriendDetails}
+              className="btn btn-secondary mr-2"
+            >
+              View Details
+            </button>
             <button onClick={viewFriendStories} className="btn btn-primary">
               View Stories
             </button>

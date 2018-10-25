@@ -1,7 +1,13 @@
 import React from "react";
 import FriendCard from "./FriendCard";
 
-const FriendList = ({ friends, name, updateFilter, viewStories }) => {
+const FriendList = ({
+  friends,
+  name,
+  updateFilter,
+  viewDetails,
+  viewStories
+}) => {
   const filteredFriends = friends.filter(
     friend => name === "" || friend.username.includes(name)
   );
@@ -27,6 +33,7 @@ const FriendList = ({ friends, name, updateFilter, viewStories }) => {
             <FriendCard
               key={friend._id}
               friend={friend}
+              viewDetails={viewDetails}
               viewStories={viewStories}
             />
           ))}

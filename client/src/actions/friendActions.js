@@ -7,6 +7,8 @@ export const FRIEND_ACTION_ERROR = "FRIEND_ACTION_ERROR";
 // loading
 export const GET_FRIENDS_REQUESTED = "GET_FRIENDS_REQUESTED";
 export const GET_FRIENDS_LOADED = "GET_FRIENDS_LOADED";
+export const GET_FRIEND_DETAILS_REQUESTED = "GET_FRIEND_DETAILS_REQUESTED";
+export const GET_FRIEND_DETAILS_LOADED = "GET_FRIEND_DETAILS_LOADED";
 export const FRIEND_REQUESTS_REQUESTED = "FRIEND_REQUESTS_REQUESTED";
 export const FRIEND_REQUESTS_LOADED = "FRIEND_REQUESTS_LOADED";
 // overlay
@@ -42,6 +44,26 @@ export const startGetFriends = userId => async dispatch => {
   }
 };
 
+// get friend details
+export const getFriendDetails = ({ friendDetails }) => ({
+  type: GET_FRIEND_DETAILS_LOADED,
+  friendDetails
+});
+
+export const startGetFriendDetails = friendId => async dispatch => {
+  try {
+    dispatch({ type: GET_FRIEND_DETAILS_REQUESTED });
+
+    const res = await axios.get(`/api/friendDetails/${friendId}`);
+
+    const { payload } = res.data;
+
+    dispatch(getFriendDetails(payload));
+  } catch (err) {
+    errorHandling(dispatch, err, "get", "friend details");
+    dispatch(friendActionError());
+  }
+};
 // --------------- friend requests ----------------------
 // get friends and friend request
 export const getFriendRequests = ({ friendIds, friendRequests }) => ({

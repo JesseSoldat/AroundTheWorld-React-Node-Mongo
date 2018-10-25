@@ -26,13 +26,13 @@ const CropperPreview = ({
               <div className="mt-2">
                 <IconBtns
                   btnClass="btn btn-danger mr-2"
-                  iconClass="fas fa-backspace mr-2"
+                  iconClass="fas fa-backspace"
                   text="Cancel"
                   cb={cancelCrop}
                 />
                 <IconBtns
                   btnClass="btn btn-secondary mr-2"
-                  iconClass="fas fa-file-upload mr-2"
+                  iconClass="fas fa-file-upload"
                   text="Upload"
                   cb={uploadImage}
                 />

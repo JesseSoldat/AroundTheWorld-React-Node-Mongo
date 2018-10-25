@@ -8,8 +8,8 @@ body {
 
 .bulletinBg {
   background: url(./_images/sand.jpg) repeat;
-  min-height: 400px;
-  padding: 20px;
+  min-height: 500px;
+  padding: 40px 30px;
 }
 
 button:focus {

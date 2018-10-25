@@ -11,7 +11,7 @@ const ReceivedFriendRequest = ({ cb }) => {
       </p>
       <IconBtn
         btnClass="btn-secondary"
-        iconClass="fas fa-arrow-alt-circle-left mr-2"
+        iconClass="fas fa-arrow-alt-circle-left"
         text="Accept Friends Request"
         cb={cb}
       />

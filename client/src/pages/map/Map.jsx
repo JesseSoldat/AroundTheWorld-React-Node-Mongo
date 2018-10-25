@@ -3,6 +3,8 @@ import GoogleMapReact from "google-map-react";
 import googleMapsApiKey from "../../_config/googleKey";
 import Marker from "./Marker";
 
+import IconBtn from "../../components/buttons/IconBtn";
+
 class Map extends Component {
   render() {
     const {
@@ -22,12 +24,18 @@ class Map extends Component {
           <div
             style={{ zIndex: 3, position: "absolute", top: "2%", right: "8%" }}
           >
-            <button onClick={cancel} className="btn btn-danger mr-2">
-              Cancel
-            </button>
-            <button onClick={selectPlace} className="btn btn-secondary">
-              Select
-            </button>
+            <IconBtn
+              btnClass="btn btn-danger mr-2"
+              iconClass="fas fa-backspace"
+              text="Cancel"
+              cb={cancel}
+            />
+            <IconBtn
+              btnClass="btn btn-secondary"
+              iconClass="fas fa-check"
+              text="Select"
+              cb={selectPlace}
+            />
           </div>
         )}
 

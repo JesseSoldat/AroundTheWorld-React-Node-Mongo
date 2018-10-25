@@ -62,8 +62,8 @@ class StoryList extends Component {
     } else {
       return (
         <NoValuesCard
-          title="No stories found for this user"
-          text=""
+          title="No Stories"
+          text="Get started by click on the map and telling your story"
           btnIcon="fas fa-atlas mr-2"
           btnText="Create a story?"
           cb={this.goToMap}
@@ -75,10 +75,12 @@ class StoryList extends Component {
   render() {
     let content = this.renderContent();
     return (
-      <div className="storyListWrapper">
-        <Heading title="Stories" />
-        <div className="bulletinBg col-xs-12 col-sm-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
-          {content}
+      <div className="row">
+        <div className="col-sm-11 mx-auto">
+          <Heading title="Stories" />
+          <div className="row">
+            <div className="bulletinBg col-sm-11 mx-auto">{content}</div>
+          </div>
         </div>
       </div>
     );

@@ -4,6 +4,7 @@ const dashboardCardData = [
     subtitle:
       "Click anywhere on the map and to start creating you own story to share with others.",
     link: "/map",
+    iconClass: "fas fa-map",
     linkText: "Map"
   },
   {
@@ -11,6 +12,7 @@ const dashboardCardData = [
     subtitle:
       "Revisit your stories and update or remove to them to your liking.",
     link: "/storyList",
+    iconClass: "fas fa-atlas",
     linkText: "Stories"
   },
   {
@@ -18,6 +20,7 @@ const dashboardCardData = [
     subtitle:
       "View all of your friends stories to see what they have been up to.",
     link: "/friends",
+    iconClass: "fas fa-user-friends",
     linkText: "Friends"
   }
 ];

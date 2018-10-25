@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const TileCard = ({ data }) => {
-  const { title, subtitle, link, linkText } = data;
+  const { title, subtitle, link, iconClass, linkText } = data;
   return (
     <div className="card my-3" style={{ width: "300px", height: "250px" }}>
       <div className="card-body d-flex flex-column align-items-center justify-content-between">
@@ -13,6 +13,7 @@ const TileCard = ({ data }) => {
 
         <Link className="w-100" to={link}>
           <button className="btn btn-outline-dark btn-sm btn-block">
+            <i className={`${iconClass} mr-2`} />
             {linkText}
           </button>
         </Link>

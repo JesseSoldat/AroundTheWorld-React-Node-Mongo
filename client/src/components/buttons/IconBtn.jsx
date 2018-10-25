@@ -15,7 +15,7 @@ const IconBtn = ({
       disabled={disabled}
       type={type}
     >
-      <i className={iconClass} /> {text}
+      <i className={`${iconClass} mr-1`} /> {text}
     </button>
   );
 };

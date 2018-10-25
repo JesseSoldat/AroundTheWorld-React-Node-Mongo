@@ -15,13 +15,15 @@ class Dashboard extends Component {
   }
   render() {
     return (
-      <div>
-        <Heading title="Dashboard" />
-        <div className="row">
-          <div className="col-12 d-flex flex-wrap justify-content-around my-4">
-            {dashboardCardData.map((obj, i) => (
-              <TileCard key={i} data={obj} />
-            ))}
+      <div className="row">
+        <div className="col-sm-11 mx-auto">
+          <Heading title="Dashboard" />
+          <div className="bulletinBg row">
+            <div className="col-12 d-flex flex-wrap justify-content-around my-4">
+              {dashboardCardData.map((obj, i) => (
+                <TileCard key={i} data={obj} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ const SendFriendRequest = ({ cb }) => {
       </p>
       <IconBtn
         btnClass="btn-secondary"
-        iconClass="fas fa-arrow-alt-circle-right mr-2"
+        iconClass="fas fa-arrow-alt-circle-right"
         text="Send Friends Request"
         cb={cb}
       />

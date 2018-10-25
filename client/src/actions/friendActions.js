@@ -111,9 +111,10 @@ export const startSendFriendRequest = (userId, friendId) => async dispatch => {
 };
 
 // accept a friend request
-export const acceptFriendRequest = ({ friendRequest }) => ({
+export const acceptFriendRequest = ({ friendRequest, user }) => ({
   type: ACCEPT_FRIEND_REQUEST_FINISHED,
-  friendRequest
+  friendRequest,
+  user
 });
 
 export const startAcceptFriendRequest = (
@@ -129,6 +130,8 @@ export const startAcceptFriendRequest = (
     });
 
     const { msg, payload } = res.data;
+
+    console.log("startAcceptFriendRequest", payload);
 
     toastr.success("Success", msg);
 

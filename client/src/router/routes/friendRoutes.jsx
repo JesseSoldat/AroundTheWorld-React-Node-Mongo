@@ -1,7 +1,7 @@
 import React from "react";
 
 import PrivateRoute from "../PrivateRoute";
-import Friends from "../../pages/friend/_Friends";
+import Friends from "../../pages/friend/Friends";
 import FriendDetails from "../../pages/friend/details/FriendDetails";
 
 const FriendRoutes = [

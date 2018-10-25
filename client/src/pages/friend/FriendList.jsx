@@ -13,7 +13,7 @@ const FriendList = ({
   );
 
   return (
-    <div className="bulletinBg  p-4">
+    <div className="bulletinBg">
       <div className="row pt-3">
         <div className="col-sm-12 col-md-8 mx-auto">
           {friends.length > 1 && (

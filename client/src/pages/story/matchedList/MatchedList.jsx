@@ -87,7 +87,7 @@ class ComponentNeedingStorage extends Component {
           </Heading>
 
           <div className="row">
-            <div className="col-xs-12 col-sm-11 mx-auto my-3 d-flex flex-wrap justify-content-around storiesContainer">
+            <div className="bulletinBg col-xs-12 col-sm-11 mx-auto my-3 d-flex flex-wrap justify-content-around">
               {content}
             </div>
           </div>

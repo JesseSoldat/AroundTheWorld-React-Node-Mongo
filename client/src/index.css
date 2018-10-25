@@ -9,6 +9,7 @@ body {
 .bulletinBg {
   background: url(./_images/sand.jpg) repeat;
   min-height: 400px;
+  padding: 20px;
 }
 
 button:focus {
@@ -98,11 +99,7 @@ a:hover {
 }
 
 /* private routes */
-/* storyList route */
-.storiesContainer {
-  background: url(./_images/sand.jpg) repeat;
-  min-height: 400px;
-}
+
 /* general util classes */
 /* height */
 .spacer200 {

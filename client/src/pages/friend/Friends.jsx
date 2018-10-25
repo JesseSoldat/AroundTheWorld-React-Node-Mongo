@@ -53,6 +53,7 @@ class Friends extends Component {
           title="No Friends"
           text="Start searching for new friends"
           btnText="Story List"
+          btnIcon="fas fa-atlas mr-2"
           cb={this.goToStoryList}
         />
       );
@@ -65,7 +66,9 @@ class Friends extends Component {
       <div className="row">
         <div className="col-sm-11 mx-auto">
           <Heading title="friends" />
-          {content}
+          <div className="row">
+            <div className="bulletinBg col-sm-11 mx-auto">{content}</div>
+          </div>
         </div>
       </div>
     );

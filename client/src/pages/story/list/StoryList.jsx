@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // common components
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
+import NoValuesCard from "../../../components/cards/NoValuesCard";
 // custom components
 import ListCard from "../../../components/cards/ListCard";
 // actions
@@ -32,18 +33,18 @@ class StoryList extends Component {
       maxDistance: values.distance,
       coordinates: story.geometry.coordinates
     };
-
     this.props.startMatchWithOthers(matchQuery);
   };
 
-  render() {
-    const { loading, stories } = this.props;
-    let content;
+  goToMap = () => this.props.history.push("/map");
 
-    if (loading) {
-      content = <Spinner />;
-    } else if (stories && stories.length) {
-      content = (
+  // render dom
+  renderContent = () => {
+    const { loading, stories } = this.props;
+
+    if (loading) return <Spinner />;
+    else if (stories && stories.length) {
+      return (
         <div className="row">
           <div className="col-12 text-center">
             {stories.map(story => (
@@ -59,27 +60,24 @@ class StoryList extends Component {
         </div>
       );
     } else {
-      content = (
-        <div className="row">
-          <div className="col-12 text-center">
-            <div className="card mt-5 w-75 mx-auto">
-              <div className="card-body">
-                <h3>No stories found for this user</h3>
-                <Link to="/map">
-                  <button className="my-5 btn btn-secondary btn-sm btn-block w-75 mx-auto">
-                    Create your first story?
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+      return (
+        <NoValuesCard
+          title="No stories found for this user"
+          text=""
+          btnIcon="fas fa-atlas mr-2"
+          btnText="Create a story?"
+          cb={this.goToMap}
+        />
       );
     }
+  };
+
+  render() {
+    let content = this.renderContent();
     return (
       <div className="storyListWrapper">
         <Heading title="Stories" />
-        <div className="storiesContainer col-xs-12 col-sm-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
+        <div className="bulletinBg col-xs-12 col-sm-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
           {content}
         </div>
       </div>

@@ -201,11 +201,7 @@ export const startMatchWithOthers = matchQuery => async (
     const { match } = matchOthers.data.payload;
     const { friends } = myFriends.data.payload.profile;
 
-    console.log(match);
-    console.log(friends);
     const filteredMatch = match.filter(obj => !friends.includes(obj._id));
-
-    console.log(filteredMatch);
 
     dispatch(matchWithOthers(filteredMatch));
     dispatch(openModal({ modalType: "matchUser", data: filteredMatch }));

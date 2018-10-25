@@ -144,16 +144,34 @@ class NavBar extends Component {
   }
 }
 
+const filterFriendsRequests = (friendRequests, userId) => {
+  if (!friendRequests) {
+    return {
+      friendRequests,
+      numberOfRequests: 0
+    };
+  }
+
+  const filteredRequest = friendRequests.filter(
+    obj => obj.recipient._id === userId
+  );
+  const numberOfRequests = filteredRequest.length;
+
+  return {
+    friendRequests: filteredRequest,
+    numberOfRequests: numberOfRequests
+  };
+};
+
 const mapStateToProps = ({ auth, friend }) => {
-  const numberOfRequests = friend.friendRequests
-    ? friend.friendRequests.length
-    : 0;
+  const userId = auth._id;
+  const friendObj = filterFriendsRequests(friend.friendRequests, userId);
 
   return {
     role: auth.role,
-    userId: auth._id,
-    friendRequests: friend.friendRequests,
-    numberOfRequests
+    userId,
+    friendRequests: friendObj.friendRequests,
+    numberOfRequests: friendObj.numberOfRequests
   };
 };
 

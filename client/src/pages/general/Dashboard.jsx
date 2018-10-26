@@ -10,9 +10,15 @@ import { startCheckToken } from "../../actions/authActions";
 import dashboardCardData from "./helpers/dashboardCardData";
 
 class Dashboard extends Component {
+  // lifecycles
   componentDidMount() {
     this.props.startCheckToken();
   }
+
+  // render dom
+  renderTileCards = () =>
+    dashboardCardData.map((obj, i) => <TileCard key={i} data={obj} />);
+
   render() {
     return (
       <div className="row">
@@ -20,9 +26,7 @@ class Dashboard extends Component {
           <Heading title="Dashboard" />
           <div className="bulletinBg row">
             <div className="col-12 d-flex flex-wrap justify-content-around my-4">
-              {dashboardCardData.map((obj, i) => (
-                <TileCard key={i} data={obj} />
-              ))}
+              {this.renderTileCards()}
             </div>
           </div>
         </div>

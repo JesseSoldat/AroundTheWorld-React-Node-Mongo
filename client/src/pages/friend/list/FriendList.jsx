@@ -1,16 +1,19 @@
 import React from "react";
 import FriendCard from "./FriendCard";
 
-const FriendList = ({
-  friends,
-  name,
-  updateFilter,
-  viewDetails,
-  viewStories
-}) => {
+const FriendList = ({ friends, name, updateFilter, onNavigate }) => {
   const filteredFriends = friends.filter(
     friend => name === "" || friend.username.toLowerCase().includes(name)
   );
+
+  // render dom
+  const renderFriendList = () => {
+    return filteredFriends.map(friend => (
+      <div className="col-sm-12 col-md-6 col-lg-4 mx-auto" key={friend._id}>
+        <FriendCard friend={friend} onNavigate={onNavigate} />
+      </div>
+    ));
+  };
 
   return (
     <div className="bulletinBg">
@@ -27,17 +30,7 @@ const FriendList = ({
           )}
         </div>
       </div>
-      <div className="row">
-        {filteredFriends.map(friend => (
-          <div className="col-sm-12 col-md-6 col-lg-4 mx-auto" key={friend._id}>
-            <FriendCard
-              friend={friend}
-              viewDetails={viewDetails}
-              viewStories={viewStories}
-            />
-          </div>
-        ))}
-      </div>
+      <div className="row">{renderFriendList()}</div>
     </div>
   );
 };

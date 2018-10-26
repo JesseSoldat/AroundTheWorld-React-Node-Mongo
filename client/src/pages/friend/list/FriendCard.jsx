@@ -1,20 +1,21 @@
 import React from "react";
 // common components
-import IconBtn from "../../components/buttons/IconBtn";
+import IconBtn from "../../../components/buttons/IconBtn";
 // utils
-import capitalizeFirstLetter from "../../utils/stringManipulation/capitalizeFirstLetter";
+import capitalizeFirstLetter from "../../../utils/stringManipulation/capitalizeFirstLetter";
 // images
-import UserAvatar from "../../_images/userdefault.png";
+import UserAvatar from "../../../_images/userdefault.png";
 
-const FriendCard = ({ friend, viewDetails, viewStories }) => {
+const FriendCard = ({ friend, onNavigate }) => {
   let { username, avatar = null } = friend;
-
+  // format data
   username = capitalizeFirstLetter(username);
   const defaultAvatar = avatar ? avatar : UserAvatar;
 
-  const viewFriendDetails = () => viewDetails(friend._id);
+  // cbs & events
+  const viewFriendDetails = () => onNavigate(`/friend/${friend._id}`);
 
-  const viewFriendStories = () => viewStories(friend._id);
+  const viewFriendStories = () => onNavigate(`/matchedList/${friend._id}`);
 
   return (
     <div className="card my-4">

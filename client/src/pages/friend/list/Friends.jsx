@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // common components
-import Spinner from "../../components/loading/Spinner";
-import Heading from "../../components/Heading";
-import NoValuesCard from "../../components/cards/NoValuesCard";
+import Spinner from "../../../components/loading/Spinner";
+import Heading from "../../../components/Heading";
+import NoValuesCard from "../../../components/cards/NoValuesCard";
 // custom components
 import FriendList from "./FriendList";
 
 // actions
-import { startGetFriends } from "../../actions/friendActions";
+import { startGetFriends } from "../../../actions/friendActions";
 
 class Friends extends Component {
-  state = {
-    name: ""
-  };
+  state = { name: "" };
 
+  // lifecycles
   componentDidMount() {
     const { friends } = this.props;
     if (!friends) this.props.startGetFriends(this.props.userId);
@@ -23,11 +22,9 @@ class Friends extends Component {
   // cbs & events
   updateFilter = e => this.setState({ name: e.target.value.toLowerCase() });
 
-  viewDetails = userId => this.props.history.push(`/friend/${userId}`);
+  onNavigate = url => this.props.history.push(url);
 
-  viewStories = userId => this.props.history.push(`/matchedList/${userId}`);
-
-  goToStoryList = () => this.props.history.push("/storyList");
+  goToStoryList = () => this.onNavigate("/storyList");
 
   // render dom
   renderContent = () => {
@@ -42,8 +39,7 @@ class Friends extends Component {
           friends={friends}
           name={this.state.name}
           updateFilter={this.updateFilter}
-          viewDetails={this.viewDetails}
-          viewStories={this.viewStories}
+          onNavigate={this.onNavigate}
         />
       );
     // no friends

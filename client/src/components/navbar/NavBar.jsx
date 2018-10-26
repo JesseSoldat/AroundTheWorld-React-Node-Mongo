@@ -58,7 +58,12 @@ class NavBar extends Component {
         to={this.props.userId ? "/dashboard" : "/"}
       >
         <img className="logo" src={jLogo} alt="logo" />
-        <span>Around The World</span>
+        <ShowHide size="xs" type="inline">
+          <span>ATW</span>
+        </ShowHide>
+        <ShowHide size="sm-xl" type="inline">
+          <span>Around The World</span>
+        </ShowHide>
       </Link>
     );
   };

@@ -19,7 +19,7 @@ const FriendCard = ({ friend, viewDetails, viewStories }) => {
   return (
     <div className="card my-4">
       <div className="card-body">
-        <div className="row d-flex flex-column justify-content-around align-items-center">
+        <div className="row d-flex flex-column justify-content-around align-items-center flex-wrap">
           <img
             style={{ maxHeight: "250px" }}
             className="img-fluid img-thumbnail"
@@ -33,14 +33,14 @@ const FriendCard = ({ friend, viewDetails, viewStories }) => {
             <IconBtn
               btnClass="btn btn-secondary btn-sm mr-2"
               iconClass="fas fa-info-circle"
-              text="View Details"
+              text="Details"
               cb={viewFriendDetails}
             />
 
             <IconBtn
               btnClass="btn btn-primary btn-sm"
               iconClass="fas fa-atlas"
-              text="View Stories"
+              text="Stories"
               cb={viewFriendStories}
             />
           </div>

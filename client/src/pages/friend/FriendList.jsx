@@ -29,7 +29,7 @@ const FriendList = ({
       </div>
       <div className="row">
         {filteredFriends.map(friend => (
-          <div className="col-sm-12 col-md-4 mx-auto" key={friend._id}>
+          <div className="col-sm-12 col-md-6 col-lg-4 mx-auto" key={friend._id}>
             <FriendCard
               friend={friend}
               viewDetails={viewDetails}

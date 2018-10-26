@@ -102,7 +102,10 @@ module.exports = app => {
           userId,
           { $addToSet: { friends: friendId } },
           { new: true }
-        ),
+        ).populate({
+          path: "friends",
+          select: ["username", "avatar"]
+        }),
         User.findByIdAndUpdate(
           friendId,
           { $addToSet: { friends: userId } },
@@ -111,12 +114,17 @@ module.exports = app => {
         FriendRequest.findByIdAndRemove(friendRequest._id)
       ]);
 
-      console.log("friends", user.friends);
-      console.log("friendRequest id", friendRequestId);
+      // console.log("friendId", friendId);
+      // console.log("friends", user.friends);
+      // console.log("friendRequest id", friendRequestId);
 
-      const msg = "You accepted the friend request.";
+      const msg = "You have accepted the friend request.";
 
-      serverRes(res, 200, msg, { friendIds: user.friends, friendRequestId });
+      serverRes(res, 200, msg, {
+        friends: user.friends,
+        friendId,
+        friendRequestId
+      });
     } catch (err) {
       console.log("Err: Accept Friend Request", err);
       const msg = "There was an error while accepting a friend request.";

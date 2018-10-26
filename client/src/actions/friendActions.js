@@ -12,8 +12,8 @@ export const GET_FRIEND_DETAILS_LOADED = "GET_FRIEND_DETAILS_LOADED";
 export const FRIEND_REQUESTS_REQUESTED = "FRIEND_REQUESTS_REQUESTED";
 export const FRIEND_REQUESTS_LOADED = "FRIEND_REQUESTS_LOADED";
 // overlay
-export const FRIEND_REQUEST_STARTED = "FRIEND_REQUEST_STARTED";
-export const FRIEND_REQUEST_FINISHED = "FRIEND_REQUEST_FINISHED";
+export const SEND_FRIEND_REQUEST_STARTED = "FRIEND_REQUEST_STARTED";
+export const SEND_FRIEND_REQUEST_FINISHED = "FRIEND_REQUEST_FINISHED";
 export const ACCEPT_FRIEND_REQUEST_STARTED = "ACCEPT_FRIEND_REQUEST_STARTED";
 export const ACCEPT_FRIEND_REQUEST_FINISHED = "ACCEPT_FRIEND_REQUEST_FINISHED";
 export const DENY_FRIEND_REQUEST_STARTED = "DENY_FRIEND_REQUEST_STARTED";
@@ -89,13 +89,13 @@ export const startGetFriendRequests = userId => async dispatch => {
 
 // send a friend request
 export const sendFriendRequest = update => ({
-  type: FRIEND_REQUEST_FINISHED,
+  type: SEND_FRIEND_REQUEST_FINISHED,
   update
 });
 
 export const startSendFriendRequest = (userId, friendId) => async dispatch => {
   try {
-    dispatch({ type: FRIEND_REQUEST_STARTED });
+    dispatch({ type: SEND_FRIEND_REQUEST_STARTED });
 
     const res = await axios.post("/api/friend/request", { userId, friendId });
 

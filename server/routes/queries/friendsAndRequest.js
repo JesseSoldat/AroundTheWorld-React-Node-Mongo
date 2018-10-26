@@ -5,7 +5,7 @@ const User = require("../../models/user");
 const queryAllFriends = userId => {
   return User.findById(userId, { _id: 1 }).populate({
     path: "friends",
-    select: ["username", "email"]
+    select: ["username", "avatar"]
   });
 };
 

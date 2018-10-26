@@ -8,8 +8,8 @@ import {
   GET_FRIEND_DETAILS_REQUESTED,
   GET_FRIEND_DETAILS_LOADED,
   // overlay
-  FRIEND_REQUEST_STARTED,
-  FRIEND_REQUEST_FINISHED,
+  SEND_FRIEND_REQUEST_STARTED,
+  SEND_FRIEND_REQUEST_FINISHED,
   ACCEPT_FRIEND_REQUEST_STARTED,
   ACCEPT_FRIEND_REQUEST_FINISHED,
   DENY_FRIEND_REQUEST_STARTED,
@@ -27,17 +27,31 @@ const initialState = {
 };
 
 const newFriendRequest = (prevFriendRequests, update) => {
-  if (!prevFriendRequests) prevFriendRequests = [];
-  prevFriendRequests.push(update);
-  return prevFriendRequests;
+  let friendRequests;
+
+  !prevFriendRequests
+    ? (friendRequests = [update])
+    : (friendRequests = [...prevFriendRequests, update]);
+
+  return friendRequests;
 };
 
-const acceptFriendRequest = (prevState, update) => {
-  console.log("friendRequestId to remove", friendRequestId);
+const acceptFriendRequest = (prevFriendRequests, update) => {
   const { friendRequestId } = update;
-  if (!prevState.friendRequests) return prevState.friendRequests;
 
-  return prevState.friendRequests.filter(obj => obj._id !== friendRequestId);
+  if (!prevFriendRequests) return null;
+
+  return prevFriendRequests.filter(obj => obj._id !== friendRequestId);
+};
+
+const acceptFriendIds = (prevFriendIds, update) => {
+  let friendIds;
+
+  !prevFriendIds
+    ? (friendIds = [update.friendId])
+    : (friendIds = [...prevFriendIds, update.friendId]);
+
+  return friendIds;
 };
 
 export default (state = initialState, action) => {
@@ -88,30 +102,28 @@ export default (state = initialState, action) => {
       };
 
     // overlay
-    case FRIEND_REQUEST_STARTED:
+    case SEND_FRIEND_REQUEST_STARTED:
     case ACCEPT_FRIEND_REQUEST_STARTED:
     case DENY_FRIEND_REQUEST_STARTED:
       return { ...state, overlay: true };
 
-    case FRIEND_REQUEST_FINISHED:
-      const updatedFriendRequests = newFriendRequest(
-        state.friendRequests,
-        update
-      );
+    case SEND_FRIEND_REQUEST_FINISHED:
       return {
         ...state,
-        friendRequests: [...updatedFriendRequests],
+        friendRequests: newFriendRequest(state.friendRequests, update),
         overlay: false
       };
 
     case ACCEPT_FRIEND_REQUEST_FINISHED:
-      console.log("friendIds", update.friendIds);
-      const friendRequests = acceptFriendRequest(state, update);
+      // console.log("friendId", update.friendId);
+      // console.log("friends", update.friends);
+      // console.log("friendRequest id", update.friendRequestId);
+
       return {
         ...state,
-        friends: null,
-        friendIds: update.friendIds,
-        friendRequests,
+        friends: [...update.friends],
+        friendIds: acceptFriendIds(state.friendIds, update),
+        friendRequests: acceptFriendRequest(state.friendRequests, update),
         overlay: false
       };
 

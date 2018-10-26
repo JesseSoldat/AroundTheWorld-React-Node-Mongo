@@ -1,10 +1,13 @@
 import React from "react";
+import moment from "moment";
 // images
 import UserAvatar from "../../_images/userdefault.png";
 
 const UserDetailsCard = ({ details }) => {
   const { avatar } = details;
   const defaultAvatar = avatar ? avatar : UserAvatar;
+
+  const birthDate = moment(details.birthDate).format("YYYY-MM-DD");
 
   return (
     <div className="row">
@@ -19,7 +22,8 @@ const UserDetailsCard = ({ details }) => {
                     {details.gender}
                   </li>
                   <li className="list-group-item">
-                    <span className="mr-2 font-weight-bold">Age:</span> ?
+                    <span className="mr-2 font-weight-bold">Birthday:</span>{" "}
+                    {birthDate}
                   </li>
                   <li className="list-group-item">
                     <span className="mr-2 font-weight-bold">Occupation:</span>{" "}

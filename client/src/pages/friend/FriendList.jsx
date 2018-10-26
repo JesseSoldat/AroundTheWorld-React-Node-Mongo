@@ -9,7 +9,7 @@ const FriendList = ({
   viewStories
 }) => {
   const filteredFriends = friends.filter(
-    friend => name === "" || friend.username.includes(name)
+    friend => name === "" || friend.username.toLowerCase().includes(name)
   );
 
   return (

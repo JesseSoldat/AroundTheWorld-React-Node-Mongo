@@ -162,11 +162,11 @@ export default (state = initialState, action) => {
 
     // add an image to a story
     case UPLOAD_STORY_IMG_FINISHED:
-      return { ...state, details: update };
+      return { ...state, details: { ...update } };
 
     // delete an image from a story
     case DELETE_IMG_FROM_STORY_FINISHED:
-      return { ...state, details: update };
+      return { ...state, details: { ...update } };
 
     default:
       return { ...state };

@@ -21,7 +21,7 @@ class Friends extends Component {
   }
 
   // cbs & events
-  updateFilter = e => this.setState({ name: e.target.value });
+  updateFilter = e => this.setState({ name: e.target.value.toLowerCase() });
 
   viewDetails = userId => this.props.history.push(`/friend/${userId}`);
 

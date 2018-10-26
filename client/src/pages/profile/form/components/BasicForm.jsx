@@ -9,6 +9,7 @@ import {
 // common components
 import TextInput from "../../../../components/form/TextInput";
 import RadioInput from "../../../../components/form/RadioInput";
+import DateInput from "../../../../components/form/DateInput";
 // data
 import profileFields from "../helpers/profileFields";
 
@@ -27,11 +28,22 @@ const BasicForm = ({ submitting, invalid, handleSubmit, updateProfile }) => {
                   type={profileFields["username"].type}
                   component={TextInput}
                 />
+
                 <Field
                   fieldObj={profileFields["hometown"]}
                   name={profileFields["hometown"].name}
                   type={profileFields["hometown"].type}
                   component={TextInput}
+                />
+                <Field
+                  name="birthDate"
+                  component={DateInput}
+                  dateFormat="YYYY-MM-DD"
+                  showYearDropdown={true}
+                  showMonthDropdown={true}
+                  dropdownMode="select"
+                  placeholder="Date of Birth"
+                  label="Date of Birth"
                 />
                 <div>
                   <label className="p-0 m-0 pl-1">

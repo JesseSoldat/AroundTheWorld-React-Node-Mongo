@@ -20,10 +20,15 @@ import "./StoryDetails.css";
 class StoryDetails extends Component {
   // lifecycles
   componentDidMount() {
-    const { stories, match } = this.props;
+    const { stories, details, match } = this.props;
     const { storyId } = match.params;
-
     let story;
+
+    if (details && details._id === storyId) {
+      console.log("have details", details);
+      return;
+    }
+
     if (stories) {
       story = stories.find(story => story._id === storyId);
     }

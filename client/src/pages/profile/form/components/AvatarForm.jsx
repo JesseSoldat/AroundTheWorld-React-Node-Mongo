@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 // common components
 import DropZone from "../../../../components/DropZone";
 import Cropper from "../../../../components/Cropper";
@@ -32,7 +33,8 @@ class AvatarForm extends Component {
   };
 
   // api call
-  uploadImage = () => this.props.startUploadAvatarImage(this.state.image);
+  uploadImage = () =>
+    this.props.startUploadAvatarImage(this.state.image, this.props.history);
 
   render() {
     return (
@@ -72,4 +74,4 @@ class AvatarForm extends Component {
 export default connect(
   null,
   { startUploadAvatarImage }
-)(AvatarForm);
+)(withRouter(AvatarForm));

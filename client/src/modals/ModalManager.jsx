@@ -36,8 +36,13 @@ const ComponentNeedingStorage = ({
   };
 
   // friend request
+  const viewRequestersProfile = friendId => {
+    history.push(`/friend/${friendId}`);
+    closeModal();
+  };
+
   const acceptRequest = request => {
-    console.log("accept", request);
+    // console.log("accept", request);
     const { recipient, requester } = request;
     startAcceptFriendRequest(recipient._id, requester._id);
     closeModal();
@@ -64,6 +69,7 @@ const ComponentNeedingStorage = ({
         <FriendRequestModal
           data={data}
           onHide={closeModal}
+          viewRequestersProfile={viewRequestersProfile}
           acceptRequest={acceptRequest}
           denyRequest={denyRequest}
         />

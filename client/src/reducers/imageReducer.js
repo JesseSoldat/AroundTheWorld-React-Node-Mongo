@@ -8,6 +8,7 @@ import {
   DELETE_IMG_FROM_STORY_FINISHED,
   IMAGE_ACTION_ERROR
 } from "../actions/imageActions";
+import { AUTH_LOGOUT } from "../actions/authActions";
 
 const initialState = {
   overlay: false
@@ -15,6 +16,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case AUTH_LOGOUT:
+      return { ...initialState };
     // overlay
     case UPLOAD_STORY_IMG_STARTED:
     case UPLOAD_AVATAR_IMG_STARTED:

@@ -93,7 +93,7 @@ module.exports = app => {
     try {
       const { userId, friendId } = req.body;
       const friendRequest = await queryReceivedFriendRequest(userId, friendId);
-      console.log("friendRequest", friendRequest);
+      const friendRequestId = friendRequest._id;
 
       if (!friendRequest) throw new Error();
 
@@ -111,12 +111,12 @@ module.exports = app => {
         FriendRequest.findByIdAndRemove(friendRequest._id)
       ]);
 
-      console.log("user", user);
-      // console.log("friend", friend);
+      console.log("friends", user.friends);
+      console.log("friendRequest id", friendRequestId);
 
       const msg = "You accepted the friend request.";
 
-      serverRes(res, 200, msg, { user, friendRequest });
+      serverRes(res, 200, msg, { friendIds: user.friends, friendRequestId });
     } catch (err) {
       console.log("Err: Accept Friend Request", err);
       const msg = "There was an error while accepting a friend request.";

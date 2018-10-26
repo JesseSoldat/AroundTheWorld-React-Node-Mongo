@@ -1,4 +1,4 @@
-const {
+import {
   FRIEND_ACTION_ERROR,
   // loading
   FRIEND_REQUESTS_REQUESTED,
@@ -14,7 +14,8 @@ const {
   ACCEPT_FRIEND_REQUEST_FINISHED,
   DENY_FRIEND_REQUEST_STARTED,
   DENY_FRIEND_REQUEST_FINISHED
-} = require("../actions/friendActions");
+} from "../actions/friendActions";
+import { AUTH_LOGOUT } from "../actions/authActions";
 
 const initialState = {
   loading: false,
@@ -31,6 +32,14 @@ const newFriendRequest = (prevFriendRequests, update) => {
   return prevFriendRequests;
 };
 
+const acceptFriendRequest = (prevState, update) => {
+  console.log("friendRequestId to remove", friendRequestId);
+  const { friendRequestId } = update;
+  if (!prevState.friendRequests) return prevState.friendRequests;
+
+  return prevState.friendRequests.filter(obj => obj._id !== friendRequestId);
+};
+
 export default (state = initialState, action) => {
   const {
     type,
@@ -42,6 +51,8 @@ export default (state = initialState, action) => {
   } = action;
 
   switch (type) {
+    case AUTH_LOGOUT:
+      return { ...initialState };
     // clear loading and overlay
     case FRIEND_ACTION_ERROR:
       return { ...state, loading: false, overlay: false };
@@ -94,6 +105,16 @@ export default (state = initialState, action) => {
       };
 
     case ACCEPT_FRIEND_REQUEST_FINISHED:
+      console.log("friendIds", update.friendIds);
+      const friendRequests = acceptFriendRequest(state, update);
+      return {
+        ...state,
+        friends: null,
+        friendIds: update.friendIds,
+        friendRequests,
+        overlay: false
+      };
+
     case DENY_FRIEND_REQUEST_FINISHED:
       return { ...state, overlay: false };
 

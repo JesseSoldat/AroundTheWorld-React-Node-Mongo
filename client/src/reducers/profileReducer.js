@@ -7,6 +7,7 @@ import {
   EDIT_PROFILE_FINISHED,
   EDIT_PROFILE_STARTED
 } from "../actions/profileActions";
+import { AUTH_LOGOUT } from "../actions/authActions";
 
 const initialState = {
   loading: false,
@@ -17,6 +18,8 @@ const initialState = {
 export default (state = initialState, action) => {
   const { type, profile, update } = action;
   switch (type) {
+    case AUTH_LOGOUT:
+      return { ...initialState };
     // profile errors clear loading and overlay
     case PROFILE_ACTION_ERROR:
       return { ...state, loading: false, overlay: false };

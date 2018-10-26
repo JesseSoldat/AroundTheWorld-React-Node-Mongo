@@ -1,4 +1,6 @@
 import React from "react";
+// common components
+import IconBtn from "../../components/buttons/IconBtn";
 // utils
 import capitalizeFirstLetter from "../../utils/stringManipulation/capitalizeFirstLetter";
 // images
@@ -28,20 +30,19 @@ const FriendCard = ({ friend, viewDetails, viewStories }) => {
           <h3 className="card-title mt-4">{username}</h3>
 
           <div className="btn-group mt-4">
-            <button
-              style={{ width: "100px" }}
-              onClick={viewFriendDetails}
-              className="btn btn-secondary btn-sm mr-2"
-            >
-              View Details
-            </button>
-            <button
-              style={{ width: "100px" }}
-              onClick={viewFriendStories}
-              className="btn btn-primary btn-sm"
-            >
-              View Stories
-            </button>
+            <IconBtn
+              btnClass="btn btn-secondary btn-sm mr-2"
+              iconClass="fas fa-info-circle"
+              text="View Details"
+              cb={viewFriendDetails}
+            />
+
+            <IconBtn
+              btnClass="btn btn-primary btn-sm"
+              iconClass="fas fa-atlas"
+              text="View Stories"
+              cb={viewFriendStories}
+            />
           </div>
         </div>
       </div>

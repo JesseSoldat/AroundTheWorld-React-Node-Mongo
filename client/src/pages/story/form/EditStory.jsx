@@ -7,6 +7,7 @@ import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import TextInput from "../../../components/form/TextInput";
 import TextArea from "../../../components/form/TextArea";
+import IconBtn from "../../../components/buttons/IconBtn";
 // custom components
 import Map from "../../map/Map";
 // data
@@ -121,19 +122,19 @@ class EditStory extends Component {
                     />
                     <div className="spacer10" />
                     <div>
-                      <button
-                        onClick={this.cancel}
-                        className="btn btn-danger mr-2"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        className="btn btn-secondary"
+                      <IconBtn
+                        btnClass="btn btn-danger mr-2"
+                        iconClass="fas fa-backspace"
+                        text="Cancel"
+                        cb={this.cancel}
+                      />
+                      <IconBtn
+                        btnClass="btn btn-secondary"
+                        iconClass="fas fa-check"
+                        text="Submit"
                         type="submit"
                         disabled={invalid || submitting}
-                      >
-                        Submit
-                      </button>
+                      />
                     </div>
                   </form>
                 </div>

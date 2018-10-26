@@ -1,12 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Modal from "react-bootstrap4-modal";
 // common components
 import IconBtn from "../components/buttons/IconBtn";
 // utils
 import capitalizeFirstLetter from "../utils/stringManipulation/capitalizeFirstLetter";
 
-const FriendRequestModal = ({ data, onHide, acceptRequest, denyRequest }) => {
+const FriendRequestModal = ({
+  data,
+  onHide,
+  viewRequestersProfile,
+  acceptRequest,
+  denyRequest
+}) => {
   return (
     <Modal visible={true} onClickBackdrop={onHide} dialogClassName="modal-lg">
       <div className="modal-header">
@@ -32,13 +37,15 @@ const FriendRequestModal = ({ data, onHide, acceptRequest, denyRequest }) => {
                     key={i}
                     className="list-group-item d-flex justify-content-between flex-wrap"
                   >
-                    <span>
-                      <Link to={`/friend/${request.requester._id}`}>
-                        <span style={{ color: "blue" }}>
-                          {capitalizeFirstLetter(request.requester.username)}{" "}
-                        </span>
-                      </Link>
+                    <span
+                      style={{ color: "blue", cursor: "pointer" }}
+                      onClick={() =>
+                        viewRequestersProfile(request.requester._id)
+                      }
+                    >
+                      {capitalizeFirstLetter(request.requester.username)}{" "}
                     </span>
+
                     <div className="btn-group">
                       <IconBtn
                         btnClass="cursorAllowed btn btn-danger mr-2"

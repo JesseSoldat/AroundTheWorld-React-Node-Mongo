@@ -57,7 +57,19 @@ class MatchedDetails extends Component {
     this.props.history.push(`/matchedList/${userId}`);
   };
 
-  render() {
+  // render dom
+  renderHeader = () => {
+    const { matchedDetails } = this.props;
+    let title;
+    if (matchedDetails) title = matchedDetails.title;
+
+    return (
+      <Heading title={title}>
+        <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
+      </Heading>
+    );
+  };
+  renderContent = () => {
     const {
       loading,
       userId,
@@ -65,23 +77,21 @@ class MatchedDetails extends Component {
       friendIds,
       friendRequests
     } = this.props;
-    let content, title, status;
 
-    if (loading) content = <Spinner />;
+    let status;
+
+    if (loading) return <Spinner />;
     else if (matchedDetails && matchedDetails.geometry) {
-      title = matchedDetails.title;
       const data = this.formatAccordionData(matchedDetails);
 
-      if (friendRequests) {
-        status = checkFriendStatus({
-          userId,
-          matchedUserId: data.matchedUserId,
-          friendIds,
-          friendRequests
-        });
-      }
+      status = checkFriendStatus({
+        userId,
+        matchedUserId: data.matchedUserId,
+        friendIds,
+        friendRequests
+      });
 
-      content = (
+      return (
         <Accordion
           data={data}
           accordionTop={<p>{data.description}</p>}
@@ -106,13 +116,16 @@ class MatchedDetails extends Component {
         />
       );
     }
+  };
+
+  render() {
+    const header = this.renderHeader();
+    const content = this.renderContent();
 
     return (
       <div className="row">
         <div className="col-sm-11 mx-auto">
-          <Heading title={title}>
-            <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
-          </Heading>
+          {header}
           <div className="row mt-4">
             <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
           </div>

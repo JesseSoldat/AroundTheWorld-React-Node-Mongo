@@ -16,7 +16,6 @@ class MatchedUserImages extends Component {
   render() {
     const { status, sendRequest, acceptRequest } = this.props;
     let content;
-
     switch (status) {
       case "unknown":
         content = <SendFriendRequest cb={sendRequest} />;
@@ -39,14 +38,7 @@ class MatchedUserImages extends Component {
         break;
 
       default:
-        content = (
-          <div
-            className="text-center"
-            style={{ width: "50px", margin: "auto" }}
-          >
-            <i className="fas fa-spinner fa-7x fa-spin mt-4" />
-          </div>
-        );
+        console.log("Friend status is unknown");
         break;
     }
 

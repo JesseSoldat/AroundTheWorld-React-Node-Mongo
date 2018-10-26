@@ -13,7 +13,7 @@ import ProfileRoutes from "./routes/profileRoutes";
 // custom components
 import OverylaySpinner from "../components/loading/OverlaySpinner";
 // components
-import NavBar from "../components/navbar/_NavBar";
+import NavBar from "../components/navbar/NavBar";
 import ModalManager from "../modals/ModalManager";
 
 import ScrollToTop from "../components/ScrollToTop";

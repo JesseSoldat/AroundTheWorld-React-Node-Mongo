@@ -23,7 +23,7 @@ const ImgCard = ({ data, cb, image }) => {
 
       <div className="mt-2 card-body d-flex-column justify-content-between">
         <h5 className="card-title">{data.title}</h5>
-        <p className="card-text mt-3">{truncateStr(data.description)}</p>
+        <p className="card-text mt-3">{truncateStr(data.description, 50)}</p>
       </div>
       <button
         onClick={btnClicked}

@@ -24,6 +24,7 @@ import {
   UPLOAD_STORY_IMG_FINISHED,
   DELETE_IMG_FROM_STORY_FINISHED
 } from "../actions/imageActions";
+import { AUTH_LOGOUT } from "../actions/authActions";
 
 const initialState = {
   overlay: false,
@@ -78,6 +79,8 @@ export default (state = initialState, action) => {
   } = action;
 
   switch (type) {
+    case AUTH_LOGOUT:
+      return { ...initialState };
     // handle error
     case STORY_ACTION_ERROR:
       return { ...state, overlay: false, loading: false };

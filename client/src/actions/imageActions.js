@@ -15,13 +15,13 @@ export const DELETE_IMG_FROM_STORY_STARTED = "DELETE_IMG_FROM_STORY_STARTED";
 export const DELETE_IMG_FROM_STORY_FINISHED = "DELETE_IMG_FROM_STORY_FINISHED";
 
 // firebase helpers
-const listenToUploadProgress = (uploadTask, uploadToServer) => {
+const listenToUploadProgress = (uploadTask, uploadToServer, history) => {
   // changes, errors, and completion of the upload.
   uploadTask.on(
     firebase.storage.TaskEvent.STATE_CHANGED,
     snapshot => {
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
+      // var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      // console.log("Upload is " + progress + "% done");
     },
     error => {
       switch (error.code) {
@@ -37,10 +37,10 @@ const listenToUploadProgress = (uploadTask, uploadToServer) => {
     () => {
       // Upload completed successfully, now we can get the download URL
       uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-        console.log("File available at", downloadURL);
+        // console.log("File available at", downloadURL);
 
         if (uploadToServer.type === "avatar") {
-          postAvatarUrlToServer(uploadToServer, downloadURL);
+          postAvatarUrlToServer(uploadToServer, downloadURL, history);
         } else {
           postStoryUrlToServer(uploadToServer, downloadURL);
         }
@@ -119,7 +119,11 @@ export const uploadAvatarImage = update => ({
   update
 });
 
-export const postAvatarUrlToServer = async (uploadToServer, downloadURL) => {
+export const postAvatarUrlToServer = async (
+  uploadToServer,
+  downloadURL,
+  history
+) => {
   const { userId, dispatch } = uploadToServer;
   try {
     const res = await axios.post(`/api/profile/${userId}`, {
@@ -131,13 +135,17 @@ export const postAvatarUrlToServer = async (uploadToServer, downloadURL) => {
     dispatch(uploadAvatarImage(payload.profile));
 
     toastr.success("Success", msg);
+    history.push(`/profile/${userId}`);
   } catch (err) {
     errorHandling(dispatch, err, "upload", "avatar");
     dispatch(imageActionError());
   }
 };
 
-export const startUploadAvatarImage = file => async (dispatch, getState) => {
+export const startUploadAvatarImage = (file, history) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: UPLOAD_AVATAR_IMG_STARTED });
     const userId = getState().auth._id;
@@ -157,7 +165,7 @@ export const startUploadAvatarImage = file => async (dispatch, getState) => {
       userId
     };
 
-    listenToUploadProgress(uploadTask, uploadToServer);
+    listenToUploadProgress(uploadTask, uploadToServer, history);
   } catch (err) {
     errorHandling(dispatch, err, "upload", "avatar");
     dispatch(imageActionError());

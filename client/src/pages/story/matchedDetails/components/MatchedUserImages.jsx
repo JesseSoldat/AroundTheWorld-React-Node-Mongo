@@ -6,11 +6,14 @@ import ImageList from "./ImageList";
 
 class MatchedUserImages extends Component {
   renderFriendImages = () => {
-    const { images } = this.props;
+    const { images, viewLargePhotoModal } = this.props;
+
     if (!images.length)
       return <p>This story does not have any photos associated with it.</p>;
 
-    return <ImageList images={images} />;
+    return (
+      <ImageList images={images} viewLargePhotoModal={viewLargePhotoModal} />
+    );
   };
 
   render() {
@@ -24,13 +27,17 @@ class MatchedUserImages extends Component {
       case "requested":
         content = (
           <div>
-            <p>Waiting for user to accept friend request.</p>
+            <p>Waiting for user to accept the friend request.</p>
           </div>
         );
         break;
 
       case "received":
         content = <ReceivedFriendRequest cb={acceptRequest} />;
+        break;
+
+      case "rejected":
+        content = <ReceivedFriendRequest cb={acceptRequest} rejected={true} />;
         break;
 
       case "isFriend":

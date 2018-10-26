@@ -12,6 +12,7 @@ import MatchedUserImages from "./components/MatchedUserImages";
 import checkFriendStatus from "../../../utils/checkFriendStatus";
 // actions
 import { startGetMatchedStoryDetails } from "../../../actions/storyActions";
+import { openModal } from "../../../actions/modalActions";
 import {
   startSendFriendRequest,
   startAcceptFriendRequest
@@ -40,6 +41,15 @@ class MatchedDetails extends Component {
   };
 
   // cb & events
+  viewLargePhotoModal = data => {
+    const { storyId } = this.props.match.params;
+
+    this.props.openModal({
+      modalType: "viewOthersPhoto",
+      data: { ...data, storyId }
+    });
+  };
+
   sendRequest = () => {
     const { userId, matchedDetails, startSendFriendRequest } = this.props;
     const matchedUserId = matchedDetails.user._id;
@@ -69,6 +79,7 @@ class MatchedDetails extends Component {
       </Heading>
     );
   };
+
   renderContent = () => {
     const {
       loading,
@@ -111,6 +122,7 @@ class MatchedDetails extends Component {
               images={matchedDetails.images}
               sendRequest={this.sendRequest}
               acceptRequest={this.acceptRequest}
+              viewLargePhotoModal={this.viewLargePhotoModal}
             />
           }
         />
@@ -146,6 +158,7 @@ const mapStateToProps = ({ story, friend, auth }) => ({
 export default connect(
   mapStateToProps,
   {
+    openModal,
     startGetMatchedStoryDetails,
     startSendFriendRequest,
     startAcceptFriendRequest

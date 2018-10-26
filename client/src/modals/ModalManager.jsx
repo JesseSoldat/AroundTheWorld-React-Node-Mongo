@@ -65,6 +65,9 @@ const ComponentNeedingStorage = ({
           deleteImgFromStory={deleteImgFromStory}
         />
       )}
+      {modalType === "viewOthersPhoto" && (
+        <ViewImageModal data={data} onHide={closeModal} />
+      )}
       {modalType === "friendRequests" && (
         <FriendRequestModal
           data={data}

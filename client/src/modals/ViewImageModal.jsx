@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap4-modal";
 
-const ViewImageModal = ({ data, onHide, deleteImgFromStory }) => {
+const ViewImageModal = ({ data, onHide, deleteImgFromStory = null }) => {
   const onDeleteImage = () => {
     deleteImgFromStory(data);
   };
@@ -11,7 +11,7 @@ const ViewImageModal = ({ data, onHide, deleteImgFromStory }) => {
       <div className="modal-body">
         {data && (
           <img
-            className="img-fluid img-thumbnail"
+            className="img-fluid mx-auto d-block"
             src={data.downloadURL}
             alt="detail preview"
           />
@@ -19,9 +19,12 @@ const ViewImageModal = ({ data, onHide, deleteImgFromStory }) => {
       </div>
 
       <div className="modal-footer">
-        <button className="btn btn-danger" onClick={onDeleteImage}>
-          Delete
-        </button>
+        {deleteImgFromStory && (
+          <button className="btn btn-danger" onClick={onDeleteImage}>
+            Delete
+          </button>
+        )}
+
         <button type="button" className="btn btn-secondary" onClick={onHide}>
           Close
         </button>

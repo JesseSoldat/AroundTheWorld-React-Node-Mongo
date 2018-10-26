@@ -131,4 +131,30 @@ module.exports = app => {
       serverRes(res, 400, msg, null);
     }
   });
+
+  // deny a friend request
+  app.post("/api/friend/request/deny", isAuth, async (req, res) => {
+    try {
+      const { userId, friendId } = req.body;
+
+      const friendRequest = await FriendRequest.findOneAndUpdate(
+        {
+          requester: friendId,
+          recipient: userId
+        },
+        { $set: { status: "rejected" } },
+        { new: true }
+      );
+
+      const msg = "Friend request has been rejected";
+
+      console.log("friendRequestId", friendRequest._id);
+
+      serverRes(res, 200, msg, { friendRequestId: friendRequest._id });
+    } catch (err) {
+      console.log("Err: Deny Friend Request", err);
+      const msg = "There was an error while denying a friend request.";
+      serverRes(res, 400, msg, null);
+    }
+  });
 };

@@ -134,17 +134,32 @@ export const startAcceptFriendRequest = (
 
     dispatch(acceptFriendRequest(payload));
   } catch (err) {
-    errorHandling(dispatch, err, "send", "friend request");
+    errorHandling(dispatch, err, "accept", "friend request");
     dispatch(friendActionError());
   }
 };
 
-export const denyFriendRequest = () => ({
-  type: DENY_FRIEND_REQUEST_FINISHED
+export const denyFriendRequest = update => ({
+  type: DENY_FRIEND_REQUEST_FINISHED,
+  update
 });
 
-export const startDenyFriendRequest = () => async dispatch => {
+export const startDenyFriendRequest = (userId, friendId) => async dispatch => {
   try {
     dispatch({ type: DENY_FRIEND_REQUEST_STARTED });
-  } catch (err) {}
+
+    const res = await axios.post("/api/friend/request/deny", {
+      userId,
+      friendId
+    });
+
+    const { msg, payload } = res.data;
+
+    toastr.success("Success", msg);
+
+    dispatch(denyFriendRequest(payload));
+  } catch (err) {
+    errorHandling(dispatch, err, "deny", "friend request");
+    dispatch(friendActionError());
+  }
 };

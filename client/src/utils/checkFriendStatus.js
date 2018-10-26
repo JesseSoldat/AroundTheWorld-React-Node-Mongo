@@ -11,27 +11,37 @@ const checkFriendStatus = ({
   let status = "unknown";
 
   // check if they are friends
-  friendIds.forEach(friendId => {
-    if (matchedUserId === friendId) {
-      return (status = "isFriend");
-    }
-  });
+  if (friendIds) {
+    friendIds.forEach(friendId => {
+      if (matchedUserId === friendId) {
+        return (status = "isFriend");
+      }
+    });
+  }
 
   // check friend requests
-  friendRequests.forEach(request => {
-    const { requester, recipient } = request;
+  if (friendRequests) {
+    friendRequests.forEach(request => {
+      const { requester, recipient } = request;
 
-    // user sent request already
-    // new friends request requester && recipient will equal _id
-    if (requester === userId && recipient === matchedUserId)
-      return (status = "requested");
-    else if (requester._id === userId && recipient._id === matchedUserId)
-      return (status = "requested");
-    // user received a request
-    else if (requester._id === matchedUserId && recipient._id === userId)
-      return (status = "received");
-  });
-  console.log("status", status);
+      // -------- user sent request already --------------
+      // new friends request requester && recipient will equal _id
+      if (requester === userId && recipient === matchedUserId) {
+        return (status = "requested");
+      }
+      // previous request
+      else if (requester._id === userId && recipient._id === matchedUserId) {
+        return (status = request.status);
+      }
+      // previous request user received a request
+      else if (requester._id === matchedUserId && recipient._id === userId) {
+        return (status =
+          request.status === "requested" ? "received" : "rejected");
+      }
+    });
+  }
+
+  console.log("status: ", status);
 
   return status;
 };

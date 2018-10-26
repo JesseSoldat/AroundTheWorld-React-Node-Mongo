@@ -54,6 +54,24 @@ const acceptFriendIds = (prevFriendIds, update) => {
   return friendIds;
 };
 
+const denyFriendRequest = (prevFriendRequests, update) => {
+  const { friendRequestId } = update;
+
+  if (!prevFriendRequests) return null;
+
+  const updatedFriendRequests = [...prevFriendRequests];
+
+  console.log("updatedFriendRequests", updatedFriendRequests);
+
+  const index = updatedFriendRequests.findIndex(
+    obj => obj._id === friendRequestId
+  );
+
+  if (index) updatedFriendRequests[index].status = "rejected";
+
+  return updatedFriendRequests;
+};
+
 export default (state = initialState, action) => {
   const {
     type,
@@ -118,7 +136,6 @@ export default (state = initialState, action) => {
       // console.log("friendId", update.friendId);
       // console.log("friends", update.friends);
       // console.log("friendRequest id", update.friendRequestId);
-
       return {
         ...state,
         friends: [...update.friends],
@@ -128,7 +145,13 @@ export default (state = initialState, action) => {
       };
 
     case DENY_FRIEND_REQUEST_FINISHED:
-      return { ...state, overlay: false };
+      console.log("update", update);
+
+      return {
+        ...state,
+        friendRequests: denyFriendRequest(state.friendRequests, update),
+        overlay: false
+      };
 
     default:
       return { ...state };

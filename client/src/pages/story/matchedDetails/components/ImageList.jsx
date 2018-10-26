@@ -1,11 +1,21 @@
 import React from "react";
 
-const ImageList = ({ images }) => {
+const ImageList = ({ images, viewLargePhotoModal }) => {
+  const onViewLargePhotoModal = img => () => viewLargePhotoModal(img);
+
   return (
     <div className="row">
-      {images.map((img, i) => (
-        <div key={i} className="col-xs-12 col-sm-6 col-md-4 col-lg-2 mx-auto">
-          <img src={img} alt="story" className="rounded mx-auto d-block" />
+      {images.map(img => (
+        <div
+          key={img._id}
+          className="cursorAllowed col-xs-4 col-md-3 col-lg-2 m-2"
+        >
+          <img
+            src={img.downloadURL}
+            alt="story"
+            onClick={onViewLargePhotoModal(img)}
+            className="img-fluid rounded mx-auto d-block"
+          />
         </div>
       ))}
     </div>

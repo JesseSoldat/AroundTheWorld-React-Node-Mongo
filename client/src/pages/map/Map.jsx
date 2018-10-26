@@ -19,7 +19,10 @@ class Map extends Component {
     } = this.props;
 
     return (
-      <div style={{ height, width: "100%", position: "relative" }}>
+      <div
+        className="mx-auto"
+        style={{ height, width: "100%", position: "relative" }}
+      >
         {showBtns && (
           <div
             style={{ zIndex: 3, position: "absolute", top: "2%", right: "8%" }}

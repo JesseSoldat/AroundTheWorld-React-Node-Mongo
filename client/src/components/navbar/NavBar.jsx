@@ -153,8 +153,9 @@ const filterFriendsRequests = (friendRequests, userId) => {
   }
 
   const filteredRequest = friendRequests.filter(
-    obj => obj.recipient._id === userId
+    obj => obj.recipient._id === userId && obj.status !== "rejected"
   );
+
   const numberOfRequests = filteredRequest.length;
 
   return {

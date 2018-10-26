@@ -61,13 +61,15 @@ const denyFriendRequest = (prevFriendRequests, update) => {
 
   const updatedFriendRequests = [...prevFriendRequests];
 
-  console.log("updatedFriendRequests", updatedFriendRequests);
-
   const index = updatedFriendRequests.findIndex(
     obj => obj._id === friendRequestId
   );
 
-  if (index) updatedFriendRequests[index].status = "rejected";
+  // console.log("index", index);
+
+  if (index >= 0) updatedFriendRequests[index].status = "rejected";
+
+  // console.log("updatedFriendRequests", updatedFriendRequests);
 
   return updatedFriendRequests;
 };
@@ -145,8 +147,6 @@ export default (state = initialState, action) => {
       };
 
     case DENY_FRIEND_REQUEST_FINISHED:
-      console.log("update", update);
-
       return {
         ...state,
         friendRequests: denyFriendRequest(state.friendRequests, update),

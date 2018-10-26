@@ -10,7 +10,10 @@ import withStorage from "../components/hoc/withStorage";
 // actions
 import { closeModal } from "../actions/modalActions";
 import { startDeleteImageFromStory } from "../actions/imageActions";
-import { startAcceptFriendRequest } from "../actions/friendActions";
+import {
+  startAcceptFriendRequest,
+  startDenyFriendRequest
+} from "../actions/friendActions";
 
 // Modal Manager
 const ComponentNeedingStorage = ({
@@ -19,6 +22,7 @@ const ComponentNeedingStorage = ({
   closeModal,
   startDeleteImageFromStory,
   startAcceptFriendRequest,
+  startDenyFriendRequest,
   history,
   save
 }) => {
@@ -49,7 +53,8 @@ const ComponentNeedingStorage = ({
   };
 
   const denyRequest = request => {
-    console.log("deny", request);
+    const { recipient, requester } = request;
+    startDenyFriendRequest(recipient._id, requester._id);
     closeModal();
   };
 
@@ -90,5 +95,10 @@ const mapStateToProps = ({ modal }) => ({
 
 export default connect(
   mapStateToProps,
-  { closeModal, startDeleteImageFromStory, startAcceptFriendRequest }
+  {
+    closeModal,
+    startDeleteImageFromStory,
+    startAcceptFriendRequest,
+    startDenyFriendRequest
+  }
 )(withRouter(ModalManager));

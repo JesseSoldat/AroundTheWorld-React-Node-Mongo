@@ -148,8 +148,6 @@ module.exports = app => {
 
       const msg = "Friend request has been rejected";
 
-      console.log("friendRequestId", friendRequest._id);
-
       serverRes(res, 200, msg, { friendRequestId: friendRequest._id });
     } catch (err) {
       console.log("Err: Deny Friend Request", err);

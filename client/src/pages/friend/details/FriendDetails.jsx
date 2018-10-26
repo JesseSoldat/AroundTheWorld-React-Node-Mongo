@@ -6,7 +6,10 @@ import Heading from "../../../components/Heading";
 import UserDetailsCard from "../../../components/cards/UserDetailsCard";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // actions
-import { startGetFriendDetails } from "../../../actions/friendActions";
+import {
+  startGetFriendDetails,
+  startDeleteFriend
+} from "../../../actions/friendActions";
 
 class FriendDetails extends Component {
   componentDidMount() {
@@ -22,6 +25,11 @@ class FriendDetails extends Component {
     this.props.history.push("/friends");
   };
 
+  deleteFriend = () => {
+    const { friendId } = this.props.match.params;
+    this.props.startDeleteFriend(friendId, this.props.history);
+  };
+
   // render dom
   renderHeader = () => {
     const { friendDetails } = this.props;
@@ -29,7 +37,10 @@ class FriendDetails extends Component {
     if (friendDetails)
       return (
         <Heading title={friendDetails.username}>
-          <TopRowBtns btn0Cb={this.goBackToFriendsList} />
+          <TopRowBtns
+            btn0Cb={this.goBackToFriendsList}
+            btn1Cb={this.deleteFriend}
+          />
         </Heading>
       );
   };
@@ -62,5 +73,5 @@ const mapStateToProps = ({ friend }) => ({
 
 export default connect(
   mapStateToProps,
-  { startGetFriendDetails }
+  { startGetFriendDetails, startDeleteFriend }
 )(FriendDetails);

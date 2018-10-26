@@ -18,6 +18,8 @@ export const ACCEPT_FRIEND_REQUEST_STARTED = "ACCEPT_FRIEND_REQUEST_STARTED";
 export const ACCEPT_FRIEND_REQUEST_FINISHED = "ACCEPT_FRIEND_REQUEST_FINISHED";
 export const DENY_FRIEND_REQUEST_STARTED = "DENY_FRIEND_REQUEST_STARTED";
 export const DENY_FRIEND_REQUEST_FINISHED = "DENY_FRIEND_REQUEST_FINISHED";
+export const DELETE_FRIEND_STARTED = "DELETE_FRIEND_STARTED";
+export const DELETE_FRIEND_FINISHED = "DELETE_FRIEND_FINISHED";
 
 // friend action error
 export const friendActionError = () => ({
@@ -160,6 +162,36 @@ export const startDenyFriendRequest = (userId, friendId) => async dispatch => {
     dispatch(denyFriendRequest(payload));
   } catch (err) {
     errorHandling(dispatch, err, "deny", "friend request");
+    dispatch(friendActionError());
+  }
+};
+
+// delete friend
+export const deleteFriend = update => ({
+  type: DELETE_FRIEND_FINISHED,
+  update
+});
+
+export const startDeleteFriend = (friendId, history) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: DELETE_FRIEND_STARTED });
+
+    const userId = getState().auth._id;
+
+    const res = await axios.post(`/api/friend/remove`, { userId, friendId });
+
+    const { msg, payload } = res.data;
+
+    toastr.success("Success", msg);
+
+    dispatch(deleteFriend(payload));
+
+    history.push("/friends");
+  } catch (err) {
+    errorHandling(dispatch, err, "delete", "friend");
     dispatch(friendActionError());
   }
 };

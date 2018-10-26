@@ -13,7 +13,9 @@ import {
   ACCEPT_FRIEND_REQUEST_STARTED,
   ACCEPT_FRIEND_REQUEST_FINISHED,
   DENY_FRIEND_REQUEST_STARTED,
-  DENY_FRIEND_REQUEST_FINISHED
+  DENY_FRIEND_REQUEST_FINISHED,
+  DELETE_FRIEND_STARTED,
+  DELETE_FRIEND_FINISHED
 } from "../actions/friendActions";
 import { AUTH_LOGOUT } from "../actions/authActions";
 
@@ -74,6 +76,12 @@ const denyFriendRequest = (prevFriendRequests, update) => {
   return updatedFriendRequests;
 };
 
+const removeFriendId = (prevFriendIds, update) => {
+  if (!prevFriendIds) return null;
+
+  return prevFriendIds.filter(id => id !== update.friendId);
+};
+
 export default (state = initialState, action) => {
   const {
     type,
@@ -125,6 +133,7 @@ export default (state = initialState, action) => {
     case SEND_FRIEND_REQUEST_STARTED:
     case ACCEPT_FRIEND_REQUEST_STARTED:
     case DENY_FRIEND_REQUEST_STARTED:
+    case DELETE_FRIEND_STARTED:
       return { ...state, overlay: true };
 
     case SEND_FRIEND_REQUEST_FINISHED:
@@ -150,6 +159,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         friendRequests: denyFriendRequest(state.friendRequests, update),
+        overlay: false
+      };
+
+    case DELETE_FRIEND_FINISHED:
+      return {
+        ...state,
+        friendDetails: null,
+        friends: [...update.friends],
+        friendIds: removeFriendId(state.friendIds, update),
         overlay: false
       };
 

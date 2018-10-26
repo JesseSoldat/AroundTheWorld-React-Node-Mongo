@@ -42,7 +42,6 @@ class UpdateProfile extends Component {
 
   updateProfile = values => {
     const { profile } = this.props;
-    console.log(values);
     this.props.startEditProfile({ ...profile, ...values });
   };
 

@@ -155,4 +155,39 @@ module.exports = app => {
       serverRes(res, 400, msg, null);
     }
   });
+
+  // delete a friend
+  app.post("/api/friend/remove", isAuth, async (req, res) => {
+    try {
+      const { userId, friendId } = req.body;
+
+      const [user, friend] = await Promise.all([
+        User.findByIdAndUpdate(
+          userId,
+          { $pull: { friends: friendId } },
+          { new: true }
+        ).populate({
+          path: "friends",
+          select: ["username", "avatar"]
+        }),
+        User.findByIdAndUpdate(
+          friendId,
+          { $pull: { friends: userId } },
+          { new: true }
+        )
+      ]);
+      // console.log("userId", userId);
+      // console.log("user:", user.friends);
+      // console.log("friendId", friendId);
+      // console.log("friend:", friend.friends);
+
+      const msg = `${friend.username} has been removed from your friend list.`;
+
+      serverRes(res, 200, msg, { friends: user.friends, friendId });
+    } catch (err) {
+      console.log("Err: Delete Friend", err);
+      const msg = "There was an error while deleting a friend.";
+      serverRes(res, 400, msg, null);
+    }
+  });
 };

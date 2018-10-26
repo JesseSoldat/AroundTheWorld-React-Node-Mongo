@@ -1,4 +1,5 @@
 import axios from "axios";
+import { change } from "redux-form";
 import { toastr } from "react-redux-toastr";
 // helpers
 import errorHandling from "./helpers/errorHandling";
@@ -13,6 +14,10 @@ export const PROFILE_LOADED = "PROFILE_LOADED";
 export const EDIT_PROFILE_STARTED = "EDIT_PROFILE_STARTED";
 export const EDIT_PROFILE_FINISHED = "EDIT_PROFILE_FINISHED";
 
+// redux form
+export const resetField = (field, value, form) => dispatch => {
+  dispatch(change(form, field, value));
+};
 // handle profile errors;
 export const profileError = () => ({
   type: PROFILE_ACTION_ERROR

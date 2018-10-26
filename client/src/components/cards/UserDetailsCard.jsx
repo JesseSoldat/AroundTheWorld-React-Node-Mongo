@@ -7,7 +7,9 @@ const UserDetailsCard = ({ details }) => {
   const { avatar } = details;
   const defaultAvatar = avatar ? avatar : UserAvatar;
 
-  const birthDate = moment(details.birthDate).format("YYYY-MM-DD");
+  const birthDate = details.birthDate
+    ? moment(details.birthDate).format("MM-DD-YYYY")
+    : null;
 
   return (
     <div className="row">

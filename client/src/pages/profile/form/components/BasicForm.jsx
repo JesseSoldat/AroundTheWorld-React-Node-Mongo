@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import {
   combineValidators,
@@ -13,7 +14,17 @@ import DateInput from "../../../../components/form/DateInput";
 // data
 import profileFields from "../helpers/profileFields";
 
-const BasicForm = ({ submitting, invalid, handleSubmit, updateProfile }) => {
+const BasicForm = ({
+  resetFieldOnForm,
+  submitting,
+  invalid,
+  handleSubmit,
+  updateProfile
+}) => {
+  const resetInputValue = () => {
+    resetFieldOnForm();
+  };
+
   return (
     <div className="col-xs-12 col-md-8 mx-auto">
       <div className="card">
@@ -44,6 +55,7 @@ const BasicForm = ({ submitting, invalid, handleSubmit, updateProfile }) => {
                   dropdownMode="select"
                   placeholder="Date of Birth"
                   label="Date of Birth"
+                  resetInputValue={resetInputValue}
                 />
                 <div>
                   <label className="p-0 m-0 pl-1">
@@ -92,9 +104,14 @@ const validate = combineValidators({
   )()
 });
 
-export default reduxForm({
-  form: "profileForm",
-  enableReinitialize: true,
-  destroyOnUnmount: false,
-  validate
-})(BasicForm);
+export default connect(
+  null,
+  {}
+)(
+  reduxForm({
+    form: "profileForm",
+    enableReinitialize: true,
+    destroyOnUnmount: false,
+    validate
+  })(BasicForm)
+);

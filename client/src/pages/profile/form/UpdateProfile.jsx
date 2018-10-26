@@ -13,7 +13,8 @@ import PasswordForm from "./components/PasswordForm";
 // actions
 import {
   startGetProfile,
-  startEditProfile
+  startEditProfile,
+  resetField
 } from "../../../actions/profileActions";
 import { startChangePassword } from "../../../actions/authActions";
 
@@ -31,6 +32,10 @@ class UpdateProfile extends Component {
   }
 
   // cbs & events
+  resetFieldOnForm = () => {
+    this.props.resetField("birthDate", null, "profileForm");
+  };
+
   changeCurrentForm = formType => {
     this.setState({ currentForm: formType });
   };
@@ -58,6 +63,7 @@ class UpdateProfile extends Component {
           <BasicForm
             initialValues={profile}
             updateProfile={this.updateProfile}
+            resetFieldOnForm={this.resetFieldOnForm}
           />
         );
 
@@ -126,5 +132,5 @@ const mapStateToProps = ({ profile }) => ({
 
 export default connect(
   mapStateToProps,
-  { startGetProfile, startEditProfile, startChangePassword }
+  { resetField, startGetProfile, startEditProfile, startChangePassword }
 )(UpdateProfile);

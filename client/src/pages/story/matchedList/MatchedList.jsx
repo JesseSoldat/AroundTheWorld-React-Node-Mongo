@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import StaticMap from "../../map/StaticMap";
-import ImgCard from "../../../components/cards/ImgCard";
+import MapCard from "../../../components/cards/MapCard";
 import withStorage from "../../../components/hoc/withStorage";
 import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // actions
@@ -74,19 +74,14 @@ class ComponentNeedingStorage extends Component {
 
     if (loading) return <Spinner />;
     else if (matchedStories && matchedStories.length) {
+      console.log(matchedStories);
       return matchedStories.map(story => (
-        <ImgCard
+        <MapCard
           key={story._id}
           storyId={story._id}
           data={story}
+          coordinates={story.geometry.coordinates}
           cb={this.viewDetails}
-          image={
-            <StaticMap
-              coordinates={story.geometry.coordinates}
-              width="100%"
-              zoom={6}
-            />
-          }
         />
       ));
     }

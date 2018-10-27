@@ -1,9 +1,10 @@
 import React from "react";
-
+// custom components
+import StaticMap from "../../pages/map/StaticMap";
 // utils
 import truncateStr from "../../utils/stringManipulation/truncateStr";
 
-const ImgCard = ({ data, cb, image }) => {
+const MapCard = ({ data, coordinates, cb }) => {
   const btnClicked = () => {
     cb(data);
   };
@@ -19,7 +20,7 @@ const ImgCard = ({ data, cb, image }) => {
           borderRadius: "3px"
         }}
       >
-        {image}
+        <StaticMap coordinates={coordinates} width="100%" zoom={6} />
       </div>
 
       <div className="mt-2 card-body d-flex-column justify-content-between">
@@ -37,4 +38,4 @@ const ImgCard = ({ data, cb, image }) => {
   );
 };
 
-export default ImgCard;
+export default MapCard;

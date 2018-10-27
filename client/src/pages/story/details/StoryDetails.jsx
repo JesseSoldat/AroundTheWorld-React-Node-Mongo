@@ -15,8 +15,6 @@ import {
   startGetStoryDetails,
   startDeleteStory
 } from "../../../actions/storyActions";
-// css
-import "./StoryDetails.css";
 
 class StoryDetails extends Component {
   // lifecycles
@@ -138,13 +136,9 @@ class StoryDetails extends Component {
 
     return (
       <div className="row">
-        <div className="col-11 mx-auto">
-          <div className="row mt-4">
-            <div className="col-xs-12 col-sm-10 mx-auto">
-              {header}
-              {content}
-            </div>
-          </div>
+        <div className="col-xs-12 col-sm-10 col-lg-8 mx-auto">
+          {header}
+          {content}
         </div>
       </div>
     );

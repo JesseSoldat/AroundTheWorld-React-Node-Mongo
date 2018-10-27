@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { combineValidators, isRequired } from "revalidate";
 import { Field, reduxForm } from "redux-form";
 // common components
-import Heading from "../../../components/Heading";
 import TextInput from "../../../components/form/TextInput";
 import TextArea from "../../../components/form/TextArea";
 import IconBtn from "../../../components/buttons/IconBtn";
@@ -114,12 +113,7 @@ class CreateStory extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <Heading title="Tell your Story" />
-        {this.renderContent()}
-      </div>
-    );
+    return <div className="mt-3">{this.renderContent()}</div>;
   }
 }
 

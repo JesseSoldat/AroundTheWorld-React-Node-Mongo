@@ -22,9 +22,9 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="row">
-        <div className="col-sm-11 mx-auto">
+        <div className="col-sm-11 col-md-10 col-lg-8 mx-auto">
           <Heading title="Dashboard" />
-          <div className="bulletinBg row">
+          <div className="bulletinBg row mt-3">
             <div className="col-12 d-flex flex-wrap justify-content-around my-4">
               {this.renderTileCards()}
             </div>

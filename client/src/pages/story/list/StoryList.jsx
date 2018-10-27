@@ -78,7 +78,9 @@ class StoryList extends Component {
         <div className="col-sm-11 mx-auto">
           <Heading title="Stories" />
           <div className="row">
-            <div className="bulletinBg col-sm-11 mx-auto">{content}</div>
+            <div className="bulletinBg col-sm-11 col-md-8 mx-auto">
+              {content}
+            </div>
           </div>
         </div>
       </div>

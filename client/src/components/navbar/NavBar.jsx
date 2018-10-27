@@ -11,8 +11,6 @@ import FriendsRequestListItem from "./FriendsRequestListItem";
 import { startLogout } from "../../actions/authActions";
 import { startGetFriendRequests } from "../../actions/friendActions";
 import { openModal } from "../../actions/modalActions";
-// css
-import "./NavBar.css";
 
 // responsive css for all of the navbar links
 const navLinkClass = "nav-item mr-2 py-2 my-md-0 py-md-0";
@@ -126,25 +124,21 @@ class NavBar extends Component {
 
   render() {
     return (
-      <div>
-        <nav className="navbar navbar-expand-md navbar-light bg-dark site-navbar">
-          {this.getBrand()}
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#mobile"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="mobile">
-            <ul className="navbar-nav mr-auto" />
-            {this.props.userId
-              ? this.getPrivateRoutes()
-              : this.getPublicRoutes()}
-          </div>
-        </nav>
-      </div>
+      <nav className="navbar navbar-expand-md navbar-light bg-dark site-navbar">
+        {this.getBrand()}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#mobile"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="mobile">
+          <ul className="navbar-nav mr-auto" />
+          {this.props.userId ? this.getPrivateRoutes() : this.getPublicRoutes()}
+        </div>
+      </nav>
     );
   }
 }

@@ -146,11 +146,9 @@ class MatchedDetails extends Component {
 
     return (
       <div className="row">
-        <div className="col-sm-11 mx-auto">
+        <div className="col-xs-12 col-sm-10 col-lg-8 mx-auto">
           {header}
-          <div className="row mt-4">
-            <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
-          </div>
+          {content}
         </div>
       </div>
     );

@@ -54,14 +54,14 @@ const ListCard = ({
       <ShowHide key="regLinkBtn" size="lg" type="inline">
         <Link to={`/storyDetails/${storyId}`}>
           <button type="button" className="btn btn-secondary d-inline">
-            View Story Details
+            Story Details
           </button>
         </Link>
       </ShowHide>,
       <ShowHide key="blockLinkBtn" size="xs-md">
         <Link to={`/storyDetails/${storyId}`}>
           <button type="button" className="mt-2 btn btn-secondary btn-block">
-            View Story Details
+            Story Details
           </button>
         </Link>
       </ShowHide>
@@ -72,7 +72,7 @@ const ListCard = ({
     <div className="card my-4">
       <div className="card-body">
         <div className="row">
-          <div className="text-left col-xs-12 col-sm-12 col-md-12 col-lg-6">
+          <div className="text-left col-xs-12 col-sm-12 col-md-12 col-lg-7">
             <h3 className="card-title">{title}</h3>
             <p className="card-text">{truncateStr(description)}</p>
 
@@ -109,7 +109,7 @@ const ListCard = ({
             </form>
           </div>
 
-          <div className="cardImg col-xs-12 col-sm-12 col-md-12 col-lg-6">
+          <div className="cardImg col-xs-12 col-sm-12 col-md-12 col-lg-5">
             <div
               className="mx-auto p-2"
               style={{

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { combineValidators, isRequired } from "revalidate";
 import { Field, reduxForm } from "redux-form";
 // common components
-import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import TextInput from "../../../components/form/TextInput";
 import TextArea from "../../../components/form/TextArea";
@@ -28,18 +27,7 @@ class EditStory extends Component {
 
   // lifecycles
   componentDidMount() {
-    const { match, stories } = this.props;
-    const { storyId } = match.params;
-
-    let story;
-    if (stories) {
-      story = stories.find(story => story._id === storyId);
-      console.log("story", story);
-      this.props.getStoryDetails({ story });
-    } else {
-      console.log("fetch story from api");
-      this.props.startGetStoryDetails(storyId);
-    }
+    this.fetchStoryDetails();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -57,6 +45,20 @@ class EditStory extends Component {
   }
 
   // api calls
+  fetchStoryDetails = () => {
+    const { match, stories } = this.props;
+    const { storyId } = match.params;
+
+    let story;
+
+    // stories is stored in the store
+    if (stories) {
+      story = stories.find(story => story._id === storyId);
+      this.props.getStoryDetails({ story });
+    }
+    // fetch from the api
+    else this.props.startGetStoryDetails(storyId);
+  };
 
   // cbs & events
   moveMarker = (mapProps, map, clickEvent) => {
@@ -162,14 +164,7 @@ class EditStory extends Component {
   };
 
   render() {
-    const content = this.renderContent();
-
-    return (
-      <div>
-        <Heading title="Edit Story" />
-        {content}
-      </div>
-    );
+    return <div className="mt-3">{this.renderContent()}</div>;
   }
 }
 

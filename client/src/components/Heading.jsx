@@ -5,12 +5,8 @@ import capitalizeEachWordOfString from "../utils/stringManipulation/capitalizeEa
 const Heading = ({ title = null, children }) => {
   const upperTitle = title && capitalizeEachWordOfString(title);
   return (
-    <div className="my-3">
-      <div className="row">
-        <div className="col-12">
-          <div>{children}</div>
-        </div>
-      </div>
+    <div className="mt-3">
+      {children}
 
       {title && (
         <div className="row">

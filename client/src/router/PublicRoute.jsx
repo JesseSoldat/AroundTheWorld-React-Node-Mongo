@@ -12,7 +12,7 @@ const PublicRoute = ({ isAuth, component: Component, ...rest }) => {
         ) : (
           <div className="publicRouteWrapper">
             <Component {...props} />
-            <div className="spacer100" />
+            <div className="spacer40" />
           </div>
         )
       }

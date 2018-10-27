@@ -1,58 +1,36 @@
 import React, { Component } from "react";
-import GoogleMapReact from "google-map-react";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import googleMapsApiKey from "../../_config/googleKey";
-import Marker from "./Marker";
 
-import IconBtn from "../../components/buttons/IconBtn";
-
-class Map extends Component {
+class MapContainer extends Component {
   render() {
     const {
-      map,
-      marker,
-      zoom = 8,
+      lat,
+      lng,
+      zoom = 12,
+      width = "100%",
       height = "100vh",
-      moveMarker = () => {},
-      showBtns = false,
-      cancel = () => {},
-      selectPlace = () => {}
+      moveMarker = () => {}
     } = this.props;
 
     return (
-      <div
-        className="mx-auto"
-        style={{ height, width: "100%", position: "relative" }}
+      <Map
+        onClick={moveMarker}
+        google={this.props.google}
+        zoom={zoom}
+        style={{ width, height }}
+        className={"map"}
+        initialCenter={{
+          lat,
+          lng
+        }}
       >
-        {showBtns && (
-          <div
-            style={{ zIndex: 3, position: "absolute", top: "2%", right: "8%" }}
-          >
-            <IconBtn
-              btnClass="btn btn-danger mr-2"
-              iconClass="fas fa-backspace"
-              text="Cancel"
-              cb={cancel}
-            />
-            <IconBtn
-              btnClass="btn btn-secondary"
-              iconClass="fas fa-check"
-              text="Select"
-              cb={selectPlace}
-            />
-          </div>
-        )}
-
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: googleMapsApiKey }}
-          defaultCenter={map}
-          defaultZoom={zoom}
-          onClick={moveMarker}
-        >
-          {marker && <Marker lat={marker.markerLat} lng={marker.markerLng} />}
-        </GoogleMapReact>
-      </div>
+        <Marker position={{ lat, lng }} />
+      </Map>
     );
   }
 }
 
-export default Map;
+export default GoogleApiWrapper({
+  apiKey: googleMapsApiKey
+})(MapContainer);

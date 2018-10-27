@@ -1,19 +1,23 @@
 import React, { Component } from "react";
 import Map from "./Map";
+import IconBtn from "../../components/buttons/IconBtn";
 
 class MapIt extends Component {
   state = {
-    markerLat: 18.646245142670608,
-    markerLng: 18.646245142670608
+    lat: 18.646245142670608,
+    lng: 18.0
   };
 
-  moveMarker = ({ lat, lng }) => {
-    this.setState({ markerLat: lat, markerLng: lng });
+  // cbs & events
+  moveMarker = (mapProps, map, clickEvent) => {
+    const lat = clickEvent.latLng.lat();
+    const lng = clickEvent.latLng.lng();
+    this.setState({ lat, lng });
   };
 
   selectPlace = () => {
-    const { markerLat, markerLng } = this.state;
-    this.props.history.push(`/createStory?lat=${markerLat}&lng=${markerLng}`);
+    const { lat, lng } = this.state;
+    this.props.history.push(`/createStory?lat=${lat}&lng=${lng}`);
   };
 
   cancel = () => {
@@ -21,17 +25,32 @@ class MapIt extends Component {
   };
 
   render() {
-    const { markerLat, markerLng } = this.state;
+    const { lat, lng } = this.state;
     return (
       <div>
+        <div style={{ zIndex: 3, position: "absolute", top: "0", right: "5%" }}>
+          <div className="spacer70" />
+          <IconBtn
+            btnClass="btn btn-danger mr-2"
+            iconClass="fas fa-backspace"
+            text="Cancel"
+            cb={this.cancel}
+          />
+          <IconBtn
+            btnClass="btn btn-secondary"
+            iconClass="fas fa-check"
+            text="Select"
+            cb={this.selectPlace}
+          />
+        </div>
+
         <Map
-          map={{ lat: markerLat, lng: markerLng }}
-          marker={{ markerLat, markerLng }}
+          lat={lat}
+          lng={lng}
           moveMarker={this.moveMarker}
-          showBtns={true}
           cancel={this.cancel}
           selectPlace={this.selectPlace}
-          zoom={-10}
+          zoom={3}
         />
       </div>
     );

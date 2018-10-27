@@ -105,14 +105,15 @@ class StoryDetails extends Component {
           data={data}
           accordionTop={<p>{data.description}</p>}
           accordionMiddle={
-            <Map
-              map={[data.coordinates[1], data.coordinates[0]]}
-              height="400px"
-              marker={{
-                markerLng: data.coordinates[0],
-                markerLat: data.coordinates[1]
-              }}
-            />
+            <div style={{ overflow: "hidden", height: "400px" }}>
+              <Map
+                lat={data.coordinates[1]}
+                lng={data.coordinates[0]}
+                zoom={8}
+                height="400px"
+                width="95%"
+              />
+            </div>
           }
           accordionBottom={
             <StoryImages

@@ -15,46 +15,37 @@ import {
   startGetStoryDetails,
   startDeleteStory
 } from "../../../actions/storyActions";
+// css
 import "./StoryDetails.css";
 
 class StoryDetails extends Component {
   // lifecycles
   componentDidMount() {
-    const { stories, details, match } = this.props;
-    const { storyId } = match.params;
-    let story;
-
-    if (details && details._id === storyId) {
-      console.log("have details", details);
-      return;
-    }
-
-    if (stories) {
-      story = stories.find(story => story._id === storyId);
-    }
-
-    if (story) {
-      console.log("fetch story from store");
-      this.props.getStoryDetails({ story });
-    } else {
-      console.log("fetch story from api");
-      this.props.startGetStoryDetails(storyId);
-    }
+    this.fetchStoryDetails();
   }
 
   componentWillUnmount() {
     this.props.getStoryDetails({ story: null });
   }
 
-  // cbs & events
-  goBack = () => {
-    this.props.history.push("/storyList");
-  };
+  // api calls
+  fetchStoryDetails = () => {
+    const { stories, details, match } = this.props;
+    const { storyId } = match.params;
+    let story;
 
-  onDeleteStory = () => {
-    const { storyId } = this.props.match.params;
-    this.props.startDeleteStory(storyId, this.props.history);
+    // the details are in the store already
+    if (details && details._id === storyId) return;
+
+    // check if the story is included in the list of stories in the store
+    if (stories) story = stories.find(story => story._id === storyId);
+    // found in the store
+    if (story) this.props.getStoryDetails({ story });
+    // not in the store fetch from the api
+    else this.props.startGetStoryDetails(storyId);
   };
+  // cbs & events
+  goBack = () => this.props.history.push("/storyList");
 
   onEditStory = () => {
     const { storyId } = this.props.match.params;
@@ -66,6 +57,11 @@ class StoryDetails extends Component {
     this.props.history.push(`/uploadPhotos/${storyId}`);
   };
 
+  onDeleteStory = () => {
+    const { storyId } = this.props.match.params;
+    this.props.startDeleteStory(storyId, this.props.history);
+  };
+
   viewLargePhotoModal = data => {
     const { storyId } = this.props.match.params;
     this.props.openModal({
@@ -75,32 +71,41 @@ class StoryDetails extends Component {
   };
 
   // format data to pass to children
-  formatAccordionData = details => {
-    const data = {
-      title1: "Story",
-      title2: "Map",
-      title3: "Photos",
-      icon1: "fas fa-atlas mr-2",
-      icon2: "fas fa-map-marked-alt mr-2",
-      icon3: "fas fa-images mr-2",
-      description: details.description,
-      coordinates: details.geometry.coordinates
-    };
+  formatAccordionData = details => ({
+    title1: "Story",
+    title2: "Map",
+    title3: "Photos",
+    icon1: "fas fa-atlas mr-2",
+    icon2: "fas fa-map-marked-alt mr-2",
+    icon3: "fas fa-images mr-2",
+    description: details.description,
+    coordinates: details.geometry.coordinates
+  });
 
-    return data;
+  // render dom
+  renderHeader = () => {
+    const { details } = this.props;
+    const title = details ? details.title : "";
+
+    return (
+      <Heading title={title}>
+        <TopRowBtns
+          btn0Cb={this.goBack}
+          btn1Cb={this.onDeleteStory}
+          btn2Cb={this.onEditStory}
+        />
+      </Heading>
+    );
   };
 
-  render() {
+  renderContent = () => {
     const { loading, details } = this.props;
 
-    let content, title;
-
-    if (loading) content = <Spinner />;
+    if (loading) return <Spinner />;
     else if (details) {
-      title = details.title;
       const data = this.formatAccordionData(details);
 
-      content = (
+      return (
         <Accordion
           data={data}
           accordionTop={<p>{data.description}</p>}
@@ -125,19 +130,20 @@ class StoryDetails extends Component {
         />
       );
     }
+  };
+
+  render() {
+    const header = this.renderHeader();
+    const content = this.renderContent();
 
     return (
       <div className="row">
         <div className="col-11 mx-auto">
-          <Heading title={title}>
-            <TopRowBtns
-              btn0Cb={this.goBack}
-              btn1Cb={this.onDeleteStory}
-              btn2Cb={this.onEditStory}
-            />
-          </Heading>
           <div className="row mt-4">
-            <div className="col-xs-12 col-sm-10 mx-auto">{content}</div>
+            <div className="col-xs-12 col-sm-10 mx-auto">
+              {header}
+              {content}
+            </div>
           </div>
         </div>
       </div>

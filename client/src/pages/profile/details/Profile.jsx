@@ -24,6 +24,8 @@ class Profile extends Component {
   renderHeader = () => {
     const { profile } = this.props;
 
+    if (!profile) return <Heading />;
+
     if (profile)
       return (
         <Heading title={profile.username}>
@@ -40,8 +42,8 @@ class Profile extends Component {
   };
 
   render() {
-    let header = this.renderHeader();
-    let content = this.renderContent();
+    const header = this.renderHeader();
+    const content = this.renderContent();
 
     return (
       <div className="row">

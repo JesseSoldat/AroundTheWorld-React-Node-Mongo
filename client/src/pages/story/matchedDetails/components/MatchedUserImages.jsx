@@ -1,13 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 // custom components
 import SendFriendRequest from "./SendFriendRequest";
 import ReceivedFriendRequest from "./ReceivedFriendRequest";
 import ImageList from "./ImageList";
 
-class MatchedUserImages extends Component {
-  renderFriendImages = () => {
-    const { images, viewLargePhotoModal } = this.props;
-
+const MatchedUserImages = ({
+  status,
+  images,
+  sendRequest,
+  acceptRequest,
+  viewLargePhotoModal
+}) => {
+  // render dom
+  const renderFriendImages = () => {
     if (!images.length)
       return <p>This story does not have any photos associated with it.</p>;
 
@@ -16,41 +21,34 @@ class MatchedUserImages extends Component {
     );
   };
 
-  render() {
-    const { status, sendRequest, acceptRequest } = this.props;
-    let content;
+  const renderContent = () => {
     switch (status) {
       case "unknown":
-        content = <SendFriendRequest cb={sendRequest} />;
-        break;
+        return <SendFriendRequest cb={sendRequest} />;
 
       case "requested":
-        content = (
+        return (
           <div>
             <p>Waiting for user to accept the friend request.</p>
           </div>
         );
-        break;
 
       case "received":
-        content = <ReceivedFriendRequest cb={acceptRequest} />;
-        break;
+        return <ReceivedFriendRequest cb={acceptRequest} />;
 
       case "rejected":
-        content = <ReceivedFriendRequest cb={acceptRequest} rejected={true} />;
-        break;
+        return <ReceivedFriendRequest cb={acceptRequest} rejected={true} />;
 
       case "isFriend":
-        content = this.renderFriendImages();
-        break;
+        return renderFriendImages();
 
       default:
         console.log("Friend status is unknown");
         break;
     }
+  };
 
-    return <div>{content}</div>;
-  }
-}
+  return <div>{renderContent()}</div>;
+};
 
 export default MatchedUserImages;

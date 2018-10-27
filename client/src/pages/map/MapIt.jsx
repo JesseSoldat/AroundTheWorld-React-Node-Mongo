@@ -20,9 +20,7 @@ class MapIt extends Component {
     this.props.history.push(`/createStory?lat=${lat}&lng=${lng}`);
   };
 
-  cancel = () => {
-    this.props.history.push("/dashboard");
-  };
+  cancel = () => this.props.history.push("/dashboard");
 
   render() {
     const { lat, lng } = this.state;
@@ -44,14 +42,7 @@ class MapIt extends Component {
           />
         </div>
 
-        <Map
-          lat={lat}
-          lng={lng}
-          moveMarker={this.moveMarker}
-          cancel={this.cancel}
-          selectPlace={this.selectPlace}
-          zoom={3}
-        />
+        <Map lat={lat} lng={lng} moveMarker={this.moveMarker} zoom={3} />
       </div>
     );
   }

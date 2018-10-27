@@ -23,38 +23,37 @@ class UpdateProfile extends Component {
     currentForm: "basic"
   };
 
+  // lifecycles
   componentDidMount() {
+    this.getUserProfile();
+  }
+
+  // api calls
+  getUserProfile = () => {
     const { profile, match } = this.props;
     const { userId } = match.params;
     if (profile && profile._id === userId) return;
 
     this.props.startGetProfile(userId);
-  }
+  };
 
   // cbs & events
-  resetFieldOnForm = () => {
+  resetFieldOnForm = () =>
     this.props.resetField("birthDate", null, "profileForm");
-  };
 
-  changeCurrentForm = formType => {
-    this.setState({ currentForm: formType });
-  };
+  changeCurrentForm = formType => this.setState({ currentForm: formType });
 
-  updateProfile = values => {
-    const { profile } = this.props;
-    this.props.startEditProfile({ ...profile, ...values });
-  };
+  updateProfile = values =>
+    this.props.startEditProfile({ ...this.props.profile, ...values });
 
-  updatePassword = values => {
-    const { password } = values;
-    this.props.startChangePassword(password);
-  };
+  updatePassword = values => this.props.startChangePassword(values.password);
 
   goBack = () => {
     const { history, match } = this.props;
     history.push(`/profile/${match.params.userId}`);
   };
 
+  // render dom
   renderCurrentForm = (currentForm, profile) => {
     switch (currentForm) {
       case "basic":
@@ -90,23 +89,30 @@ class UpdateProfile extends Component {
     }
   };
 
-  render() {
+  renderContent = () => {
     const { loading, profile, match } = this.props;
     const { userId } = match.params;
-    const { currentForm } = this.state;
-    let content, sideBar;
 
-    if (loading) content = <Spinner />;
+    if (loading) return <Spinner />;
     else if (profile && profile._id === userId) {
-      content = this.renderCurrentForm(currentForm, profile);
-
-      sideBar = (
-        <SideBar
-          currentForm={this.state.currentForm}
-          changeCurrentForm={this.changeCurrentForm}
-        />
-      );
+      return this.renderCurrentForm(this.state.currentForm, profile);
     }
+  };
+
+  renderSideBar = () => {
+    if (this.props.loading) return;
+
+    return (
+      <SideBar
+        currentForm={this.state.currentForm}
+        changeCurrentForm={this.changeCurrentForm}
+      />
+    );
+  };
+
+  render() {
+    const content = this.renderContent();
+    const sideBar = this.renderSideBar();
 
     return (
       <div className="row">

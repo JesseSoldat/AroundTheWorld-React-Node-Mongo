@@ -16,9 +16,22 @@ import {
 
 // MatchedList
 class ComponentNeedingStorage extends Component {
+  // lifecycles
   componentDidMount() {
+    this.fetchMatchedList();
+  }
+  // helpers
+  checkStorage = () => {
+    const haveInStorage = this.props.load("matchedUser");
+    if (haveInStorage) return JSON.parse(haveInStorage);
+    return null;
+  };
+
+  // api calls
+  fetchMatchedList = () => {
     const { userId } = this.props.match.params;
     const matchedUser = this.checkStorage();
+    // check local storage
     if (matchedUser && matchedUser._id === userId) {
       const { userInfo, stories } = matchedUser;
 
@@ -28,63 +41,65 @@ class ComponentNeedingStorage extends Component {
 
       this.props.getMatchedUserStoriesRequested();
       this.props.getMatchedUserStories(stories, userInfo[0]);
-    } else {
-      // api call
-      this.props.startGetMatchedUserStories(userId);
     }
-  }
-
-  checkStorage = () => {
-    const haveInStorage = this.props.load("matchedUser");
-    if (haveInStorage) {
-      return JSON.parse(haveInStorage);
-    }
-    return null;
+    // api call
+    else this.props.startGetMatchedUserStories(userId);
   };
 
+  // cbs & events
   viewDetails = story => {
     const { userId } = this.props.match.params;
     this.props.history.push(`/matchedDetails/${userId}/${story._id}`);
   };
 
-  goBack = () => {
-    this.props.history.goBack();
+  goBack = () => this.props.history.goBack();
+
+  // render dom
+  renderHeader = () => {
+    const { matchedStories } = this.props;
+    let title;
+    if (matchedStories && matchedStories.length) {
+      title = matchedStories[0].user.username + "'s Stories";
+    }
+
+    return (
+      <Heading title={title}>
+        <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
+      </Heading>
+    );
+  };
+
+  renderContent = () => {
+    const { loading, matchedStories } = this.props;
+
+    if (loading) return <Spinner />;
+    else if (matchedStories && matchedStories.length) {
+      return matchedStories.map(story => (
+        <ImgCard
+          key={story._id}
+          storyId={story._id}
+          data={story}
+          cb={this.viewDetails}
+          image={
+            <StaticMap
+              coordinates={story.geometry.coordinates}
+              width="100%"
+              zoom={6}
+            />
+          }
+        />
+      ));
+    }
   };
 
   render() {
-    const { loading, matchedStories } = this.props;
-
-    let content, title;
-
-    if (loading) content = <Spinner />;
-    else if (matchedStories) {
-      if (matchedStories.length) {
-        title = matchedStories[0].user.username + "'s Stories";
-
-        content = matchedStories.map(story => (
-          <ImgCard
-            key={story._id}
-            storyId={story._id}
-            data={story}
-            cb={this.viewDetails}
-            image={
-              <StaticMap
-                coordinates={story.geometry.coordinates}
-                width="100%"
-                zoom={6}
-              />
-            }
-          />
-        ));
-      }
-    }
+    const header = this.renderHeader();
+    const content = this.renderContent();
 
     return (
       <div className="row">
         <div className="col-11 mx-auto">
-          <Heading title={title}>
-            <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
-          </Heading>
+          {header}
 
           <div className="row">
             <div className="bulletinBg col-xs-12 col-sm-11 mx-auto my-3 d-flex flex-wrap justify-content-around">

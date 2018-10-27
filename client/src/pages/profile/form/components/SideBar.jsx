@@ -5,6 +5,18 @@ import SideBarBtn from "./SideBarBtn";
 import buttonFields from "./buttonFields";
 
 const SideBar = ({ currentForm, changeCurrentForm }) => {
+  // render dom
+  const renderSideBar = () =>
+    buttonFields.map((field, i) => (
+      <SideBarBtn
+        key={i}
+        btnText={field.btnText}
+        formType={field.formType}
+        currentForm={currentForm}
+        changeCurrentForm={changeCurrentForm}
+      />
+    ));
+
   return (
     <div className="col-xs-12 col-md-4 mx-auto mb-2">
       <div className="row">
@@ -14,15 +26,7 @@ const SideBar = ({ currentForm, changeCurrentForm }) => {
               <i className="fas fa-cogs mr-2" />
               Profile
             </li>
-            {buttonFields.map((field, i) => (
-              <SideBarBtn
-                key={i}
-                btnText={field.btnText}
-                formType={field.formType}
-                currentForm={currentForm}
-                changeCurrentForm={changeCurrentForm}
-              />
-            ))}
+            {renderSideBar()}
           </ul>
         </div>
       </div>

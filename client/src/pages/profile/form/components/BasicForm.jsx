@@ -21,6 +21,7 @@ const BasicForm = ({
   handleSubmit,
   updateProfile
 }) => {
+  // cbs & events
   const resetInputValue = () => {
     resetFieldOnForm();
   };

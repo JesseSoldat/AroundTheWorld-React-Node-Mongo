@@ -56,6 +56,8 @@ class EditStory extends Component {
     }
   }
 
+  // api calls
+
   // cbs & events
   moveMarker = (mapProps, map, clickEvent) => {
     const lat = clickEvent.latLng.lat();
@@ -79,85 +81,88 @@ class EditStory extends Component {
     this.props.startEditStory(storyId, story, this.props.history);
   };
 
-  cancel = () => {
-    this.props.history.push("/storyList");
-  };
+  cancel = () => this.props.history.push("/storyList");
 
+  // render dom
   renderContent = () => {
+    const {
+      loading,
+      initialValues,
+      handleSubmit,
+      invalid,
+      submitting
+    } = this.props;
     const { lat, lng, showMap } = this.state;
-    const { handleSubmit, invalid, submitting } = this.props;
-    return (
-      <div>
-        <div className="row">
-          <div
-            className="col-sm-12 col-md-7 mx-auto"
-            style={{ overflow: "hidden", height: "400px" }}
-          >
-            {showMap && (
-              <Map
-                lat={lat}
-                lng={lng}
-                moveMarker={this.moveMarker}
-                zoom={3}
-                height="400px"
-                width="96.5%"
-              />
-            )}
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-sm-12 col-md-7 mx-auto">
-            <div className="card p-4">
-              <div className="card-block">
-                <h3 className="card-title styles.storyCard">Story Details</h3>
-                <form onSubmit={handleSubmit(this.submitStory)}>
-                  <Field
-                    fieldObj={storyFields["title"]}
-                    name={storyFields["title"].name}
-                    type={storyFields["title"].type}
-                    component={TextInput}
-                  />
-                  <div className="spacer10" />
-                  <Field
-                    fieldObj={storyFields["description"]}
-                    name={storyFields["description"].name}
-                    type={storyFields["description"].type}
-                    component={TextArea}
-                  />
-                  <div className="spacer10" />
-                  <div>
-                    <IconBtn
-                      btnClass="btn btn-danger mr-2"
-                      iconClass="fas fa-backspace"
-                      text="Cancel"
-                      cb={this.cancel}
+    if (loading) return <Spinner />;
+    else if (initialValues) {
+      return (
+        <div>
+          <div className="row">
+            <div
+              className="col-sm-12 col-md-7 mx-auto"
+              style={{ overflow: "hidden", height: "400px" }}
+            >
+              {showMap && (
+                <Map
+                  lat={lat}
+                  lng={lng}
+                  moveMarker={this.moveMarker}
+                  zoom={3}
+                  height="400px"
+                  width="96.5%"
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-sm-12 col-md-7 mx-auto">
+              <div className="card p-4">
+                <div className="card-block">
+                  <h3 className="card-title styles.storyCard">Story Details</h3>
+                  <form onSubmit={handleSubmit(this.submitStory)}>
+                    <Field
+                      fieldObj={storyFields["title"]}
+                      name={storyFields["title"].name}
+                      type={storyFields["title"].type}
+                      component={TextInput}
                     />
-                    <IconBtn
-                      btnClass="btn btn-secondary"
-                      iconClass="fas fa-check"
-                      text="Submit"
-                      type="submit"
-                      disabled={invalid || submitting}
+                    <div className="spacer10" />
+                    <Field
+                      fieldObj={storyFields["description"]}
+                      name={storyFields["description"].name}
+                      type={storyFields["description"].type}
+                      component={TextArea}
                     />
-                  </div>
-                </form>
+                    <div className="spacer10" />
+                    <div>
+                      <IconBtn
+                        btnClass="btn btn-danger mr-2"
+                        iconClass="fas fa-backspace"
+                        text="Cancel"
+                        cb={this.cancel}
+                      />
+                      <IconBtn
+                        btnClass="btn btn-secondary"
+                        iconClass="fas fa-check"
+                        text="Submit"
+                        type="submit"
+                        disabled={invalid || submitting}
+                      />
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   };
 
   render() {
-    // const { showMap, markerLat, markerLng } = this.state;
-    const { loading, initialValues } = this.props;
-    let content;
-    if (loading) content = <Spinner />;
-    else if (initialValues) {
-      content = this.renderContent();
-    }
+    const content = this.renderContent();
 
     return (
       <div>

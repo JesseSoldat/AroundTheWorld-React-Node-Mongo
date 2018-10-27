@@ -29,10 +29,7 @@ class CreateStory extends Component {
     this.setState({ lat, lng });
   };
 
-  // form
-  cancel = () => {
-    this.props.history.push("/storyList");
-  };
+  cancel = () => this.props.history.push("/storyList");
 
   submitStory = values => {
     const { lat, lng } = this.state;
@@ -49,13 +46,13 @@ class CreateStory extends Component {
     this.props.startCreateStory(story, this.props.history);
   };
 
-  render() {
+  // render dom
+  renderContent = () => {
     const { lat, lng } = this.state;
     const { handleSubmit, invalid, submitting } = this.props;
 
     return (
       <div>
-        <Heading title="Tell your Story" />
         <div className="row">
           <div
             className="col-sm-12 col-md-7 mx-auto"
@@ -112,6 +109,15 @@ class CreateStory extends Component {
             </div>
           </div>
         </div>
+      </div>
+    );
+  };
+
+  render() {
+    return (
+      <div>
+        <Heading title="Tell your Story" />
+        {this.renderContent()}
       </div>
     );
   }

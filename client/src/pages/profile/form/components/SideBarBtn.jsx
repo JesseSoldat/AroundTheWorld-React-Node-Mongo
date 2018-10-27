@@ -1,6 +1,7 @@
 import React from "react";
 
 const SideBarBtn = ({ btnText, formType, currentForm, changeCurrentForm }) => {
+  // cbs & events
   const changeForm = () => changeCurrentForm(formType);
 
   return (

@@ -11,7 +11,10 @@ import MatchedUserImages from "./components/MatchedUserImages";
 // utils
 import checkFriendStatus from "../../../utils/checkFriendStatus";
 // actions
-import { startGetMatchedStoryDetails } from "../../../actions/storyActions";
+import {
+  getMatchedStoryDetails,
+  startGetMatchedStoryDetails
+} from "../../../actions/storyActions";
 import { openModal } from "../../../actions/modalActions";
 import {
   startSendFriendRequest,
@@ -19,25 +22,19 @@ import {
 } from "../../../actions/friendActions";
 
 class MatchedDetails extends Component {
+  // lifecycles
   componentDidMount() {
-    const { storyId } = this.props.match.params;
-    this.props.startGetMatchedStoryDetails(storyId);
+    this.fetchMatchedStoryDetails();
   }
 
-  // format data to pass to children
-  formatAccordionData = matchedDetails => {
-    const data = {
-      title1: "Story",
-      title2: "Map",
-      title3: "Photos",
-      icon1: "fas fa-atlas mr-2",
-      icon2: "fas fa-map-marked-alt mr-2",
-      icon3: "fas fa-images mr-2",
-      matchedUserId: matchedDetails.user._id,
-      description: matchedDetails.description,
-      coordinates: matchedDetails.geometry.coordinates
-    };
-    return data;
+  componentWillUnmount() {
+    this.props.getMatchedStoryDetails({ story: null });
+  }
+
+  // api calls
+  fetchMatchedStoryDetails = () => {
+    const { storyId } = this.props.match.params;
+    this.props.startGetMatchedStoryDetails(storyId);
   };
 
   // cb & events
@@ -67,11 +64,23 @@ class MatchedDetails extends Component {
     this.props.history.push(`/matchedList/${userId}`);
   };
 
+  // format data to pass to children
+  formatAccordionData = matchedDetails => ({
+    title1: "Story",
+    title2: "Map",
+    title3: "Photos",
+    icon1: "fas fa-atlas mr-2",
+    icon2: "fas fa-map-marked-alt mr-2",
+    icon3: "fas fa-images mr-2",
+    matchedUserId: matchedDetails.user._id,
+    description: matchedDetails.description,
+    coordinates: matchedDetails.geometry.coordinates
+  });
+
   // render dom
   renderHeader = () => {
     const { matchedDetails } = this.props;
-    let title;
-    if (matchedDetails) title = matchedDetails.title;
+    const title = matchedDetails ? matchedDetails.title : "";
 
     return (
       <Heading title={title}>
@@ -160,6 +169,7 @@ export default connect(
   mapStateToProps,
   {
     openModal,
+    getMatchedStoryDetails,
     startGetMatchedStoryDetails,
     startSendFriendRequest,
     startAcceptFriendRequest

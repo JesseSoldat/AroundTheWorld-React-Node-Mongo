@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 // common components
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
@@ -73,7 +72,7 @@ class StoryList extends Component {
   };
 
   render() {
-    let content = this.renderContent();
+    const content = this.renderContent();
     return (
       <div className="row">
         <div className="col-sm-11 mx-auto">

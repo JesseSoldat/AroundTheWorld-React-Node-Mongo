@@ -61,7 +61,7 @@ class CreateStory extends Component {
               lat={lat}
               lng={lng}
               moveMarker={this.moveMarker}
-              zoom={3}
+              zoom={5}
               height="400px"
               width="96.5%"
             />

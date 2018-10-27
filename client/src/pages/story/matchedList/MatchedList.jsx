@@ -50,8 +50,6 @@ class ComponentNeedingStorage extends Component {
     this.props.history.push(`/matchedDetails/${userId}/${story._id}`);
   };
 
-  goBack = () => this.props.history.goBack();
-
   // render dom
   renderHeader = () => {
     const { matchedStories } = this.props;
@@ -60,7 +58,7 @@ class ComponentNeedingStorage extends Component {
       title = matchedStories[0].user.username + "'s Stories";
     }
 
-    return <Heading title={title} btn0Cb={this.goBack} />;
+    return <Heading title={title} />;
   };
 
   renderContent = () => {

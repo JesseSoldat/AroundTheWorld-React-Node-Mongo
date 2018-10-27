@@ -117,10 +117,9 @@ class UpdateProfile extends Component {
     return (
       <div className="row">
         <div className="col-xs-12 col-sm-11 col-lg-10 mx-auto">
-          <Heading title="Update Profile">
-            <TopRowBtns btn0Cb={this.goBack} />
-          </Heading>
-          <div className="row mt-5">
+          <Heading title="Update Profile" btn0Cb={this.goBack} />
+
+          <div className="row mt-5 mx-2">
             {sideBar}
             {content}
           </div>

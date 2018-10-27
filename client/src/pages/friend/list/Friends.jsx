@@ -59,14 +59,10 @@ class Friends extends Component {
     let content = this.renderContent();
 
     return (
-      <div className="row">
-        <div className="col-sm-11 mx-auto">
+      <div className="row px-3">
+        <div className="col-xs-12 col-sm-10 col-md-9 col-lg-8 mx-auto">
           <Heading title="friends" />
-          <div className="row">
-            <div className="bulletinBg col-sm-11 col-lg-9 mx-auto">
-              {content}
-            </div>
-          </div>
+          <div className="bulletinBg">{content}</div>
         </div>
       </div>
     );

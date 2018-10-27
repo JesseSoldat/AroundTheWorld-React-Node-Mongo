@@ -18,7 +18,7 @@ const FriendCard = ({ friend, onNavigate }) => {
   const viewFriendStories = () => onNavigate(`/matchedList/${friend._id}`);
 
   return (
-    <div className="card my-4">
+    <div className="card m-3" style={{ width: "280px" }}>
       <div className="card-body">
         <div className="row d-flex flex-column justify-content-around align-items-center flex-wrap">
           <img

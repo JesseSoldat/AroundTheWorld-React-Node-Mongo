@@ -10,11 +10,14 @@ const MapCard = ({ data, coordinates, cb }) => {
   };
 
   return (
-    <div className="card m-4" style={{ width: "300px", height: "450px" }}>
+    <div
+      className="card m-4"
+      style={{ width: "300px", height: "450px", overflow: "hidden" }}
+    >
       <div
-        className="mx-auto p-2"
+        className="mx-auto"
         style={{
-          width: "280px",
+          width: "300px",
           height: "250px",
           overflow: "hidden",
           borderRadius: "3px"
@@ -23,7 +26,7 @@ const MapCard = ({ data, coordinates, cb }) => {
         <StaticMap coordinates={coordinates} width="100%" zoom={6} />
       </div>
 
-      <div className="mt-2 card-body d-flex-column justify-content-between">
+      <div className="mt-2 card-body ">
         <h5 className="card-title">{data.title}</h5>
         <p className="card-text mt-3">{truncateStr(data.description, 50)}</p>
       </div>

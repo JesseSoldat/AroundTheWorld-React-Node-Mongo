@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import Spinner from "../../../components/loading/Spinner";
 import Heading from "../../../components/Heading";
 import UserDetailsCard from "../../../components/cards/UserDetailsCard";
-import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // actions
 import {
   getFriendDetails,
@@ -46,21 +45,15 @@ class FriendDetails extends Component {
   renderHeader = () => {
     const { friendDetails } = this.props;
 
-    if (!friendDetails)
-      return (
-        <Heading>
-          <TopRowBtns btn0Cb={this.goBackToFriendsList} />
-        </Heading>
-      );
+    if (!friendDetails) return <Heading btn0Cb={this.goBackToFriendsList} />;
 
     if (friendDetails)
       return (
-        <Heading title={friendDetails.username}>
-          <TopRowBtns
-            btn0Cb={this.goBackToFriendsList}
-            btn1Cb={this.deleteFriend}
-          />
-        </Heading>
+        <Heading
+          title={friendDetails.username}
+          btn0Cb={this.goBackToFriendsList}
+          btn1Cb={this.deleteFriend}
+        />
       );
   };
 
@@ -76,7 +69,7 @@ class FriendDetails extends Component {
     let content = this.renderContent();
 
     return (
-      <div className="row">
+      <div className="row px-3">
         <div className="col-sm-11 mx-auto">
           {header}
           {content}

@@ -9,16 +9,14 @@ const FriendList = ({ friends, name, updateFilter, onNavigate }) => {
   // render dom
   const renderFriendList = () => {
     return filteredFriends.map(friend => (
-      <div className="col-sm-12 col-md-6 col-lg-4 mx-auto" key={friend._id}>
-        <FriendCard friend={friend} onNavigate={onNavigate} />
-      </div>
+      <FriendCard key={friend._id} friend={friend} onNavigate={onNavigate} />
     ));
   };
 
   return (
-    <div className="bulletinBg">
-      <div className="row pt-3">
-        <div className="col-sm-12 col-md-8 mx-auto">
+    <div>
+      <div className="row py-2">
+        <div className="col-sm-12 col-md-8 col-lg-7 mx-auto">
           {friends.length > 1 && (
             <input
               placeholder="Search for a friend by name..."
@@ -30,7 +28,11 @@ const FriendList = ({ friends, name, updateFilter, onNavigate }) => {
           )}
         </div>
       </div>
-      <div className="row">{renderFriendList()}</div>
+      <div className="row">
+        <div className="d-flex flex-wrap justify-content-around">
+          {renderFriendList()}
+        </div>
+      </div>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // common components
 import Heading from "../../components/Heading";
-import TopRowBtns from "../../components/buttons/TopRowBtns";
 import DropZone from "../../components/DropZone";
 import Cropper from "../../components/Cropper";
 import CropperPreview from "../../components/CropperPreview";
@@ -52,9 +51,7 @@ class PhotoUploadPage extends Component {
     return (
       <div className="row">
         <div className="col-sm-11 mx-auto">
-          <Heading title="Upload Image">
-            <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
-          </Heading>
+          <Heading title="Upload Image" btn0Cb={this.goBack} />
 
           <div className="row mt-3">
             <div className="col-xs-12 col-md-10 mx-auto">

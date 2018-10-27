@@ -9,7 +9,7 @@ body {
 .bulletinBg {
   background: url(./_images/sand.jpg) repeat;
   min-height: 500px;
-  padding: 40px 30px;
+  padding: 30px 10px;
 }
 
 button:focus {

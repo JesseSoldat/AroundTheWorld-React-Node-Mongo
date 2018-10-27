@@ -3,10 +3,8 @@ import { connect } from "react-redux";
 // common component
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
-import StaticMap from "../../map/StaticMap";
 import MapCard from "../../../components/cards/MapCard";
 import withStorage from "../../../components/hoc/withStorage";
-import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // actions
 import {
   getMatchedUserStoriesRequested,
@@ -62,11 +60,7 @@ class ComponentNeedingStorage extends Component {
       title = matchedStories[0].user.username + "'s Stories";
     }
 
-    return (
-      <Heading title={title}>
-        <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
-      </Heading>
-    );
+    return <Heading title={title} btn0Cb={this.goBack} />;
   };
 
   renderContent = () => {
@@ -74,7 +68,6 @@ class ComponentNeedingStorage extends Component {
 
     if (loading) return <Spinner />;
     else if (matchedStories && matchedStories.length) {
-      console.log(matchedStories);
       return matchedStories.map(story => (
         <MapCard
           key={story._id}

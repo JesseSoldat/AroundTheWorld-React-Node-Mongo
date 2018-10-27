@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
-import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // custom components
 import Map from "../../map/Map";
 import MatchedUserImages from "./components/MatchedUserImages";
@@ -82,11 +81,7 @@ class MatchedDetails extends Component {
     const { matchedDetails } = this.props;
     const title = matchedDetails ? matchedDetails.title : "";
 
-    return (
-      <Heading title={title}>
-        <TopRowBtns btn0Cb={this.goBack} showLeftBtns={true} />
-      </Heading>
-    );
+    return <Heading title={title} btn0Cb={this.goBack} />;
   };
 
   renderContent = () => {

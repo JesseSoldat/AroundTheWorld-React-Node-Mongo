@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
 import Accordion from "../../../components/Accordion";
-import TopRowBtns from "../../../components/buttons/TopRowBtns";
 // custom components
 import StoryImages from "./StoryImages";
 import Map from "../../map/Map";
@@ -86,13 +85,12 @@ class StoryDetails extends Component {
     const title = details ? details.title : "";
 
     return (
-      <Heading title={title}>
-        <TopRowBtns
-          btn0Cb={this.goBack}
-          btn1Cb={this.onDeleteStory}
-          btn2Cb={this.onEditStory}
-        />
-      </Heading>
+      <Heading
+        title={title}
+        btn0Cb={this.goBack}
+        btn1Cb={this.onDeleteStory}
+        btn2Cb={this.onEditStory}
+      />
     );
   };
 

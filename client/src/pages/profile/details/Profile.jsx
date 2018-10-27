@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 // common components
 import Heading from "../../../components/Heading";
 import Spinner from "../../../components/loading/Spinner";
-import TopRowBtns from "../../../components/buttons/TopRowBtns";
 import UserDetailsCard from "../../../components/cards/UserDetailsCard";
 // actions
 import { startGetProfile } from "../../../actions/profileActions";
@@ -27,11 +26,7 @@ class Profile extends Component {
     if (!profile) return <Heading />;
 
     if (profile)
-      return (
-        <Heading title={profile.username}>
-          <TopRowBtns btn2Cb={this.editProfile} />
-        </Heading>
-      );
+      return <Heading title={profile.username} btn2Cb={this.editProfile} />;
   };
 
   renderContent = () => {
